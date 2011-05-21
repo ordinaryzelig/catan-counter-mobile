@@ -1,0 +1,4 @@
+class Settlement
+
+  upgradeToCity: ->
+    @destroy()
