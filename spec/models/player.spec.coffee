@@ -20,10 +20,3 @@ describe 'Player', ->
     player = new Player()
     player.setup()
     expect(player.settlements.inPlay().length).toEqual(2)
-
-  it 'counts each settlements in play as 1 victory point and each city in play as 2 victory points', ->
-    player = new Player()
-    player.setup()
-    player.buildSettlement()
-    player.buildCity()
-    expect(player.victoryPoints()).toEqual(4)

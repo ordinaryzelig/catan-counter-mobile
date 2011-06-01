@@ -1,6 +1,12 @@
 var Player;
 Player = (function() {
-  function Player() {}
+  function Player(atts) {
+    if (atts == null) {
+      atts = {};
+    }
+    this.game = atts['game'];
+    this.soldiers = new PlayableSet();
+  }
   Player.prototype.setup = function() {
     var i, _results;
     this.createSettlements();
@@ -11,17 +17,13 @@ Player = (function() {
     }
     return _results;
   };
+  Player.prototype.victoryPoints = function() {
+    return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0);
+  };
   Player.prototype.buildSettlement = function() {
     var settlementToBuild;
     settlementToBuild = this.settlements.notInPlay()[0];
     return settlementToBuild.build();
-  };
-  Player.prototype.buildCity = function() {
-    var settlementToUpgrade;
-    settlementToUpgrade = this.settlements.inPlay()[0];
-    if (settlementToUpgrade != null) {
-      return settlementToUpgrade.upgradeToCity();
-    }
   };
   Player.prototype.createSettlements = function() {
     var i, _results;
@@ -34,6 +36,13 @@ Player = (function() {
     }
     return _results;
   };
+  Player.prototype.buildCity = function() {
+    var settlementToUpgrade;
+    settlementToUpgrade = this.settlements.inPlay()[0];
+    if (settlementToUpgrade != null) {
+      return settlementToUpgrade.upgradeToCity();
+    }
+  };
   Player.prototype.createCities = function() {
     var i, _results;
     this.cities = new PlayableSet();
@@ -45,8 +54,25 @@ Player = (function() {
     }
     return _results;
   };
-  Player.prototype.victoryPoints = function() {
-    return (this.settlements.inPlay().length) + (this.cities.inPlay().length * 2);
+  Player.prototype.playSoldier = function() {
+    var soldierToPlay;
+    soldierToPlay = this.game.soldiers.notInPlay()[0];
+    if (soldierToPlay != null) {
+      soldierToPlay.build();
+      this.soldiers.push(soldierToPlay);
+    }
+    return this.checkForLargestArmy();
+  };
+  Player.prototype.hasLargestArmy = function() {
+    if (this.game.largestArmy.awarded()) {
+      return false;
+    }
+    return this.game.largestArmy.player === this;
+  };
+  Player.prototype.checkForLargestArmy = function() {
+    if (this.soldiers.length >= this.game.largestArmy.numSoldiersNeeded()) {
+      return this.game.awardLargestArmyTo(this);
+    }
   };
   return Player;
 })();
