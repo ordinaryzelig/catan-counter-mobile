@@ -6,6 +6,10 @@ describe 'Player', ->
         for object in @actual
           return false unless object.player == player
         true
+      toHaveEnoughVictoryPointsToWin: ->
+        @actual.hasEnoughVictoryPointsToWin()
+      toNotHaveEnoughVictoryPointsToWin: ->
+        !@actual.hasEnoughVictoryPointsToWin()
     }
 
   it '#setup creates settlements and cities', ->
@@ -20,3 +24,16 @@ describe 'Player', ->
     player = new Player()
     player.setup()
     expect(player.settlements.inPlay().length).toEqual(2)
+
+  it 'that has 10 victory points has enough victory points to win', ->
+    game = new Game()
+    game.setup(numPlayers: 1)
+    player = game.players[0]
+    expect(player).toNotHaveEnoughVictoryPointsToWin()
+    for i in [1..3]
+      player.buildSettlement()
+    for i in [1..4]
+      player.buildCity()
+    expect(player).toNotHaveEnoughVictoryPointsToWin()
+    player.buildSettlement()
+    expect(player).toHaveEnoughVictoryPointsToWin()

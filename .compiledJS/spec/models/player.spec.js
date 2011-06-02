@@ -11,6 +11,12 @@ describe('Player', function() {
           }
         }
         return true;
+      },
+      toHaveEnoughVictoryPointsToWin: function() {
+        return this.actual.hasEnoughVictoryPointsToWin();
+      },
+      toNotHaveEnoughVictoryPointsToWin: function() {
+        return !this.actual.hasEnoughVictoryPointsToWin();
       }
     });
   });
@@ -23,10 +29,28 @@ describe('Player', function() {
     expect(player.cities.length).toEqual(4);
     return expect(player.cities).toAllBelongToPlayer(player);
   });
-  return it('starts with 2 settlements built', function() {
+  it('starts with 2 settlements built', function() {
     var player;
     player = new Player();
     player.setup();
     return expect(player.settlements.inPlay().length).toEqual(2);
+  });
+  return it('that has 10 victory points has enough victory points to win', function() {
+    var game, i, player;
+    game = new Game();
+    game.setup({
+      numPlayers: 1
+    });
+    player = game.players[0];
+    expect(player).toNotHaveEnoughVictoryPointsToWin();
+    for (i = 1; i <= 3; i++) {
+      player.buildSettlement();
+    }
+    for (i = 1; i <= 4; i++) {
+      player.buildCity();
+    }
+    expect(player).toNotHaveEnoughVictoryPointsToWin();
+    player.buildSettlement();
+    return expect(player).toHaveEnoughVictoryPointsToWin();
   });
 });

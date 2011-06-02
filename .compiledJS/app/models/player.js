@@ -20,6 +20,9 @@ Player = (function() {
   Player.prototype.victoryPoints = function() {
     return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0) + (this.hasLongestRoad() ? 2 : 0);
   };
+  Player.prototype.hasEnoughVictoryPointsToWin = function() {
+    return this.victoryPoints() >= this.game.victoryPointsRequiredToWin;
+  };
   Player.prototype.buildSettlement = function() {
     var settlementToBuild;
     settlementToBuild = this.settlements.notInPlay()[0];
@@ -41,6 +44,8 @@ Player = (function() {
     settlementToUpgrade = this.settlements.inPlay()[0];
     if (settlementToUpgrade != null) {
       return settlementToUpgrade.upgradeToCity();
+    } else {
+      throw 'no settlements to upgrade';
     }
   };
   Player.prototype.createCities = function() {

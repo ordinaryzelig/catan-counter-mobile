@@ -6,6 +6,8 @@ class Game
     @createLargestArmy()
     @createLongestRoad()
 
+  victoryPointsRequiredToWin: 10
+
   createPlayers: (num)->
     @players = []
     for i in [1..num]

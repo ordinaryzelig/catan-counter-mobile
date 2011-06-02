@@ -10,11 +10,16 @@ class Player
     for i in [1..2]
       @buildSettlement()
 
+  # Victory points.
+
   victoryPoints: ->
     (@settlements.inPlay().length * 1) +
     (@cities.inPlay().length * 2) +
     (if @hasLargestArmy() then 2 else 0) +
     (if @hasLongestRoad() then 2 else 0)
+
+  hasEnoughVictoryPointsToWin: ->
+    @victoryPoints() >= @game.victoryPointsRequiredToWin
 
   # Settlements.
 
@@ -33,6 +38,8 @@ class Player
     settlementToUpgrade = @settlements.inPlay()[0]
     if settlementToUpgrade?
       settlementToUpgrade.upgradeToCity()
+    else
+      throw 'no settlements to upgrade'
 
   createCities: ->
     @cities = new PlayableSet()

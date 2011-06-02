@@ -10,6 +10,7 @@ Game = (function() {
     this.createLargestArmy();
     return this.createLongestRoad();
   };
+  Game.prototype.victoryPointsRequiredToWin = 10;
   Game.prototype.createPlayers = function(num) {
     var i, player, _results;
     this.players = [];
