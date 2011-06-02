@@ -7,7 +7,8 @@ Game = (function() {
     }
     this.createPlayers(options['numPlayers']);
     this.createSoldiers();
-    return this.createLargestArmy();
+    this.createLargestArmy();
+    return this.createLongestRoad();
   };
   Game.prototype.createPlayers = function(num) {
     var i, player, _results;
@@ -33,6 +34,11 @@ Game = (function() {
     }
     return _results;
   };
+  Game.prototype.createLongestRoad = function() {
+    return this.longestRoad = new LongestRoad({
+      game: this
+    });
+  };
   Game.prototype.createLargestArmy = function() {
     return this.largestArmy = new LargestArmy({
       game: this
@@ -40,6 +46,9 @@ Game = (function() {
   };
   Game.prototype.awardLargestArmyTo = function(player) {
     return this.largestArmy.player = player;
+  };
+  Game.prototype.awardLongestRoadTo = function(player) {
+    return this.longestRoad.player = player;
   };
   return Game;
 })();

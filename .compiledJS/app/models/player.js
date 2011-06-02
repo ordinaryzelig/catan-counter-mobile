@@ -18,7 +18,7 @@ Player = (function() {
     return _results;
   };
   Player.prototype.victoryPoints = function() {
-    return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0);
+    return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0) + (this.hasLongestRoad() ? 2 : 0);
   };
   Player.prototype.buildSettlement = function() {
     var settlementToBuild;
@@ -64,7 +64,7 @@ Player = (function() {
     return this.checkForLargestArmy();
   };
   Player.prototype.hasLargestArmy = function() {
-    if (this.game.largestArmy.awarded()) {
+    if (!this.game.largestArmy.awarded()) {
       return false;
     }
     return this.game.largestArmy.player === this;
@@ -73,6 +73,12 @@ Player = (function() {
     if (this.soldiers.length >= this.game.largestArmy.numSoldiersNeeded()) {
       return this.game.awardLargestArmyTo(this);
     }
+  };
+  Player.prototype.hasLongestRoad = function() {
+    if (!this.game.longestRoad.awarded()) {
+      return false;
+    }
+    return this.game.longestRoad.player === this;
   };
   return Player;
 })();

@@ -10,8 +10,7 @@ describe('LargestArmy', function() {
     for (i = 1; i <= 3; i++) {
       player.playSoldier();
     }
-    expect(player.soldiers.length).toEqual(3);
-    expect(game.largestArmy.player).toEqual(player);
+    expect(player.hasLargestArmy()).toEqual(true);
     return expect(player.victoryPoints()).toEqual(4);
   });
 });

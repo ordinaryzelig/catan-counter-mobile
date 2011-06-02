@@ -4,6 +4,7 @@ class Game
     @createPlayers(options['numPlayers'])
     @createSoldiers()
     @createLargestArmy()
+    @createLongestRoad()
 
   createPlayers: (num)->
     @players = []
@@ -17,8 +18,14 @@ class Game
     for i in [1..14]
       @soldiers.push new Soldier(game: this)
 
+  createLongestRoad: ->
+    @longestRoad = new LongestRoad(game: this)
+
   createLargestArmy: ->
     @largestArmy = new LargestArmy(game: this)
 
   awardLargestArmyTo: (player)->
     @largestArmy.player = player
+
+  awardLongestRoadTo: (player)->
+    @longestRoad.player = player

@@ -7,6 +7,5 @@ describe 'LargestArmy', ->
     expect(player.hasLargestArmy()).toEqual(false)
     for i in [1..3]
       player.playSoldier()
-    expect(player.soldiers.length).toEqual(3)
-    expect(game.largestArmy.player).toEqual(player)
+    expect(player.hasLargestArmy()).toEqual(true)
     expect(player.victoryPoints()).toEqual(4)

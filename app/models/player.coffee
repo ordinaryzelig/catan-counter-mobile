@@ -12,8 +12,9 @@ class Player
 
   victoryPoints: ->
     (@settlements.inPlay().length * 1) +
-    (@cities.inPlay().length      * 2) +
-    (if @hasLargestArmy() then 2 else 0)
+    (@cities.inPlay().length * 2) +
+    (if @hasLargestArmy() then 2 else 0) +
+    (if @hasLongestRoad() then 2 else 0)
 
   # Settlements.
 
@@ -48,9 +49,15 @@ class Player
     @checkForLargestArmy()
 
   hasLargestArmy: ->
-    return false if @game.largestArmy.awarded()
+    return false unless @game.largestArmy.awarded()
     @game.largestArmy.player == @
 
   checkForLargestArmy: ->
     if @soldiers.length >= @game.largestArmy.numSoldiersNeeded()
       @game.awardLargestArmyTo(this)
+
+  # Longest road.
+
+  hasLongestRoad: ->
+    return false unless @game.longestRoad.awarded()
+    @game.longestRoad.player == @
