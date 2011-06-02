@@ -3,8 +3,8 @@
 
 # All .coffee files are compiled with the same structure in .compiledJS/.
 guard 'coffeescript', {
-  :output =>       '.compiledJS',
+  :output =>       '.',
   :bare =>         true
 } do
-  watch %r{(.*/(.+\.coffee))}
+  watch %r{coffee/(.+\.coffee)}
 end
