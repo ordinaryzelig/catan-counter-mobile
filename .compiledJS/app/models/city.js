@@ -16,5 +16,9 @@ City = (function() {
     this.player = atts['player'];
   }
   __extends(City, Buildable);
+  City.prototype.downgradeToSettlement = function() {
+    this.destroy();
+    return this.player.buildSettlement();
+  };
   return City;
 })();

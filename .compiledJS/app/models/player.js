@@ -59,6 +59,9 @@ Player = (function() {
     }
     return _results;
   };
+  Player.prototype.downgradeCity = function() {
+    return this.cities[0].downgradeToSettlement();
+  };
   Player.prototype.playSoldier = function() {
     var soldierToPlay;
     soldierToPlay = this.game.soldiers.notInPlay()[0];

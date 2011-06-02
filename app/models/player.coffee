@@ -46,6 +46,9 @@ class Player
     for i in [1..4]
       @cities.push(new City(player: this))
 
+  downgradeCity: ->
+    @cities[0].downgradeToSettlement()
+
   # Soldiers.
 
   playSoldier: ->
