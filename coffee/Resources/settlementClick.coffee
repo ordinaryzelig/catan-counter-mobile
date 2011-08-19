@@ -6,6 +6,8 @@ settlementEvents = {
 }
 
 settlementClick = (player) ->
+
+  # Construct option dialog.
   settlements = player.settlements
   options = []
   for key, value of settlementEvents
@@ -16,6 +18,8 @@ settlementClick = (player) ->
     cancel: options.indexOf(settlementEvents['CANCEL']),
     title: '' + settlements.inPlay().length + '/' + settlements.length + ' settlements built',
   })
+
+  # Handle clicks.
   dialog.addEventListener('click', (event) ->
     switch options[event.index]
       when settlementEvents.BUILD
@@ -29,4 +33,5 @@ settlementClick = (player) ->
     gui.changeTitle(player)
     gui.updateBadges(player)
   )
+
   dialog.show()

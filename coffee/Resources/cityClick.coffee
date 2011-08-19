@@ -5,6 +5,8 @@ cityEvents = {
 }
 
 cityClick = (player) ->
+
+  # Construct option dialog.
   cities = player.cities
   options = []
   for key, value of cityEvents
@@ -15,6 +17,8 @@ cityClick = (player) ->
     cancel: options.indexOf(cityEvents['CANCEL']),
     title: '' + cities.inPlay().length + '/' + cities.length + ' cities built',
   })
+
+  # Handle clicks.
   dialog.addEventListener('click', (event) ->
     switch options[event.index]
       when cityEvents.BUILD
@@ -26,4 +30,5 @@ cityClick = (player) ->
     gui.changeTitle(player)
     gui.updateBadges(player)
   )
+
   dialog.show()
