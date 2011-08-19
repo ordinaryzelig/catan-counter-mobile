@@ -9,7 +9,7 @@ for player in game.players
 
   # create components as dashboard items.
   components = ['settlement', 'city']
-  dashboardData = []
+  dashboardItems = []
   for component in components
     image = 'images/' + component + '_' + player.color + '.png'
     item = Titanium.UI.createDashboardItem({
@@ -19,12 +19,12 @@ for player in game.players
     item.componentType = component
     item.color = player.color # For some reason app crashes if I try to reference actual player.
     item.badge = player[pluralize(component)].inPlay().length
-    dashboardData.push(item)
-    gui.dashboardItems.push(item)
+    dashboardItems.push(item)
+    gui.dashboardItems[player.color] = dashboardItems
 
   # Create dashboard and add it to a view.
   dashboard = Titanium.UI.createDashboardView({
-    data: dashboardData,
+    data: dashboardItems,
     editable: false,
     background: '#aaa',
   })
@@ -59,4 +59,4 @@ colorNav.addEventListener('click', (event) ->
 gui.changeTitle(game.players[0], window)
 
 # Center the colorNav on the window's toolbar.
-window.setToolbar([flexSpace, colorNav, flexSpace])
+window.setToolbar([gui.flexSpace, colorNav, gui.flexSpace])

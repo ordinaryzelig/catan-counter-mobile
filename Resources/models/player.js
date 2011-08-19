@@ -39,6 +39,13 @@ Player = (function() {
     }
     return _results;
   };
+  Player.prototype.destroySettlement = function() {
+    var settlementToDestroy;
+    settlementToDestroy = this.settlements.inPlay()[0];
+    if (settlementToDestroy != null) {
+      return settlementToDestroy.destroy();
+    }
+  };
   Player.prototype.buildCity = function() {
     var settlementToUpgrade;
     settlementToUpgrade = this.settlements.inPlay()[0];

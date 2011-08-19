@@ -5,7 +5,7 @@ settlementEvents = {
   CANCEL:  'Cancel',
 }
 
-settlementClick = (player, component) ->
+settlementClick = (player) ->
   settlements = player.settlements
   options = []
   for key, value of settlementEvents
@@ -22,9 +22,11 @@ settlementClick = (player, component) ->
         player.buildSettlement()
       when settlementEvents.UPGRADE
         player.buildCity()
+      when settlementEvents.DESTROY
+        player.destroySettlement()
       when settlementEvents.CANCEL
         return
     gui.changeTitle(player)
-    gui.updateBadges()
+    gui.updateBadges(player)
   )
   dialog.show()

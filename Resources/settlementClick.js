@@ -5,7 +5,7 @@ settlementEvents = {
   DESTROY: 'Destroy',
   CANCEL: 'Cancel'
 };
-settlementClick = function(player, component) {
+settlementClick = function(player) {
   var dialog, key, options, settlements, value;
   settlements = player.settlements;
   options = [];
@@ -27,11 +27,14 @@ settlementClick = function(player, component) {
       case settlementEvents.UPGRADE:
         player.buildCity();
         break;
+      case settlementEvents.DESTROY:
+        player.destroySettlement();
+        break;
       case settlementEvents.CANCEL:
         return;
     }
     gui.changeTitle(player);
-    return gui.updateBadges();
+    return gui.updateBadges(player);
   });
   return dialog.show();
 };

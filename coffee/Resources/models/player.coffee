@@ -32,6 +32,11 @@ class Player
     for i in [1..5]
       @settlements.push(new Settlement(player: this))
 
+  destroySettlement: ->
+    settlementToDestroy = @settlements.inPlay()[0]
+    if settlementToDestroy?
+      settlementToDestroy.destroy()
+
   # Cities.
 
   buildCity: ->

@@ -5,7 +5,5 @@ pluralize = (str) ->
     else
       alert 'no pluralization for ' + str
 
-flexSpace = Titanium.UI.createButton({systemButton: Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE})
-
 currentPlayer = ->
   game.players[colorNav.index]

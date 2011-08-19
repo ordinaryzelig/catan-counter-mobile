@@ -1,4 +1,4 @@
-var currentPlayer, flexSpace, pluralize;
+var currentPlayer, pluralize;
 pluralize = function(str) {
   switch (str) {
     case 'settlement':
@@ -9,9 +9,6 @@ pluralize = function(str) {
       return alert('no pluralization for ' + str);
   }
 };
-flexSpace = Titanium.UI.createButton({
-  systemButton: Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
-});
 currentPlayer = function() {
   return game.players[colorNav.index];
 };

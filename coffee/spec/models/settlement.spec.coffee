@@ -18,3 +18,10 @@ describe 'Settlement', ->
     expect(city.inPlay).toEqual(true)
     expect(player.settlements.inPlay().length).toEqual(1)
     expect(player.cities.inPlay().length).toEqual(1)
+
+  it '#destroy removes it from being in play', ->
+    player = new Player()
+    player.setup()
+    settlement = player.settlements.inPlay()[0]
+    settlement.destroy()
+    expect(settlement.inPlay).toEqual(false)

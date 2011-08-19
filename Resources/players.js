@@ -1,11 +1,11 @@
-var colorNav, component, components, dashboard, dashboardData, image, imagePath, item, player, scrollableView, tabbedBarButtonData, view, views, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
+var colorNav, component, components, dashboard, dashboardItems, image, imagePath, item, player, scrollableView, tabbedBarButtonData, view, views, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
 Titanium.include('componentClick.js');
 views = [];
 _ref = game.players;
 for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   player = _ref[_i];
   components = ['settlement', 'city'];
-  dashboardData = [];
+  dashboardItems = [];
   for (_j = 0, _len2 = components.length; _j < _len2; _j++) {
     component = components[_j];
     image = 'images/' + component + '_' + player.color + '.png';
@@ -16,11 +16,11 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     item.componentType = component;
     item.color = player.color;
     item.badge = player[pluralize(component)].inPlay().length;
-    dashboardData.push(item);
-    gui.dashboardItems.push(item);
+    dashboardItems.push(item);
+    gui.dashboardItems[player.color] = dashboardItems;
   }
   dashboard = Titanium.UI.createDashboardView({
-    data: dashboardData,
+    data: dashboardItems,
     editable: false,
     background: '#aaa'
   });
@@ -52,4 +52,4 @@ colorNav.addEventListener('click', function(event) {
   return gui.changeTitle(player);
 });
 gui.changeTitle(game.players[0], window);
-window.setToolbar([flexSpace, colorNav, flexSpace]);
+window.setToolbar([gui.flexSpace, colorNav, gui.flexSpace]);
