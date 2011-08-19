@@ -31,3 +31,10 @@ class Game
 
   awardLongestRoadTo: (player)->
     @longestRoad.player = player
+
+  playerByColor: (color) ->
+    return @playersByColor[color] if @playersByColor?
+    @playersByColor = {}
+    for player in @players
+      @playersByColor[player.color] = player
+    @playersByColor[color]

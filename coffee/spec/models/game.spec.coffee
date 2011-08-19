@@ -2,7 +2,17 @@ describe 'Game', ->
 
   it 'creates players and soldiers', ->
     numPlayers = 4
-    game = new Game(numPlayers: numPlayers)
+    game = new Game()
     game.setup(numPlayers: numPlayers)
     expect(game.players.length).toEqual(numPlayers)
     expect(game.soldiers.length).toEqual(14)
+
+  it 'access players by color', ->
+    colors = ['red', 'white', 'blue']
+    numPlayers = colors.length
+    game = new Game()
+    game.setup(numPlayers: numPlayers)
+    for idx in [0..numPlayers - 1]
+      game.players[idx].color = colors[idx]
+    for color in colors
+      expect(game.playerByColor(color).color).toEqual(color)

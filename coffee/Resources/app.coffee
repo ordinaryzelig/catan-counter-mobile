@@ -1,5 +1,6 @@
 Ti.include('init.js')
 Ti.include('helpers.js')
+Ti.include('guiEvents.js')
 
 Titanium.UI.setBackgroundColor('#aaa')
 

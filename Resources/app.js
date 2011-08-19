@@ -1,6 +1,7 @@
 var colors, game, player, _i, _len, _ref;
 Ti.include('init.js');
 Ti.include('helpers.js');
+Ti.include('guiEvents.js');
 Titanium.UI.setBackgroundColor('#aaa');
 colors = ['red', 'blue', 'orange', 'white', 'green', 'brown'];
 game = new Game();

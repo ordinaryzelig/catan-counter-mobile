@@ -51,5 +51,18 @@ Game = (function() {
   Game.prototype.awardLongestRoadTo = function(player) {
     return this.longestRoad.player = player;
   };
+  Game.prototype.playerByColor = function(color) {
+    var player, _i, _len, _ref;
+    if (this.playersByColor != null) {
+      return this.playersByColor[color];
+    }
+    this.playersByColor = {};
+    _ref = this.players;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      player = _ref[_i];
+      this.playersByColor[player.color] = player;
+    }
+    return this.playersByColor[color];
+  };
   return Game;
 })();
