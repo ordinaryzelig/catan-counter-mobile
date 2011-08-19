@@ -10,6 +10,7 @@ game.setup({
 _ref = game.players;
 for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   player = _ref[_i];
+  player.color = colors[game.players.indexOf(player)];
   player.buildCity();
   player.buildSettlement();
 }

@@ -1,13 +1,13 @@
-var color, component, components, dashboard, dashboard_data, idx, image, imagePath, item, player, scrollableView, tabbedBar, tabbedBarButtonData, view, views, _i, _len, _ref, _ref2;
+var changeTitle, component, components, dashboard, dashboard_data, image, imagePath, item, player, scrollableView, tabbedBar, tabbedBarButtonData, view, views, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
 views = [];
-for (idx = 0, _ref = game.players.length - 1; 0 <= _ref ? idx <= _ref : idx >= _ref; 0 <= _ref ? idx++ : idx--) {
-  player = game.players[idx];
-  color = colors[idx];
+_ref = game.players;
+for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+  player = _ref[_i];
   components = ['settlement', 'city'];
   dashboard_data = [];
-  for (_i = 0, _len = components.length; _i < _len; _i++) {
-    component = components[_i];
-    image = 'images/' + component + '_' + color + '.png';
+  for (_j = 0, _len2 = components.length; _j < _len2; _j++) {
+    component = components[_j];
+    image = 'images/' + component + '_' + player.color + '.png';
     item = Titanium.UI.createDashboardItem({
       image: image,
       canDelete: false
@@ -29,9 +29,10 @@ scrollableView = Titanium.UI.createScrollableView({
 });
 window.add(scrollableView);
 tabbedBarButtonData = [];
-for (idx = 0, _ref2 = colors.length - 1; 0 <= _ref2 ? idx <= _ref2 : idx >= _ref2; 0 <= _ref2 ? idx++ : idx--) {
-  color = colors[idx];
-  imagePath = 'images/toolbar_button_' + color + '.png';
+_ref2 = game.players;
+for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
+  player = _ref2[_k];
+  imagePath = 'images/toolbar_button_' + player.color + '.png';
   tabbedBarButtonData.push({
     image: imagePath
   });
@@ -40,7 +41,13 @@ tabbedBar = Titanium.UI.createTabbedBar({
   labels: tabbedBarButtonData,
   index: 0
 });
+changeTitle = function(player, window) {
+  return window.title = player.color + ' (' + player.victoryPoints() + ')';
+};
 tabbedBar.addEventListener('click', function(event) {
-  return scrollableView.scrollToView(event.index);
+  scrollableView.scrollToView(event.index);
+  player = game.players[event.index];
+  return changeTitle(player, window);
 });
+changeTitle(game.players[0], window);
 window.setToolbar([flexSpace, tabbedBar, flexSpace]);

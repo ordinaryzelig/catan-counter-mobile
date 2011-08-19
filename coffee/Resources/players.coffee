@@ -3,16 +3,13 @@
 # Each view has a dashboard with their game components.
 
 views = []
-for idx in [0..game.players.length - 1]
-
-  player = game.players[idx]
-  color = colors[idx]
+for player in game.players
 
   # create components as dashboard items.
   components = ['settlement', 'city']
   dashboard_data = []
   for component in components
-    image = 'images/' + component + '_' + color + '.png'
+    image = 'images/' + component + '_' + player.color + '.png'
     item = Titanium.UI.createDashboardItem({
       image: image,
       canDelete: false,
@@ -37,17 +34,25 @@ window.add(scrollableView)
 
 # Toolbar with buttons to scroll to player.
 tabbedBarButtonData = []
-for idx in [0..colors.length - 1]
-  color = colors[idx]
-  imagePath = 'images/toolbar_button_' + color + '.png'
+for player in game.players
+  imagePath = 'images/toolbar_button_' + player.color + '.png'
   tabbedBarButtonData.push({image: imagePath})
 tabbedBar = Titanium.UI.createTabbedBar({
   labels: tabbedBarButtonData,
   index: 0
 })
-# When clicked, determine which view to scroll to.
+
+# When clicked, scroll to view and change the title bar.
+changeTitle = (player, window) ->
+  window.title = player.color + ' (' + player.victoryPoints() + ')'
 tabbedBar.addEventListener('click', (event) ->
   scrollableView.scrollToView(event.index)
+  player = game.players[event.index]
+  changeTitle(player, window)
 )
+
+# Change title for first player.
+changeTitle(game.players[0], window)
+
 # Center the tabbed bar on the window's toolbar.
 window.setToolbar([flexSpace, tabbedBar, flexSpace])
