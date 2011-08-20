@@ -14,4 +14,3 @@ for player in game.players
   player.buildSettlement()
 
 Ti.include('navigation.js')
-Ti.include('players.js')

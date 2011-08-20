@@ -1,6 +1,9 @@
 var gui;
-gui = {
-  dashboardItems: {}
+gui = {};
+gui.dashboardItems = {};
+gui.tabs = {
+  PLAYERS_MENU: 0,
+  PLAYERS: 1
 };
 gui.updateBadges = function(player) {
   var item, _i, _len, _ref, _results;
@@ -13,8 +16,14 @@ gui.updateBadges = function(player) {
   return _results;
 };
 gui.changeTitle = function(player) {
-  return window.title = player.color + ' (' + player.victoryPoints() + ')';
+  return playersWindow.title = player.color + ' (' + player.victoryPoints() + ')';
 };
 gui.flexSpace = Titanium.UI.createButton({
   systemButton: Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 });
+gui.navigateTo = function(tab_id) {
+  return this.navigation.setActiveTab(tab_id);
+};
+gui.scrollTo = function(index) {
+  return this.scrollableView.scrollToView(index);
+};

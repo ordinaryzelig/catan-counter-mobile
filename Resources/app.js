@@ -16,4 +16,3 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   player.buildSettlement();
 }
 Ti.include('navigation.js');
-Ti.include('players.js');

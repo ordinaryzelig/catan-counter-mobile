@@ -1,9 +1,18 @@
-var navigation, tab, window;
-navigation = Titanium.UI.createTabGroup();
-window = Titanium.UI.createWindow();
+var playerPointsWindow, playersWindow, tab;
+gui.navigation = Titanium.UI.createTabGroup();
+playerPointsWindow = Titanium.UI.createWindow();
 tab = Titanium.UI.createTab({
-  window: window,
+  window: playerPointsWindow,
   icon: Titanium.UI.iPhone.SystemIcon.BOOKMARKS
 });
-navigation.addTab(tab);
-navigation.open();
+Ti.include('playersMenu.js');
+gui.navigation.addTab(tab);
+playersWindow = Titanium.UI.createWindow();
+tab = Titanium.UI.createTab({
+  window: playersWindow,
+  icon: Titanium.UI.iPhone.SystemIcon.CONTACTS
+});
+Ti.include('players.js');
+gui.navigation.addTab(tab);
+gui.navigateTo(gui.tabs.PLAYERS);
+gui.navigation.open();

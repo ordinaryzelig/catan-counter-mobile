@@ -33,16 +33,18 @@ for player in game.players
   view.add(dashboard)
   views.push(view)
 
-scrollableView = Titanium.UI.createScrollableView({
+gui.scrollableView = Titanium.UI.createScrollableView({
   views: views,
 })
-window.add(scrollableView)
+playersWindow.add(gui.scrollableView)
 
 # Toolbar with buttons to scroll to player.
 tabbedBarButtonData = []
 for player in game.players
-  imagePath = 'images/toolbar_button_' + player.color + '.png'
-  tabbedBarButtonData.push({image: imagePath})
+  imagePath = 'images/square_' + player.color + '.png'
+  tabbedBarButtonData.push({
+    image: imagePath,
+  })
 colorNav = Titanium.UI.createTabbedBar({
   labels: tabbedBarButtonData,
   index: 0
@@ -50,13 +52,13 @@ colorNav = Titanium.UI.createTabbedBar({
 
 # When clicked, scroll to view and change the title bar.
 colorNav.addEventListener('click', (event) ->
-  scrollableView.scrollToView(event.index)
+  gui.scrollTo(event.index)
   player = game.players[event.index]
   gui.changeTitle(player)
 )
 
 # Change title for first player.
-gui.changeTitle(game.players[0], window)
+gui.changeTitle(game.players[0], playersWindow)
 
 # Center the colorNav on the window's toolbar.
-window.setToolbar([gui.flexSpace, colorNav, gui.flexSpace])
+playersWindow.setToolbar([gui.flexSpace, colorNav, gui.flexSpace])
