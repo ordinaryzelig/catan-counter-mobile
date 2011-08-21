@@ -5,9 +5,6 @@ pluralize = (str) ->
     else
       alert 'no pluralization for ' + str
 
-currentPlayer = ->
-  game.players[colorNav.index]
-
 # Custom badge.
 badge = (text, options = {}) ->
   labelOpts = {
@@ -25,3 +22,13 @@ badge = (text, options = {}) ->
   for attr, value of options
     labelOpts[attr] = value
   Ti.UI.createLabel(labelOpts)
+
+# Reorder an array of objects by the given colors.
+# Assumes that each colored object has playerColor attribute.
+reorderByColor = (colors, coloredObjects) ->
+  reordered = []
+  for color in colors
+    for object in coloredObjects
+      if object.playerColor == color
+        reordered.push object
+  reordered

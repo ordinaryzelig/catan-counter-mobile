@@ -1,4 +1,4 @@
-var badge, currentPlayer, pluralize;
+var badge, pluralize, reorderByColor;
 pluralize = function(str) {
   switch (str) {
     case 'settlement':
@@ -8,9 +8,6 @@ pluralize = function(str) {
     default:
       return alert('no pluralization for ' + str);
   }
-};
-currentPlayer = function() {
-  return game.players[colorNav.index];
 };
 badge = function(text, options) {
   var attr, labelOpts, value;
@@ -34,4 +31,18 @@ badge = function(text, options) {
     labelOpts[attr] = value;
   }
   return Ti.UI.createLabel(labelOpts);
+};
+reorderByColor = function(colors, coloredObjects) {
+  var color, object, reordered, _i, _j, _len, _len2;
+  reordered = [];
+  for (_i = 0, _len = colors.length; _i < _len; _i++) {
+    color = colors[_i];
+    for (_j = 0, _len2 = coloredObjects.length; _j < _len2; _j++) {
+      object = coloredObjects[_j];
+      if (object.playerColor === color) {
+        reordered.push(object);
+      }
+    }
+  }
+  return reordered;
 };

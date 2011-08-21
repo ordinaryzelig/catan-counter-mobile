@@ -5,6 +5,6 @@ componentClick = (event) ->
   item = event.item
   switch item.componentType
     when 'settlement'
-      settlementClick(currentPlayer())
+      settlementClick(gui.currentPlayer)
     when 'city'
-      cityClick(currentPlayer())
+      cityClick(gui.currentPlayer)

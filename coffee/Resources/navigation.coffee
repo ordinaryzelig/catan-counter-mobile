@@ -3,7 +3,9 @@
 gui.navigation = Titanium.UI.createTabGroup()
 
 # Player points.
-playerPointsWindow = Titanium.UI.createWindow()
+playerPointsWindow = Titanium.UI.createWindow({
+  title: 'Players',
+})
 tab = Titanium.UI.createTab({
   window: playerPointsWindow,
   icon:   Titanium.UI.iPhone.SystemIcon.BOOKMARKS
@@ -20,5 +22,5 @@ tab = Titanium.UI.createTab({
 Ti.include('players.js')
 gui.navigation.addTab(tab)
 
-gui.navigateTo(gui.tabs.PLAYERS)
+gui.navigateTo(gui.tabs.PLAYERS_MENU)
 gui.navigation.open()

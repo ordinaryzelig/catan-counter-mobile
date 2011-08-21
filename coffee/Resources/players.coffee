@@ -17,7 +17,6 @@ for player in game.players
       canDelete: false,
     })
     item.componentType = component
-    item.color = player.color # For some reason app crashes if I try to reference actual player.
     item.badge = player[pluralize(component)].inPlay().length
     dashboardItems.push(item)
     gui.dashboardItems[player.color] = dashboardItems
@@ -31,6 +30,7 @@ for player in game.players
   dashboard.addEventListener('click', componentClick)
   view = Titanium.UI.createView()
   view.add(dashboard)
+  view.playerColor = player.color
   views.push(view)
 
 gui.scrollableView = Titanium.UI.createScrollableView({
@@ -44,21 +44,21 @@ for player in game.players
   imagePath = 'images/square_' + player.color + '.png'
   tabbedBarButtonData.push({
     image: imagePath,
+    playerColor: player.color,
   })
-colorNav = Titanium.UI.createTabbedBar({
+gui.colorNav = Titanium.UI.createTabbedBar({
   labels: tabbedBarButtonData,
   index: 0
 })
 
 # When clicked, scroll to view and change the title bar.
-colorNav.addEventListener('click', (event) ->
+gui.colorNav.addEventListener('click', (event) ->
   gui.scrollTo(event.index)
   player = game.players[event.index]
-  gui.changeTitle(player)
 )
 
 # Change title for first player.
 gui.changeTitle(game.players[0], playersWindow)
 
-# Center the colorNav on the window's toolbar.
-playersWindow.setToolbar([gui.flexSpace, colorNav, gui.flexSpace])
+# Center the gui.colorNav on the window's toolbar.
+playersWindow.setToolbar([gui.flexSpace, gui.colorNav, gui.flexSpace])

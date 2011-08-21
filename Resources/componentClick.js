@@ -6,8 +6,8 @@ componentClick = function(event) {
   item = event.item;
   switch (item.componentType) {
     case 'settlement':
-      return settlementClick(currentPlayer());
+      return settlementClick(gui.currentPlayer);
     case 'city':
-      return cityClick(currentPlayer());
+      return cityClick(gui.currentPlayer);
   }
 };
