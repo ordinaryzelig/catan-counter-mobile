@@ -4,8 +4,6 @@ gui = {}
 
 gui.dashboardItems = {}
 
-gui.currentPlayer = null
-
 gui.tabs = {
   PLAYERS_MENU: 0,
   PLAYERS: 1,

@@ -17,4 +17,5 @@ tab = Ti.UI.createTab({
 Ti.include('/gui/players.js');
 gui.navigation.addTab(tab);
 gui.navigateTo(gui.tabs.PLAYERS_MENU);
+gui.currentPlayer = game.playerByColor(colors[0]);
 gui.navigation.open();

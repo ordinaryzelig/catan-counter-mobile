@@ -1,7 +1,6 @@
 var gui;
 gui = {};
 gui.dashboardItems = {};
-gui.currentPlayer = null;
 gui.tabs = {
   PLAYERS_MENU: 0,
   PLAYERS: 1
@@ -54,7 +53,6 @@ gui.updatePlayerVictoryPoints = function(player) {
 };
 gui.changePlayersMenuVictoryPoints = function(player) {
   var row, _i, _len, _ref, _results;
-  alert(player.victoryPoints());
   _ref = this.playersTable.data[0].rows;
   _results = [];
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {

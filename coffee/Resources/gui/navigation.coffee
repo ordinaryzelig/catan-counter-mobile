@@ -22,5 +22,10 @@ tab = Ti.UI.createTab({
 Ti.include('/gui/players.js')
 gui.navigation.addTab(tab)
 
+# Start on players menu.
 gui.navigateTo(gui.tabs.PLAYERS_MENU)
+
+# Assign first player as gui.currentPlayer
+gui.currentPlayer = game.playerByColor(colors[0])
+
 gui.navigation.open()
