@@ -2,8 +2,6 @@ pluralize = (str) ->
   switch str
     when 'settlement' then 'settlements'
     when 'city' then 'cities'
-    else
-      alert 'no pluralization for ' + str
 
 # Custom badge.
 badge = (text, options = {}) ->

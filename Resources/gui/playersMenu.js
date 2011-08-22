@@ -31,11 +31,11 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   row.add(victoryPoints);
   section.add(row);
 }
-gui.playersTable = Titanium.UI.createTableView({
+gui.playersTable = Ti.UI.createTableView({
   data: [section],
   moveable: true,
   scrollable: false,
-  style: Titanium.UI.iPhone.TableViewStyle.GROUPED
+  style: Ti.UI.iPhone.TableViewStyle.GROUPED
 });
 playerPointsWindow.add(gui.playersTable);
 gui.playersTable.addEventListener('click', function(event) {
@@ -45,7 +45,7 @@ gui.playersTable.addEventListener('click', function(event) {
   rowIndex = rows.indexOf(event.row);
   return gui.scrollTo(rowIndex);
 });
-editButton = Titanium.UI.createButton({
+editButton = Ti.UI.createButton({
   title: 'Edit'
 });
 editButton.addEventListener('click', function(event) {
@@ -53,9 +53,9 @@ editButton.addEventListener('click', function(event) {
   return gui.playersTable.moving = true;
 });
 playerPointsWindow.setRightNavButton(editButton);
-doneButton = Titanium.UI.createButton({
+doneButton = Ti.UI.createButton({
   title: 'Done',
-  style: Titanium.UI.iPhone.SystemButtonStyle.DONE
+  style: Ti.UI.iPhone.SystemButtonStyle.DONE
 });
 doneButton.addEventListener('click', function(event) {
   var newColorOrder, row, rows, _j, _len2;

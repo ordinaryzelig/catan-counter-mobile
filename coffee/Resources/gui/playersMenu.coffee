@@ -32,11 +32,11 @@ for player in game.players
 
   section.add(row)
 
-gui.playersTable = Titanium.UI.createTableView({
+gui.playersTable = Ti.UI.createTableView({
   data: [section],
   moveable: true,
   scrollable: false,
-  style: Titanium.UI.iPhone.TableViewStyle.GROUPED,
+  style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 })
 playerPointsWindow.add(gui.playersTable)
 
@@ -52,7 +52,7 @@ gui.playersTable.addEventListener('click', (event) ->
   gui.scrollTo(rowIndex)
 )
 
-editButton = Titanium.UI.createButton({
+editButton = Ti.UI.createButton({
   title: 'Edit',
 })
 editButton.addEventListener('click', (event) ->
@@ -61,9 +61,9 @@ editButton.addEventListener('click', (event) ->
 )
 playerPointsWindow.setRightNavButton(editButton)
 
-doneButton = Titanium.UI.createButton({
+doneButton = Ti.UI.createButton({
   title: 'Done',
-  style: Titanium.UI.iPhone.SystemButtonStyle.DONE,
+  style: Ti.UI.iPhone.SystemButtonStyle.DONE,
 })
 doneButton.addEventListener('click', (event) ->
   playerPointsWindow.setRightNavButton(editButton)

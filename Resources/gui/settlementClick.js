@@ -13,7 +13,7 @@ settlementClick = function(player) {
     value = settlementEvents[key];
     options.push(value);
   }
-  dialog = Titanium.UI.createOptionDialog({
+  dialog = Ti.UI.createOptionDialog({
     options: options,
     destructive: options.indexOf(settlementEvents['DESTROY']),
     cancel: options.indexOf(settlementEvents['CANCEL']),

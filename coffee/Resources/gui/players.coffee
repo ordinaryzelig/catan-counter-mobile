@@ -12,7 +12,7 @@ for player in game.players
   dashboardItems = []
   for component in components
     image = 'images/' + component + '_' + player.color + '.png'
-    item = Titanium.UI.createDashboardItem({
+    item = Ti.UI.createDashboardItem({
       image: image,
       canDelete: false,
     })
@@ -22,18 +22,18 @@ for player in game.players
     gui.dashboardItems[player.color] = dashboardItems
 
   # Create dashboard and add it to a view.
-  dashboard = Titanium.UI.createDashboardView({
+  dashboard = Ti.UI.createDashboardView({
     data: dashboardItems,
     editable: false,
     background: '#aaa',
   })
   dashboard.addEventListener('click', componentClick)
-  view = Titanium.UI.createView()
+  view = Ti.UI.createView()
   view.add(dashboard)
   view.playerColor = player.color
   views.push(view)
 
-gui.scrollableView = Titanium.UI.createScrollableView({
+gui.scrollableView = Ti.UI.createScrollableView({
   views: views,
 })
 playersWindow.add(gui.scrollableView)
@@ -46,7 +46,7 @@ for player in game.players
     image: imagePath,
     playerColor: player.color,
   })
-gui.colorNav = Titanium.UI.createTabbedBar({
+gui.colorNav = Ti.UI.createTabbedBar({
   labels: tabbedBarButtonData,
   index: 0
 })

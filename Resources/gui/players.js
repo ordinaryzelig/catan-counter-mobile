@@ -9,7 +9,7 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   for (_j = 0, _len2 = components.length; _j < _len2; _j++) {
     component = components[_j];
     image = 'images/' + component + '_' + player.color + '.png';
-    item = Titanium.UI.createDashboardItem({
+    item = Ti.UI.createDashboardItem({
       image: image,
       canDelete: false
     });
@@ -18,18 +18,18 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     dashboardItems.push(item);
     gui.dashboardItems[player.color] = dashboardItems;
   }
-  dashboard = Titanium.UI.createDashboardView({
+  dashboard = Ti.UI.createDashboardView({
     data: dashboardItems,
     editable: false,
     background: '#aaa'
   });
   dashboard.addEventListener('click', componentClick);
-  view = Titanium.UI.createView();
+  view = Ti.UI.createView();
   view.add(dashboard);
   view.playerColor = player.color;
   views.push(view);
 }
-gui.scrollableView = Titanium.UI.createScrollableView({
+gui.scrollableView = Ti.UI.createScrollableView({
   views: views
 });
 playersWindow.add(gui.scrollableView);
@@ -43,7 +43,7 @@ for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
     playerColor: player.color
   });
 }
-gui.colorNav = Titanium.UI.createTabbedBar({
+gui.colorNav = Ti.UI.createTabbedBar({
   labels: tabbedBarButtonData,
   index: 0
 });

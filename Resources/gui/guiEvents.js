@@ -19,8 +19,8 @@ gui.updateBadges = function(player) {
 gui.changeTitle = function(player) {
   return playersWindow.title = player.color + ' (' + player.victoryPoints() + ')';
 };
-gui.flexSpace = Titanium.UI.createButton({
-  systemButton: Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
+gui.flexSpace = Ti.UI.createButton({
+  systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 });
 gui.navigateTo = function(tab_id) {
   return this.navigation.setActiveTab(tab_id);

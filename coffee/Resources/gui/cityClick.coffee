@@ -11,7 +11,7 @@ cityClick = (player) ->
   options = []
   for key, value of cityEvents
     options.push value
-  dialog = Titanium.UI.createOptionDialog({
+  dialog = Ti.UI.createOptionDialog({
     options: options
     destructive: options.indexOf(cityEvents['DOWNGRADE']),
     cancel: options.indexOf(cityEvents['CANCEL']),

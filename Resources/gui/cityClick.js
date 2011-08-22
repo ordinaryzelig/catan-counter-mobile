@@ -12,7 +12,7 @@ cityClick = function(player) {
     value = cityEvents[key];
     options.push(value);
   }
-  dialog = Titanium.UI.createOptionDialog({
+  dialog = Ti.UI.createOptionDialog({
     options: options,
     destructive: options.indexOf(cityEvents['DOWNGRADE']),
     cancel: options.indexOf(cityEvents['CANCEL']),

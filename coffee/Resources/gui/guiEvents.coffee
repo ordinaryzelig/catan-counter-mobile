@@ -19,7 +19,7 @@ gui.updateBadges = (player) ->
 gui.changeTitle = (player) ->
   playersWindow.title = player.color + ' (' + player.victoryPoints() + ')'
 
-gui.flexSpace = Titanium.UI.createButton({systemButton: Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE})
+gui.flexSpace = Ti.UI.createButton({systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE})
 
 gui.navigateTo = (tab_id) ->
   @navigation.setActiveTab(tab_id)
@@ -49,7 +49,6 @@ gui.updatePlayerVictoryPoints = (player) ->
   @changeTitle(player)
 
 gui.changePlayersMenuVictoryPoints = (player) ->
-  alert player.victoryPoints()
   for row in @playersTable.data[0].rows
     if row.playerColor == player.color
       row.children[2].text = player.victoryPoints()

@@ -1,23 +1,23 @@
 # Create tab group (black bar at bottom and title bar at top).
 
-gui.navigation = Titanium.UI.createTabGroup()
+gui.navigation = Ti.UI.createTabGroup()
 
 # Player points.
-playerPointsWindow = Titanium.UI.createWindow({
+playerPointsWindow = Ti.UI.createWindow({
   title: 'Players',
 })
-tab = Titanium.UI.createTab({
+tab = Ti.UI.createTab({
   window: playerPointsWindow,
-  icon:   Titanium.UI.iPhone.SystemIcon.BOOKMARKS
+  icon:   Ti.UI.iPhone.SystemIcon.BOOKMARKS
 })
 Ti.include('/gui/playersMenu.js')
 gui.navigation.addTab(tab)
 
 # Player boards.
-playersWindow = Titanium.UI.createWindow()
-tab = Titanium.UI.createTab({
+playersWindow = Ti.UI.createWindow()
+tab = Ti.UI.createTab({
   window: playersWindow,
-  icon:   Titanium.UI.iPhone.SystemIcon.CONTACTS
+  icon:   Ti.UI.iPhone.SystemIcon.CONTACTS
 })
 Ti.include('/gui/players.js')
 gui.navigation.addTab(tab)

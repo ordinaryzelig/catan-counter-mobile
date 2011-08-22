@@ -5,8 +5,6 @@ pluralize = function(str) {
       return 'settlements';
     case 'city':
       return 'cities';
-    default:
-      return alert('no pluralization for ' + str);
   }
 };
 badge = function(text, options) {
