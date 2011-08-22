@@ -1,5 +1,5 @@
 section = Ti.UI.createTableViewSection({
-  footerTitle: 'Tap Edit to remove or reorder players',
+  footerTitle: 'Tap Edit to reorder players',
 })
 
 for player in game.players
@@ -35,7 +35,6 @@ for player in game.players
 gui.playersTable = Titanium.UI.createTableView({
   data: [section],
   moveable: true,
-  editable: true,
   scrollable: false,
   style: Titanium.UI.iPhone.TableViewStyle.GROUPED,
 })
@@ -58,7 +57,7 @@ editButton = Titanium.UI.createButton({
 })
 editButton.addEventListener('click', (event) ->
   playerPointsWindow.setRightNavButton(doneButton)
-  gui.playersTable.editing = true
+  gui.playersTable.moving = true
 )
 playerPointsWindow.setRightNavButton(editButton)
 
@@ -68,7 +67,7 @@ doneButton = Titanium.UI.createButton({
 })
 doneButton.addEventListener('click', (event) ->
   playerPointsWindow.setRightNavButton(editButton)
-  gui.playersTable.editing = false
+  gui.playersTable.moving = false
   newColorOrder = []
   rows = gui.playersTable.data[0].rows
   for row in rows

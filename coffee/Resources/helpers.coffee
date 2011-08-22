@@ -17,7 +17,6 @@ badge = (text, options = {}) ->
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: 12.5,
-    shadowColor: 'black',
   }
   for attr, value of options
     labelOpts[attr] = value

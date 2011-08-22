@@ -23,8 +23,7 @@ badge = function(text, options) {
     backgroundColor: 'red',
     borderColor: 'white',
     borderWidth: 2,
-    borderRadius: 12.5,
-    shadowColor: 'black'
+    borderRadius: 12.5
   };
   for (attr in options) {
     value = options[attr];
