@@ -5,7 +5,7 @@ tab = Ti.UI.createTab({
   icon: Ti.UI.iPhone.SystemIcon.CONTACTS
 });
 gui.navigation.addTab(tab);
-Ti.include('/gui/componentClick.js');
+Ti.include('/gui/events/componentClick.js');
 views = [];
 _ref = game.players;
 for (_i = 0, _len = _ref.length; _i < _len; _i++) {

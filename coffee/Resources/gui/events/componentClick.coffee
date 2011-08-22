@@ -1,5 +1,5 @@
-Ti.include('/gui/settlementClick.js')
-Ti.include('/gui/cityClick.js')
+Ti.include('/gui/events/settlementClick.js')
+Ti.include('/gui/events/cityClick.js')
 
 componentClick = (event) ->
   item = event.item

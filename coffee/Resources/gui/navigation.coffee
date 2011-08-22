@@ -3,8 +3,8 @@
 gui.navigation = Ti.UI.createTabGroup()
 
 # Tabs.
-Ti.include('/gui/gameMenu.js')
-Ti.include('/gui/players.js')
+Ti.include('/gui/views/gameMenu.js')
+Ti.include('/gui/views/players.js')
 
 # Start on players menu.
 gui.navigateTo(gui.tabs.PLAYERS_MENU)

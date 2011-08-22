@@ -1,6 +1,6 @@
 var componentClick;
-Ti.include('/gui/settlementClick.js');
-Ti.include('/gui/cityClick.js');
+Ti.include('/gui/events/settlementClick.js');
+Ti.include('/gui/events/cityClick.js');
 componentClick = function(event) {
   var item;
   item = event.item;

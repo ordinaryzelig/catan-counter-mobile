@@ -10,7 +10,7 @@ tab = Ti.UI.createTab({
 })
 gui.navigation.addTab(tab)
 
-Ti.include('/gui/componentClick.js')
+Ti.include('/gui/events/componentClick.js')
 
 views = []
 for player in game.players
