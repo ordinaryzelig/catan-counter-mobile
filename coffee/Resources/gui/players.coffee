@@ -1,6 +1,14 @@
 # Tabbed navigation browser for players.
-# For each player, create a view.
-# Each view has a dashboard with their game components.
+# Each player has dashboard with components (settlement, city, etc.).
+# All dashboards are on a view that belong to a scrollable view.
+# Tabbed bar at bottom represents each color. Scrolls to player when tapped.
+
+playersWindow = Ti.UI.createWindow()
+tab = Ti.UI.createTab({
+  window: playersWindow,
+  icon:   Ti.UI.iPhone.SystemIcon.CONTACTS
+})
+gui.navigation.addTab(tab)
 
 Ti.include('/gui/componentClick.js')
 

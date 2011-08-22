@@ -1,4 +1,10 @@
-var component, components, dashboard, dashboardItems, image, imagePath, item, player, tabbedBarButtonData, view, views, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
+var component, components, dashboard, dashboardItems, image, imagePath, item, player, playersWindow, tab, tabbedBarButtonData, view, views, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
+playersWindow = Ti.UI.createWindow();
+tab = Ti.UI.createTab({
+  window: playersWindow,
+  icon: Ti.UI.iPhone.SystemIcon.CONTACTS
+});
+gui.navigation.addTab(tab);
 Ti.include('/gui/componentClick.js');
 views = [];
 _ref = game.players;

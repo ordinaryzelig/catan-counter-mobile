@@ -1,5 +1,14 @@
-var colorImage, colorLabel, doneButton, editButton, player, row, section, victoryPoints, _i, _len, _ref;
+var colorImage, colorLabel, doneButton, editButton, gameMenuWindow, player, row, section, tab, victoryPoints, _i, _len, _ref;
+gameMenuWindow = Ti.UI.createWindow({
+  title: 'Game'
+});
+tab = Ti.UI.createTab({
+  window: gameMenuWindow,
+  icon: Ti.UI.iPhone.SystemIcon.BOOKMARKS
+});
+gui.navigation.addTab(tab);
 section = Ti.UI.createTableViewSection({
+  headerTitle: 'Players',
   footerTitle: 'Tap Edit to reorder players'
 });
 _ref = game.players;

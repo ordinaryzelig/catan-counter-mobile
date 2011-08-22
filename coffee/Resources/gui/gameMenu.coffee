@@ -1,4 +1,18 @@
+# Table view to create new game and manage players.
+# Each player's victory points are displayed as badges for a bird's eye view of points.
+# Tapping on player will take user to player's dashboard.
+
+gameMenuWindow = Ti.UI.createWindow({
+  title: 'Game',
+})
+tab = Ti.UI.createTab({
+  window: gameMenuWindow,
+  icon:   Ti.UI.iPhone.SystemIcon.BOOKMARKS
+})
+gui.navigation.addTab(tab)
+
 section = Ti.UI.createTableViewSection({
+  headerTitle: 'Players',
   footerTitle: 'Tap Edit to reorder players',
 })
 
