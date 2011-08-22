@@ -2,15 +2,15 @@
 
 gui.navigation = Ti.UI.createTabGroup()
 
-# Player points.
-playerPointsWindow = Ti.UI.createWindow({
+# Players menu.
+gameMenuWindow = Ti.UI.createWindow({
   title: 'Players',
 })
 tab = Ti.UI.createTab({
-  window: playerPointsWindow,
+  window: gameMenuWindow,
   icon:   Ti.UI.iPhone.SystemIcon.BOOKMARKS
 })
-Ti.include('/gui/playersMenu.js')
+Ti.include('/gui/gameMenu.js')
 gui.navigation.addTab(tab)
 
 # Player boards.

@@ -38,7 +38,7 @@ gui.playersTable = Ti.UI.createTableView({
   scrollable: false,
   style: Ti.UI.iPhone.TableViewStyle.GROUPED
 });
-playerPointsWindow.add(gui.playersTable);
+gameMenuWindow.add(gui.playersTable);
 gui.playersTable.addEventListener('click', function(event) {
   var rowIndex, rows;
   gui.navigateTo(gui.tabs.PLAYERS);
@@ -50,17 +50,17 @@ editButton = Ti.UI.createButton({
   title: 'Edit'
 });
 editButton.addEventListener('click', function(event) {
-  playerPointsWindow.setRightNavButton(doneButton);
+  gameMenuWindow.setRightNavButton(doneButton);
   return gui.playersTable.moving = true;
 });
-playerPointsWindow.setRightNavButton(editButton);
+gameMenuWindow.setRightNavButton(editButton);
 doneButton = Ti.UI.createButton({
   title: 'Done',
   style: Ti.UI.iPhone.SystemButtonStyle.DONE
 });
 doneButton.addEventListener('click', function(event) {
   var newColorOrder, row, rows, _j, _len2;
-  playerPointsWindow.setRightNavButton(editButton);
+  gameMenuWindow.setRightNavButton(editButton);
   gui.playersTable.moving = false;
   newColorOrder = [];
   rows = gui.playersTable.data[0].rows;

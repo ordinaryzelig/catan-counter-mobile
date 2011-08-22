@@ -1,13 +1,13 @@
-var playerPointsWindow, playersWindow, tab;
+var gameMenuWindow, playersWindow, tab;
 gui.navigation = Ti.UI.createTabGroup();
-playerPointsWindow = Ti.UI.createWindow({
+gameMenuWindow = Ti.UI.createWindow({
   title: 'Players'
 });
 tab = Ti.UI.createTab({
-  window: playerPointsWindow,
+  window: gameMenuWindow,
   icon: Ti.UI.iPhone.SystemIcon.BOOKMARKS
 });
-Ti.include('/gui/playersMenu.js');
+Ti.include('/gui/gameMenu.js');
 gui.navigation.addTab(tab);
 playersWindow = Ti.UI.createWindow();
 tab = Ti.UI.createTab({
