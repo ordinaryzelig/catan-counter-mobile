@@ -27,6 +27,7 @@ gui.navigateTo = (tab_id) ->
 gui.scrollTo = (index) ->
   view = @scrollableView.views[index]
   @currentPlayer = game.playerByColor(view.playerColor)
+  @colorNav.index = index
   @scrollableView.scrollToView(view)
   @changeTitle(@currentPlayer)
 

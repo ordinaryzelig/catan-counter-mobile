@@ -29,6 +29,7 @@ gui.scrollTo = function(index) {
   var view;
   view = this.scrollableView.views[index];
   this.currentPlayer = game.playerByColor(view.playerColor);
+  this.colorNav.index = index;
   this.scrollableView.scrollToView(view);
   return this.changeTitle(this.currentPlayer);
 };
