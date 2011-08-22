@@ -1,8 +1,8 @@
 var colors, game, player, _i, _len, _ref;
 Ti.include('init.js');
 Ti.include('helpers.js');
-Ti.include('guiEvents.js');
-Titanium.UI.setBackgroundColor('#aaa');
+Ti.include('/gui/guiEvents.js');
+Ti.UI.setBackgroundColor('#aaa');
 colors = ['red', 'blue', 'orange', 'white', 'green', 'brown'];
 game = new Game();
 game.setup({
@@ -15,4 +15,4 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   player.buildCity();
   player.buildSettlement();
 }
-Ti.include('navigation.js');
+Ti.include('/gui/navigation.js');

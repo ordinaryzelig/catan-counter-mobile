@@ -1,5 +1,5 @@
 var component, components, dashboard, dashboardItems, image, imagePath, item, player, tabbedBarButtonData, view, views, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
-Titanium.include('componentClick.js');
+Ti.include('/gui/componentClick.js');
 views = [];
 _ref = game.players;
 for (_i = 0, _len = _ref.length; _i < _len; _i++) {

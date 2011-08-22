@@ -10,7 +10,7 @@ tab = Titanium.UI.createTab({
   window: playerPointsWindow,
   icon:   Titanium.UI.iPhone.SystemIcon.BOOKMARKS
 })
-Ti.include('playersMenu.js')
+Ti.include('/gui/playersMenu.js')
 gui.navigation.addTab(tab)
 
 # Player boards.
@@ -19,7 +19,7 @@ tab = Titanium.UI.createTab({
   window: playersWindow,
   icon:   Titanium.UI.iPhone.SystemIcon.CONTACTS
 })
-Ti.include('players.js')
+Ti.include('/gui/players.js')
 gui.navigation.addTab(tab)
 
 gui.navigateTo(gui.tabs.PLAYERS_MENU)

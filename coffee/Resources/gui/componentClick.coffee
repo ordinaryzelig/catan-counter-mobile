@@ -1,5 +1,5 @@
-Titanium.include('settlementClick.js')
-Titanium.include('cityClick.js')
+Ti.include('/gui/settlementClick.js')
+Ti.include('/gui/cityClick.js')
 
 componentClick = (event) ->
   item = event.item

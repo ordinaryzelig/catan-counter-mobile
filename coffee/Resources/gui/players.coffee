@@ -2,7 +2,7 @@
 # For each player, create a view.
 # Each view has a dashboard with their game components.
 
-Titanium.include('componentClick.js')
+Ti.include('/gui/componentClick.js')
 
 views = []
 for player in game.players

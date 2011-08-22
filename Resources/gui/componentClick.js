@@ -1,6 +1,6 @@
 var componentClick;
-Titanium.include('settlementClick.js');
-Titanium.include('cityClick.js');
+Ti.include('/gui/settlementClick.js');
+Ti.include('/gui/cityClick.js');
 componentClick = function(event) {
   var item;
   item = event.item;

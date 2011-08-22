@@ -1,8 +1,8 @@
 Ti.include('init.js')
 Ti.include('helpers.js')
-Ti.include('guiEvents.js')
+Ti.include('/gui/guiEvents.js')
 
-Titanium.UI.setBackgroundColor('#aaa')
+Ti.UI.setBackgroundColor('#aaa')
 
 # Create new game.
 colors = ['red', 'blue', 'orange', 'white', 'green', 'brown']
@@ -13,4 +13,4 @@ for player in game.players
   player.buildCity()
   player.buildSettlement()
 
-Ti.include('navigation.js')
+Ti.include('/gui/navigation.js')
