@@ -27,7 +27,7 @@ cityClick = (player) ->
         player.downgradeCity()
       when cityEvents.CANCEL
         return
-    gui.changeTitle(player)
+    gui.updatePlayerVictoryPoints(player)
     gui.updateBadges(player)
   )
 

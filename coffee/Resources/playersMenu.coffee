@@ -32,23 +32,23 @@ for player in game.players
 
   section.add(row)
 
-table = Titanium.UI.createTableView({
+gui.playersTable = Titanium.UI.createTableView({
   data: [section],
   moveable: true,
   editable: true,
   scrollable: false,
   style: Titanium.UI.iPhone.TableViewStyle.GROUPED,
 })
-playerPointsWindow.add(table)
+playerPointsWindow.add(gui.playersTable)
 
 # When clicked, navigate to that player's board.
-table.addEventListener('click', (event) ->
+gui.playersTable.addEventListener('click', (event) ->
   gui.navigateTo(gui.tabs.PLAYERS)
   # event.index returns incorrect index because
   # for some reason, when adding more than 1 object
   # to the row, the indexes gets jumbled up.
   # We'll need to figure it out on our own.
-  rows = table.data[0].rows
+  rows = gui.playersTable.data[0].rows
   rowIndex = rows.indexOf(event.row)
   gui.scrollTo(rowIndex)
 )
@@ -58,7 +58,7 @@ editButton = Titanium.UI.createButton({
 })
 editButton.addEventListener('click', (event) ->
   playerPointsWindow.setRightNavButton(doneButton)
-  table.editing = true
+  gui.playersTable.editing = true
 )
 playerPointsWindow.setRightNavButton(editButton)
 
@@ -68,9 +68,9 @@ doneButton = Titanium.UI.createButton({
 })
 doneButton.addEventListener('click', (event) ->
   playerPointsWindow.setRightNavButton(editButton)
-  table.editing = false
+  gui.playersTable.editing = false
   newColorOrder = []
-  rows = table.data[0].rows
+  rows = gui.playersTable.data[0].rows
   for row in rows
     newColorOrder.push(row.playerColor)
   gui.reorderNavigation(newColorOrder)

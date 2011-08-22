@@ -29,7 +29,7 @@ cityClick = function(player) {
       case cityEvents.CANCEL:
         return;
     }
-    gui.changeTitle(player);
+    gui.updatePlayerVictoryPoints(player);
     return gui.updateBadges(player);
   });
   return dialog.show();

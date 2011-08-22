@@ -30,8 +30,8 @@ settlementClick = (player) ->
         player.destroySettlement()
       when settlementEvents.CANCEL
         return
-    gui.changeTitle(player)
     gui.updateBadges(player)
+    gui.updatePlayerVictoryPoints(player)
   )
 
   dialog.show()

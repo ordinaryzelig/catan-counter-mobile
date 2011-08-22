@@ -47,3 +47,18 @@ gui.reorderNavigation = function(colors) {
   reorderedTabs = reorderByColor(colors, this.colorNav.labels);
   return this.colorNav.labels = reorderedTabs;
 };
+gui.updatePlayerVictoryPoints = function(player) {
+  this.changePlayersMenuVictoryPoints(player);
+  return this.changeTitle(player);
+};
+gui.changePlayersMenuVictoryPoints = function(player) {
+  var row, _i, _len, _ref, _results;
+  alert(player.victoryPoints());
+  _ref = this.playersTable.data[0].rows;
+  _results = [];
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    row = _ref[_i];
+    _results.push(row.playerColor === player.color ? row.children[2].text = player.victoryPoints() : void 0);
+  }
+  return _results;
+};

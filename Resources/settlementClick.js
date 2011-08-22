@@ -33,8 +33,8 @@ settlementClick = function(player) {
       case settlementEvents.CANCEL:
         return;
     }
-    gui.changeTitle(player);
-    return gui.updateBadges(player);
+    gui.updateBadges(player);
+    return gui.updatePlayerVictoryPoints(player);
   });
   return dialog.show();
 };

@@ -1,4 +1,4 @@
-var colorImage, colorLabel, doneButton, editButton, player, row, section, table, victoryPoints, _i, _len, _ref;
+var colorImage, colorLabel, doneButton, editButton, player, row, section, victoryPoints, _i, _len, _ref;
 section = Ti.UI.createTableViewSection({
   footerTitle: 'Tap Edit to remove or reorder players'
 });
@@ -31,18 +31,18 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   row.add(victoryPoints);
   section.add(row);
 }
-table = Titanium.UI.createTableView({
+gui.playersTable = Titanium.UI.createTableView({
   data: [section],
   moveable: true,
   editable: true,
   scrollable: false,
   style: Titanium.UI.iPhone.TableViewStyle.GROUPED
 });
-playerPointsWindow.add(table);
-table.addEventListener('click', function(event) {
+playerPointsWindow.add(gui.playersTable);
+gui.playersTable.addEventListener('click', function(event) {
   var rowIndex, rows;
   gui.navigateTo(gui.tabs.PLAYERS);
-  rows = table.data[0].rows;
+  rows = gui.playersTable.data[0].rows;
   rowIndex = rows.indexOf(event.row);
   return gui.scrollTo(rowIndex);
 });
@@ -51,7 +51,7 @@ editButton = Titanium.UI.createButton({
 });
 editButton.addEventListener('click', function(event) {
   playerPointsWindow.setRightNavButton(doneButton);
-  return table.editing = true;
+  return gui.playersTable.editing = true;
 });
 playerPointsWindow.setRightNavButton(editButton);
 doneButton = Titanium.UI.createButton({
@@ -61,9 +61,9 @@ doneButton = Titanium.UI.createButton({
 doneButton.addEventListener('click', function(event) {
   var newColorOrder, row, rows, _j, _len2;
   playerPointsWindow.setRightNavButton(editButton);
-  table.editing = false;
+  gui.playersTable.editing = false;
   newColorOrder = [];
-  rows = table.data[0].rows;
+  rows = gui.playersTable.data[0].rows;
   for (_j = 0, _len2 = rows.length; _j < _len2; _j++) {
     row = rows[_j];
     newColorOrder.push(row.playerColor);

@@ -41,3 +41,14 @@ gui.reorderNavigation = (colors) ->
   # Reassign tabs to colorNav.
   reorderedTabs = reorderByColor(colors, @colorNav.labels)
   @colorNav.labels = reorderedTabs
+
+# Update player's victory points in title bar and players menu.
+gui.updatePlayerVictoryPoints = (player) ->
+  @changePlayersMenuVictoryPoints(player)
+  @changeTitle(player)
+
+gui.changePlayersMenuVictoryPoints = (player) ->
+  alert player.victoryPoints()
+  for row in @playersTable.data[0].rows
+    if row.playerColor == player.color
+      row.children[2].text = player.victoryPoints()
