@@ -35,6 +35,7 @@ for player in game.players
 gui.playersTable = Ti.UI.createTableView({
   data: [section],
   moveable: true,
+  editable: true,
   scrollable: false,
   style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 })

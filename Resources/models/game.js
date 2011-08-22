@@ -66,3 +66,4 @@ Game = (function() {
   };
   return Game;
 })();
+Game.COLORS = ['red', 'blue', 'orange', 'white', 'green', 'brown'];

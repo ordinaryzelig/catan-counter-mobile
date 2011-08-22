@@ -34,6 +34,7 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
 gui.playersTable = Ti.UI.createTableView({
   data: [section],
   moveable: true,
+  editable: true,
   scrollable: false,
   style: Ti.UI.iPhone.TableViewStyle.GROUPED
 });

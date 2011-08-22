@@ -26,6 +26,6 @@ gui.navigation.addTab(tab)
 gui.navigateTo(gui.tabs.PLAYERS_MENU)
 
 # Assign first player as gui.currentPlayer
-gui.currentPlayer = game.playerByColor(colors[0])
+gui.currentPlayer = game.playerByColor(Game.COLORS[0])
 
 gui.navigation.open()

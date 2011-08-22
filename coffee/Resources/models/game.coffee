@@ -38,3 +38,5 @@ class Game
     for player in @players
       @playersByColor[player.color] = player
     @playersByColor[color]
+
+Game.COLORS = ['red', 'blue', 'orange', 'white', 'green', 'brown']
