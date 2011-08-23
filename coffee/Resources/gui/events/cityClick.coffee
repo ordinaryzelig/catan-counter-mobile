@@ -22,7 +22,12 @@ cityClick = (player) ->
   dialog.addEventListener('click', (event) ->
     switch options[event.index]
       when cityEvents.BUILD
-        player.buildCity()
+        if !player.hasSettlementsToUpgrade()
+          illegalActionAlert 'No upgradable settlements'
+        else if !player.hasCitiesToBuild()
+          illegalActionAlert 'No cities left to build'
+        else
+          player.buildCity()
       when cityEvents.DOWNGRADE
         player.downgradeCity()
       when cityEvents.CANCEL

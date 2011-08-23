@@ -37,3 +37,18 @@ describe 'Player', ->
     expect(player).toNotHaveEnoughVictoryPointsToWin()
     player.buildSettlement()
     expect(player).toHaveEnoughVictoryPointsToWin()
+
+  it '#canBuildCity', ->
+    game = new Game()
+    game.setup(numPlayers: 1)
+    player = game.players[0]
+    expect(player.canBuildCity()).toEqual(true)
+    # If no settlements to build city, then should return false.
+    for settlement in player.settlements.inPlay()
+      player.destroySettlement()
+    expect(player.canBuildCity()).toEqual(false)
+    # If no more cities to build, then should return false.
+    for idx in [1..4]
+      player.buildSettlement()
+      player.buildCity()
+    expect(player.canBuildCity()).toEqual(false)

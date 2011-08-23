@@ -1,4 +1,4 @@
-var badge, eventsPath, guiPath, pluralize, reorderByColor, viewsPath;
+var badge, basicAlert, eventsPath, guiPath, illegalActionAlert, pluralize, reorderByColor, viewsPath;
 pluralize = function(str) {
   switch (str) {
     case 'settlement':
@@ -51,4 +51,13 @@ viewsPath = function(path) {
 };
 eventsPath = function(path) {
   return guiPath("events/" + path);
+};
+basicAlert = function(title, message) {
+  return Ti.UI.createAlertDialog({
+    title: title,
+    message: message
+  }).show();
+};
+illegalActionAlert = function(message) {
+  return basicAlert("You can't do that", message);
 };

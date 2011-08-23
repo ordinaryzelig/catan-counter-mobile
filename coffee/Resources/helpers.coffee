@@ -38,3 +38,12 @@ viewsPath = (path) ->
 
 eventsPath = (path) ->
   guiPath("events/#{path}")
+
+basicAlert = (title, message) ->
+  Ti.UI.createAlertDialog({
+    title: title,
+    message: message,
+  }).show()
+
+illegalActionAlert = (message) ->
+  basicAlert "You can't do that", message

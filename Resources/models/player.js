@@ -46,6 +46,9 @@ Player = (function() {
       return settlementToDestroy.destroy();
     }
   };
+  Player.prototype.hasSettlementsToUpgrade = function() {
+    return this.settlements.inPlay().length > 0;
+  };
   Player.prototype.buildCity = function() {
     var settlementToUpgrade;
     settlementToUpgrade = this.settlements.inPlay()[0];
@@ -67,7 +70,13 @@ Player = (function() {
     return _results;
   };
   Player.prototype.downgradeCity = function() {
-    return this.cities[0].downgradeToSettlement();
+    return this.cities.inPlay()[0].downgradeToSettlement();
+  };
+  Player.prototype.hasCitiesToBuild = function() {
+    return this.cities.notInPlay().length > 0;
+  };
+  Player.prototype.canBuildCity = function() {
+    return this.hasCitiesToBuild() && this.hasSettlementsToUpgrade();
   };
   Player.prototype.playSoldier = function() {
     var soldierToPlay;

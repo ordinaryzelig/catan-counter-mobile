@@ -21,7 +21,13 @@ cityClick = function(player) {
   dialog.addEventListener('click', function(event) {
     switch (options[event.index]) {
       case cityEvents.BUILD:
-        player.buildCity();
+        if (!player.hasSettlementsToUpgrade()) {
+          illegalActionAlert('No upgradable settlements');
+        } else if (!player.hasCitiesToBuild()) {
+          illegalActionAlert('No cities left to build');
+        } else {
+          player.buildCity();
+        }
         break;
       case cityEvents.DOWNGRADE:
         player.downgradeCity();

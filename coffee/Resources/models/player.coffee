@@ -37,6 +37,9 @@ class Player
     if settlementToDestroy?
       settlementToDestroy.destroy()
 
+  hasSettlementsToUpgrade: ->
+    @settlements.inPlay().length > 0
+
   # Cities.
 
   buildCity: ->
@@ -52,7 +55,13 @@ class Player
       @cities.push(new City(player: this))
 
   downgradeCity: ->
-    @cities[0].downgradeToSettlement()
+    @cities.inPlay()[0].downgradeToSettlement()
+
+  hasCitiesToBuild: ->
+    @cities.notInPlay().length > 0
+
+  canBuildCity: ->
+    @hasCitiesToBuild() and @hasSettlementsToUpgrade()
 
   # Soldiers.
 

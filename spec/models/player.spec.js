@@ -35,7 +35,7 @@ describe('Player', function() {
     player.setup();
     return expect(player.settlements.inPlay().length).toEqual(2);
   });
-  return it('that has 10 victory points has enough victory points to win', function() {
+  it('that has 10 victory points has enough victory points to win', function() {
     var game, i, player;
     game = new Game();
     game.setup({
@@ -52,5 +52,25 @@ describe('Player', function() {
     expect(player).toNotHaveEnoughVictoryPointsToWin();
     player.buildSettlement();
     return expect(player).toHaveEnoughVictoryPointsToWin();
+  });
+  return it('#canBuildCity', function() {
+    var game, idx, player, settlement, _i, _len, _ref;
+    game = new Game();
+    game.setup({
+      numPlayers: 1
+    });
+    player = game.players[0];
+    expect(player.canBuildCity()).toEqual(true);
+    _ref = player.settlements.inPlay();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      settlement = _ref[_i];
+      player.destroySettlement();
+    }
+    expect(player.canBuildCity()).toEqual(false);
+    for (idx = 1; idx <= 4; idx++) {
+      player.buildSettlement();
+      player.buildCity();
+    }
+    return expect(player.canBuildCity()).toEqual(false);
   });
 });
