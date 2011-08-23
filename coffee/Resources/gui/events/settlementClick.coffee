@@ -23,9 +23,20 @@ settlementClick = (player) ->
   dialog.addEventListener('click', (event) ->
     switch options[event.index]
       when settlementEvents.BUILD
-        player.buildSettlement()
+        if player.canBuildSettlement()
+          player.buildSettlement()
+        else
+          illegalActionAlert 'No settlements left to build'
+          return
       when settlementEvents.UPGRADE
-        player.buildCity()
+        if !player.hasCitiesToBuild()
+          illegalActionAlert 'No cities left to build'
+          return
+        else if !player.hasSettlementsToUpgrade()
+          illegalActionAlert 'No settlements to upgrade'
+          return
+        else
+          player.buildCity()
       when settlementEvents.DESTROY
         player.destroySettlement()
       when settlementEvents.CANCEL

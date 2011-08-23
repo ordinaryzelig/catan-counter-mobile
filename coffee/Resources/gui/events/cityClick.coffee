@@ -20,26 +20,24 @@ cityClick = (player) ->
 
   # Handle clicks.
   dialog.addEventListener('click', (event) ->
-    updateGui = false
     switch options[event.index]
       when cityEvents.BUILD
         if !player.hasSettlementsToUpgrade()
           illegalActionAlert 'No upgradable settlements'
+          return
         else if !player.hasCitiesToBuild()
           illegalActionAlert 'No cities left to build'
+          return
         else
           player.buildCity()
-          updateGui = true
       when cityEvents.DOWNGRADE
         if player.destroysCityIfDowngraded()
-          basicAlert 'No settlements to build', 'City was completely distroyed'
+          basicAlert 'No settlements to build', 'City was completely destroyed'
         player.downgradeCity()
-        updateGui = true
       when cityEvents.CANCEL
         return
-    if updateGui
-      gui.updatePlayerVictoryPoints(player)
-      gui.updateBadges(player)
+    gui.updatePlayerVictoryPoints(player)
+    gui.updateBadges(player)
   )
 
   dialog.show()

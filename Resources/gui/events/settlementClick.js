@@ -22,10 +22,23 @@ settlementClick = function(player) {
   dialog.addEventListener('click', function(event) {
     switch (options[event.index]) {
       case settlementEvents.BUILD:
-        player.buildSettlement();
+        if (player.canBuildSettlement()) {
+          player.buildSettlement();
+        } else {
+          illegalActionAlert('No settlements left to build');
+          return;
+        }
         break;
       case settlementEvents.UPGRADE:
-        player.buildCity();
+        if (!player.hasCitiesToBuild()) {
+          illegalActionAlert('No cities left to build');
+          return;
+        } else if (!player.hasSettlementsToUpgrade()) {
+          illegalActionAlert('No settlements to upgrade');
+          return;
+        } else {
+          player.buildCity();
+        }
         break;
       case settlementEvents.DESTROY:
         player.destroySettlement();
