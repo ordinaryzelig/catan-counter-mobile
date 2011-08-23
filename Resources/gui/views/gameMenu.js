@@ -55,6 +55,12 @@ gui.playersTable.addEventListener('click', function(event) {
   rowIndex = rows.indexOf(event.row);
   return gui.scrollTo(rowIndex);
 });
+gui.playersTable.addEventListener('delete', function(event) {
+  var color;
+  color = event.row.playerColor;
+  player = game.playerByColor(event.row.playerColor);
+  return game.players.remove(player);
+});
 editButton = Ti.UI.createButton({
   title: 'Edit'
 });

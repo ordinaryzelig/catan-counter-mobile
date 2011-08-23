@@ -67,6 +67,13 @@ gui.playersTable.addEventListener('click', (event) ->
   gui.scrollTo(rowIndex)
 )
 
+gui.playersTable.addEventListener('delete', (event) ->
+  color = event.row.playerColor
+  player = game.playerByColor(event.row.playerColor)
+  game.players.remove(player)
+  # colorNav and scrollableView will be changed when Done button is clicked.
+)
+
 editButton = Ti.UI.createButton({
   title: 'Edit',
 })

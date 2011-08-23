@@ -29,3 +29,12 @@ reorderByColor = (colors, coloredObjects) ->
       if object.playerColor == color
         reordered.push object
   reordered
+
+guiPath = (path) ->
+  "/gui/#{path}"
+
+viewsPath = (path) ->
+  guiPath("views/#{path}")
+
+eventsPath = (path) ->
+  guiPath("events/#{path}")

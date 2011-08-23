@@ -1,4 +1,4 @@
-var badge, pluralize, reorderByColor;
+var badge, eventsPath, guiPath, pluralize, reorderByColor, viewsPath;
 pluralize = function(str) {
   switch (str) {
     case 'settlement':
@@ -42,4 +42,13 @@ reorderByColor = function(colors, coloredObjects) {
     }
   }
   return reordered;
+};
+guiPath = function(path) {
+  return "/gui/" + path;
+};
+viewsPath = function(path) {
+  return guiPath("views/" + path);
+};
+eventsPath = function(path) {
+  return guiPath("events/" + path);
 };
