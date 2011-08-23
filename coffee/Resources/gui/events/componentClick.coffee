@@ -1,5 +1,6 @@
 Ti.include('/gui/events/settlementClick.js')
 Ti.include('/gui/events/cityClick.js')
+Ti.include('/gui/events/longestRoadClick.js')
 
 componentClick = (event) ->
   item = event.item
@@ -8,3 +9,5 @@ componentClick = (event) ->
       settlementClick(gui.currentPlayer)
     when 'city'
       cityClick(gui.currentPlayer)
+    when 'longest road'
+      longestRoadClick(gui.currentPlayer)

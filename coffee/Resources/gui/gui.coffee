@@ -11,7 +11,11 @@ gui.tabs = {
 
 gui.updateBadges = (player) ->
   for item in @dashboardItems[player.color]
-    item.badge = player[pluralize(item.componentType)].inPlay().length
+    switch item.componentType
+      when 'settlement', 'city'
+        item.badge = player[pluralize(item.componentType)].inPlay().length
+      when 'longest road'
+        item.badge = if player.hasLongestRoad() then 1 else 0
 
 # Change title of players window.
 gui.changeTitle = (player) ->
@@ -53,3 +57,7 @@ gui.changePlayersMenuVictoryPoints = (player) ->
 gui.updatePlayerVictoryPoints = (player) ->
   @changePlayersMenuVictoryPoints(player)
   @changeTitle(player)
+
+gui.updatePlayerVictoryPointsAndBadges = (player) ->
+  @updateBadges(player)
+  @updatePlayerVictoryPoints(player)

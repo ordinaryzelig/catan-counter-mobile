@@ -1,4 +1,4 @@
-var badge, basicAlert, eventsPath, guiPath, illegalActionAlert, pluralize, reorderByColor, viewsPath;
+var badge, basicAlert, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, pluralize, reorderByColor, viewsPath;
 pluralize = function(str) {
   switch (str) {
     case 'settlement':
@@ -52,6 +52,9 @@ viewsPath = function(path) {
 eventsPath = function(path) {
   return guiPath("events/" + path);
 };
+imagesPath = function(path) {
+  return "/images/" + path;
+};
 basicAlert = function(title, message) {
   return Ti.UI.createAlertDialog({
     title: title,
@@ -60,4 +63,14 @@ basicAlert = function(title, message) {
 };
 illegalActionAlert = function(message) {
   return basicAlert("You can't do that", message);
+};
+dashboardItem = function(atts) {
+  var item;
+  item = Ti.UI.createDashboardItem({
+    image: atts['image'],
+    canDelete: false
+  });
+  item.componentType = atts['componentType'];
+  item.badge = atts['badge'];
+  return item;
 };

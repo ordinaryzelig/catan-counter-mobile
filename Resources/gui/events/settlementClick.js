@@ -17,7 +17,7 @@ settlementClick = function(player) {
     options: options,
     destructive: options.indexOf(settlementEvents['DESTROY']),
     cancel: options.indexOf(settlementEvents['CANCEL']),
-    title: '' + settlements.inPlay().length + '/' + settlements.length + ' settlements built'
+    title: settlements.inPlay().length + '/' + settlements.length + ' settlements built'
   });
   dialog.addEventListener('click', function(event) {
     switch (options[event.index]) {
@@ -46,8 +46,7 @@ settlementClick = function(player) {
       case settlementEvents.CANCEL:
         return;
     }
-    gui.updateBadges(player);
-    return gui.updatePlayerVictoryPoints(player);
+    return gui.updatePlayerVictoryPointsAndBadges(player);
   });
   return dialog.show();
 };

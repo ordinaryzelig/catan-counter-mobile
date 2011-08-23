@@ -110,5 +110,8 @@ Player = (function() {
     }
     return this.game.longestRoad.player === this;
   };
+  Player.prototype.takeLongestRoad = function() {
+    return this.game.awardLongestRoadTo(this);
+  };
   return Player;
 })();

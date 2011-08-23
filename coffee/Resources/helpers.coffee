@@ -39,6 +39,9 @@ viewsPath = (path) ->
 eventsPath = (path) ->
   guiPath("events/#{path}")
 
+imagesPath = (path) ->
+  "/images/#{path}"
+
 basicAlert = (title, message) ->
   Ti.UI.createAlertDialog({
     title: title,
@@ -47,3 +50,12 @@ basicAlert = (title, message) ->
 
 illegalActionAlert = (message) ->
   basicAlert "You can't do that", message
+
+dashboardItem = (atts) ->
+  item = Ti.UI.createDashboardItem({
+    image: atts['image'],
+    canDelete: false,
+  })
+  item.componentType = atts['componentType']
+  item.badge = atts['badge']
+  item

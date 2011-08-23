@@ -16,19 +16,24 @@ createPlayerViews = ->
   views = []
   for player in game.players
 
-    # create components as dashboard items.
-    components = ['settlement', 'city']
     dashboardItems = []
-    for component in components
-      image = 'images/' + component + '_' + player.color + '.png'
-      item = Ti.UI.createDashboardItem({
-        image: image,
-        canDelete: false,
+
+    # Create settlement and city dashboard items.
+    for componentType in ['settlement', 'city']
+      item = dashboardItem({
+        image: imagesPath(componentType + '_' + player.color + '.png'),
+        badge: player[pluralize(componentType)].inPlay().length,
+        componentType: componentType
       })
-      item.componentType = component
-      item.badge = player[pluralize(component)].inPlay().length
       dashboardItems.push(item)
       gui.dashboardItems[player.color] = dashboardItems
+
+    # Create longest road dashboard item.
+    item = dashboardItem({
+      image: imagesPath('longest_road.png'),
+      componentType: 'longest road',
+    })
+    dashboardItems.push(item)
 
     # Create dashboard and add it to a view.
     dashboard = Ti.UI.createDashboardView({

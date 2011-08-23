@@ -7,25 +7,28 @@ tab = Ti.UI.createTab({
 gui.navigation.addTab(tab);
 Ti.include('/gui/events/componentClick.js');
 createPlayerViews = function() {
-  var component, components, dashboard, dashboardItems, image, item, player, view, views, _i, _j, _len, _len2, _ref;
+  var componentType, dashboard, dashboardItems, item, player, view, views, _i, _j, _len, _len2, _ref, _ref2;
   views = [];
   _ref = game.players;
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     player = _ref[_i];
-    components = ['settlement', 'city'];
     dashboardItems = [];
-    for (_j = 0, _len2 = components.length; _j < _len2; _j++) {
-      component = components[_j];
-      image = 'images/' + component + '_' + player.color + '.png';
-      item = Ti.UI.createDashboardItem({
-        image: image,
-        canDelete: false
+    _ref2 = ['settlement', 'city'];
+    for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+      componentType = _ref2[_j];
+      item = dashboardItem({
+        image: imagesPath(componentType + '_' + player.color + '.png'),
+        badge: player[pluralize(componentType)].inPlay().length,
+        componentType: componentType
       });
-      item.componentType = component;
-      item.badge = player[pluralize(component)].inPlay().length;
       dashboardItems.push(item);
       gui.dashboardItems[player.color] = dashboardItems;
     }
+    item = dashboardItem({
+      image: imagesPath('longest_road.png'),
+      componentType: 'longest road'
+    });
+    dashboardItems.push(item);
     dashboard = Ti.UI.createDashboardView({
       data: dashboardItems,
       editable: false,

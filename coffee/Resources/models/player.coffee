@@ -91,3 +91,6 @@ class Player
   hasLongestRoad: ->
     return false unless @game.longestRoad.awarded()
     @game.longestRoad.player == @
+
+  takeLongestRoad: ->
+    @game.awardLongestRoadTo @

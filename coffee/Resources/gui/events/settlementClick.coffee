@@ -16,7 +16,7 @@ settlementClick = (player) ->
     options: options
     destructive: options.indexOf(settlementEvents['DESTROY']),
     cancel: options.indexOf(settlementEvents['CANCEL']),
-    title: '' + settlements.inPlay().length + '/' + settlements.length + ' settlements built',
+    title: settlements.inPlay().length + '/' + settlements.length + ' settlements built',
   })
 
   # Handle clicks.
@@ -41,8 +41,7 @@ settlementClick = (player) ->
         player.destroySettlement()
       when settlementEvents.CANCEL
         return
-    gui.updateBadges(player)
-    gui.updatePlayerVictoryPoints(player)
+    gui.updatePlayerVictoryPointsAndBadges(player)
   )
 
   dialog.show()

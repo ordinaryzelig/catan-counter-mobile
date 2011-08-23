@@ -15,7 +15,7 @@ cityClick = (player) ->
     options: options
     destructive: options.indexOf(cityEvents['DOWNGRADE']),
     cancel: options.indexOf(cityEvents['CANCEL']),
-    title: '' + cities.inPlay().length + '/' + cities.length + ' cities built',
+    title: cities.inPlay().length + '/' + cities.length + ' cities built',
   })
 
   # Handle clicks.
@@ -36,8 +36,7 @@ cityClick = (player) ->
         player.downgradeCity()
       when cityEvents.CANCEL
         return
-    gui.updatePlayerVictoryPoints(player)
-    gui.updateBadges(player)
+    gui.updatePlayerVictoryPointsAndBadges(player)
   )
 
   dialog.show()

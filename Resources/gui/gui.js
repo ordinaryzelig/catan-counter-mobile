@@ -11,7 +11,15 @@ gui.updateBadges = function(player) {
   _results = [];
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     item = _ref[_i];
-    _results.push(item.badge = player[pluralize(item.componentType)].inPlay().length);
+    _results.push((function() {
+      switch (item.componentType) {
+        case 'settlement':
+        case 'city':
+          return item.badge = player[pluralize(item.componentType)].inPlay().length;
+        case 'longest road':
+          return item.badge = player.hasLongestRoad() ? 1 : 0;
+      }
+    })());
   }
   return _results;
 };
@@ -59,4 +67,8 @@ gui.changePlayersMenuVictoryPoints = function(player) {
 gui.updatePlayerVictoryPoints = function(player) {
   this.changePlayersMenuVictoryPoints(player);
   return this.changeTitle(player);
+};
+gui.updatePlayerVictoryPointsAndBadges = function(player) {
+  this.updateBadges(player);
+  return this.updatePlayerVictoryPoints(player);
 };

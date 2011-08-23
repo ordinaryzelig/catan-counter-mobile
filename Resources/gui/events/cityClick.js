@@ -16,7 +16,7 @@ cityClick = function(player) {
     options: options,
     destructive: options.indexOf(cityEvents['DOWNGRADE']),
     cancel: options.indexOf(cityEvents['CANCEL']),
-    title: '' + cities.inPlay().length + '/' + cities.length + ' cities built'
+    title: cities.inPlay().length + '/' + cities.length + ' cities built'
   });
   dialog.addEventListener('click', function(event) {
     switch (options[event.index]) {
@@ -40,8 +40,7 @@ cityClick = function(player) {
       case cityEvents.CANCEL:
         return;
     }
-    gui.updatePlayerVictoryPoints(player);
-    return gui.updateBadges(player);
+    return gui.updatePlayerVictoryPointsAndBadges(player);
   });
   return dialog.show();
 };
