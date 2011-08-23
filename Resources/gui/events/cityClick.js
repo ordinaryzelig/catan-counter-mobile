@@ -19,6 +19,8 @@ cityClick = function(player) {
     title: '' + cities.inPlay().length + '/' + cities.length + ' cities built'
   });
   dialog.addEventListener('click', function(event) {
+    var updateGui;
+    updateGui = false;
     switch (options[event.index]) {
       case cityEvents.BUILD:
         if (!player.hasSettlementsToUpgrade()) {
@@ -27,16 +29,23 @@ cityClick = function(player) {
           illegalActionAlert('No cities left to build');
         } else {
           player.buildCity();
+          updateGui = true;
         }
         break;
       case cityEvents.DOWNGRADE:
+        if (player.destroysCityIfDowngraded()) {
+          basicAlert('No settlements to build', 'City was completely distroyed');
+        }
         player.downgradeCity();
+        updateGui = true;
         break;
       case cityEvents.CANCEL:
         return;
     }
-    gui.updatePlayerVictoryPoints(player);
-    return gui.updateBadges(player);
+    if (updateGui) {
+      gui.updatePlayerVictoryPoints(player);
+      return gui.updateBadges(player);
+    }
   });
   return dialog.show();
 };

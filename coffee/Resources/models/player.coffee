@@ -37,6 +37,9 @@ class Player
     if settlementToDestroy?
       settlementToDestroy.destroy()
 
+  canBuildSettlement: ->
+    @settlements.notInPlay().length > 0
+
   hasSettlementsToUpgrade: ->
     @settlements.inPlay().length > 0
 
@@ -62,6 +65,9 @@ class Player
 
   canBuildCity: ->
     @hasCitiesToBuild() and @hasSettlementsToUpgrade()
+
+  destroysCityIfDowngraded: ->
+    !@canBuildSettlement()
 
   # Soldiers.
 

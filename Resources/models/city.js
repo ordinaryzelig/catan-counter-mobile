@@ -18,7 +18,9 @@ City = (function() {
   __extends(City, Buildable);
   City.prototype.downgradeToSettlement = function() {
     this.destroy();
-    return this.player.buildSettlement();
+    if (this.player.canBuildSettlement()) {
+      return this.player.buildSettlement();
+    }
   };
   return City;
 })();

@@ -6,4 +6,4 @@ class City extends Buildable
 
   downgradeToSettlement: ->
     @destroy()
-    @player.buildSettlement()
+    @player.buildSettlement() if @player.canBuildSettlement()
