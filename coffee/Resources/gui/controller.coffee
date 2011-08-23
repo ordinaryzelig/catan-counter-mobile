@@ -2,8 +2,8 @@ game = new Game()
 
 controller = {}
 
-controller.resetGame = (colors) ->
-  game.setup({numPlayers: colors.length})
+controller.resetGame = ->
+  game.setup({numPlayers: Game.COLORS.length})
   # Assign colors.
   for player in game.players
-    player.color = colors[game.players.indexOf(player)]
+    player.color = Game.COLORS[game.players.indexOf(player)]

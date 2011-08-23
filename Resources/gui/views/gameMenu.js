@@ -1,4 +1,4 @@
-var colorImage, colorLabel, doneButton, editButton, gameMenuWindow, player, row, section, tab, victoryPoints, _i, _len, _ref;
+var createPlayersRows, doneButton, editButton, gameMenuWindow, newGameButton, tab;
 gameMenuWindow = Ti.UI.createWindow({
   title: 'Game'
 });
@@ -7,41 +7,45 @@ tab = Ti.UI.createTab({
   icon: Ti.UI.iPhone.SystemIcon.BOOKMARKS
 });
 gui.navigation.addTab(tab);
-section = Ti.UI.createTableViewSection({
-  headerTitle: 'Players',
-  footerTitle: 'Tap Edit to reorder players'
-});
-_ref = game.players;
-for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-  player = _ref[_i];
-  row = Ti.UI.createTableViewRow({
-    playerColor: player.color
+createPlayersRows = function() {
+  var colorImage, colorLabel, player, row, section, victoryPoints, _i, _len, _ref;
+  section = Ti.UI.createTableViewSection({
+    headerTitle: 'Players',
+    footerTitle: 'Tap Edit to remove or reorder players'
   });
-  colorImage = Ti.UI.createLabel({
-    backgroundImage: 'images/square_' + player.color + '.png',
-    width: 30,
-    height: 30,
-    borderColor: 'black',
-    left: 5
-  });
-  row.add(colorImage);
-  colorLabel = Ti.UI.createLabel({
-    text: player.color,
-    left: 40,
-    font: {
-      fontSize: 20,
-      fontWeight: 'bold'
-    }
-  });
-  row.add(colorLabel);
-  victoryPoints = badge(player.victoryPoints(), {
-    right: 5
-  });
-  row.add(victoryPoints);
-  section.add(row);
-}
+  _ref = game.players;
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    player = _ref[_i];
+    row = Ti.UI.createTableViewRow({
+      playerColor: player.color
+    });
+    colorImage = Ti.UI.createLabel({
+      backgroundImage: 'images/square_' + player.color + '.png',
+      width: 30,
+      height: 30,
+      borderColor: 'black',
+      left: 5
+    });
+    row.add(colorImage);
+    colorLabel = Ti.UI.createLabel({
+      text: player.color,
+      left: 40,
+      font: {
+        fontSize: 20,
+        fontWeight: 'bold'
+      }
+    });
+    row.add(colorLabel);
+    victoryPoints = badge(player.victoryPoints(), {
+      right: 5
+    });
+    row.add(victoryPoints);
+    section.add(row);
+  }
+  return section;
+};
 gui.playersTable = Ti.UI.createTableView({
-  data: [section],
+  data: [createPlayersRows()],
   moveable: true,
   editable: true,
   scrollable: false,
@@ -56,7 +60,7 @@ gui.playersTable.addEventListener('click', function(event) {
   return gui.scrollTo(rowIndex);
 });
 gui.playersTable.addEventListener('delete', function(event) {
-  var color;
+  var color, player;
   color = event.row.playerColor;
   player = game.playerByColor(event.row.playerColor);
   return game.players.remove(player);
@@ -74,14 +78,27 @@ doneButton = Ti.UI.createButton({
   style: Ti.UI.iPhone.SystemButtonStyle.DONE
 });
 doneButton.addEventListener('click', function(event) {
-  var newColorOrder, row, rows, _j, _len2;
+  var newColorOrder, row, rows, _i, _len;
   gameMenuWindow.setRightNavButton(editButton);
   gui.playersTable.moving = false;
   newColorOrder = [];
   rows = gui.playersTable.data[0].rows;
-  for (_j = 0, _len2 = rows.length; _j < _len2; _j++) {
-    row = rows[_j];
+  for (_i = 0, _len = rows.length; _i < _len; _i++) {
+    row = rows[_i];
     newColorOrder.push(row.playerColor);
   }
   return gui.reorderNavigation(newColorOrder);
 });
+newGameButton = Ti.UI.createButton({
+  title: 'New game'
+});
+newGameButton.addEventListener('click', function(event) {
+  gameMenuWindow.setRightNavButton(editButton);
+  gui.playersTable.moving = false;
+  controller.resetGame();
+  gui.playersTable.data = [createPlayersRows()];
+  gui.setScrollableViews(createPlayerViews());
+  gui.setColorNavTabs(createColorNavTabs());
+  return gui.scrollTo(0);
+});
+gameMenuWindow.setLeftNavButton(newGameButton);

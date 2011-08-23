@@ -5,6 +5,6 @@ Ti.include('/gui/controller.js')
 
 Ti.UI.setBackgroundColor('#aaa')
 
-controller.resetGame(Game.COLORS)
+controller.resetGame()
 
 Ti.include('/gui/navigation.js')

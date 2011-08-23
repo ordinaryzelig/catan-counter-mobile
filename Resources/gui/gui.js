@@ -33,23 +33,18 @@ gui.scrollTo = function(index) {
   return this.changeTitle(this.currentPlayer);
 };
 gui.reorderNavigation = function(colors) {
-  var reorderedTabs, reorderedViews, view, _i, _j, _len, _len2, _ref;
-  reorderedViews = reorderByColor(colors, this.scrollableView.views);
-  _ref = this.scrollableView.views;
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    view = _ref[_i];
-    this.scrollableView.removeView(view);
-  }
-  for (_j = 0, _len2 = reorderedViews.length; _j < _len2; _j++) {
-    view = reorderedViews[_j];
-    this.scrollableView.addView(view);
-  }
+  var reorderedTabs, reorderedViews;
   reorderedTabs = reorderByColor(colors, this.colorNav.labels);
-  return this.colorNav.labels = reorderedTabs;
+  this.setColorNavTabs(reorderedTabs);
+  reorderedViews = reorderByColor(colors, this.scrollableView.views);
+  this.setScrollableViews(reorderedViews);
+  return this.scrollTo(0);
 };
-gui.updatePlayerVictoryPoints = function(player) {
-  this.changePlayersMenuVictoryPoints(player);
-  return this.changeTitle(player);
+gui.setScrollableViews = function(newViews) {
+  return this.scrollableView.views = newViews;
+};
+gui.setColorNavTabs = function(tabs) {
+  return this.colorNav.labels = tabs;
 };
 gui.changePlayersMenuVictoryPoints = function(player) {
   var row, _i, _len, _ref, _results;
@@ -60,4 +55,8 @@ gui.changePlayersMenuVictoryPoints = function(player) {
     _results.push(row.playerColor === player.color ? row.children[2].text = player.victoryPoints() : void 0);
   }
   return _results;
+};
+gui.updatePlayerVictoryPoints = function(player) {
+  this.changePlayersMenuVictoryPoints(player);
+  return this.changeTitle(player);
 };

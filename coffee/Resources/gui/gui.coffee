@@ -22,6 +22,7 @@ gui.flexSpace = Ti.UI.createButton({systemButton: Ti.UI.iPhone.SystemButton.FLEX
 gui.navigateTo = (tab_id) ->
   @navigation.setActiveTab(tab_id)
 
+# TODO: use color instead of index.
 gui.scrollTo = (index) ->
   view = @scrollableView.views[index]
   @currentPlayer = game.playerByColor(view.playerColor)
@@ -31,22 +32,24 @@ gui.scrollTo = (index) ->
 
 # Reorder scrollableView and navigation tabs.
 gui.reorderNavigation = (colors) ->
-  reorderedViews = reorderByColor(colors, @scrollableView.views)
-  # Remove all views, then add reorderedViews back.
-  for view in @scrollableView.views
-    @scrollableView.removeView(view)
-  for view in reorderedViews
-    @scrollableView.addView(view)
-  # Reassign tabs to colorNav.
   reorderedTabs = reorderByColor(colors, @colorNav.labels)
-  @colorNav.labels = reorderedTabs
+  @setColorNavTabs(reorderedTabs)
+  reorderedViews = reorderByColor(colors, @scrollableView.views)
+  @setScrollableViews(reorderedViews)
+  @scrollTo(0)
 
-# Update player's victory points in title bar and players menu.
-gui.updatePlayerVictoryPoints = (player) ->
-  @changePlayersMenuVictoryPoints(player)
-  @changeTitle(player)
+gui.setScrollableViews = (newViews) ->
+  @scrollableView.views = newViews
+
+gui.setColorNavTabs = (tabs) ->
+  @colorNav.labels = tabs
 
 gui.changePlayersMenuVictoryPoints = (player) ->
   for row in @playersTable.data[0].rows
     if row.playerColor == player.color
       row.children[2].text = player.victoryPoints()
+
+# Update player's victory points in title bar and players menu.
+gui.updatePlayerVictoryPoints = (player) ->
+  @changePlayersMenuVictoryPoints(player)
+  @changeTitle(player)

@@ -12,50 +12,54 @@ gui.navigation.addTab(tab)
 
 Ti.include('/gui/events/componentClick.js')
 
-views = []
-for player in game.players
+createPlayerViews = ->
+  views = []
+  for player in game.players
 
-  # create components as dashboard items.
-  components = ['settlement', 'city']
-  dashboardItems = []
-  for component in components
-    image = 'images/' + component + '_' + player.color + '.png'
-    item = Ti.UI.createDashboardItem({
-      image: image,
-      canDelete: false,
+    # create components as dashboard items.
+    components = ['settlement', 'city']
+    dashboardItems = []
+    for component in components
+      image = 'images/' + component + '_' + player.color + '.png'
+      item = Ti.UI.createDashboardItem({
+        image: image,
+        canDelete: false,
+      })
+      item.componentType = component
+      item.badge = player[pluralize(component)].inPlay().length
+      dashboardItems.push(item)
+      gui.dashboardItems[player.color] = dashboardItems
+
+    # Create dashboard and add it to a view.
+    dashboard = Ti.UI.createDashboardView({
+      data: dashboardItems,
+      editable: false,
+      background: '#aaa',
     })
-    item.componentType = component
-    item.badge = player[pluralize(component)].inPlay().length
-    dashboardItems.push(item)
-    gui.dashboardItems[player.color] = dashboardItems
-
-  # Create dashboard and add it to a view.
-  dashboard = Ti.UI.createDashboardView({
-    data: dashboardItems,
-    editable: false,
-    background: '#aaa',
-  })
-  dashboard.addEventListener('click', componentClick)
-  view = Ti.UI.createView()
-  view.add(dashboard)
-  view.playerColor = player.color
-  views.push(view)
+    dashboard.addEventListener('click', componentClick)
+    view = Ti.UI.createView()
+    view.add(dashboard)
+    view.playerColor = player.color
+    views.push(view)
+  views
 
 gui.scrollableView = Ti.UI.createScrollableView({
-  views: views,
+  views: createPlayerViews(),
 })
 playersWindow.add(gui.scrollableView)
 
 # Toolbar with buttons to scroll to player.
-tabbedBarButtonData = []
-for player in game.players
-  imagePath = 'images/square_' + player.color + '.png'
-  tabbedBarButtonData.push({
-    image: imagePath,
-    playerColor: player.color,
-  })
+createColorNavTabs = ->
+  tabbedBarButtonData = []
+  for player in game.players
+    imagePath = 'images/square_' + player.color + '.png'
+    tabbedBarButtonData.push({
+      image: imagePath,
+      playerColor: player.color,
+    })
+  tabbedBarButtonData
 gui.colorNav = Ti.UI.createTabbedBar({
-  labels: tabbedBarButtonData,
+  labels: createColorNavTabs(),
   index: 0
 })
 

@@ -11,48 +11,45 @@ tab = Ti.UI.createTab({
 })
 gui.navigation.addTab(tab)
 
-section = Ti.UI.createTableViewSection({
-  headerTitle: 'Players',
-  footerTitle: 'Tap Edit to reorder players',
-})
-
-for player in game.players
-
-  row = Ti.UI.createTableViewRow({playerColor: player.color})
-
-  colorImage = Ti.UI.createLabel({
-    backgroundImage: 'images/square_' + player.color + '.png',
-    width: 30,
-    height: 30,
-    borderColor: 'black',
-    left: 5,
+createPlayersRows = ->
+  section = Ti.UI.createTableViewSection({
+    headerTitle: 'Players',
+    footerTitle: 'Tap Edit to remove or reorder players',
   })
-  row.add(colorImage)
-
-  colorLabel = Ti.UI.createLabel({
-    text: player.color,
-    left: 40,
-    font: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    }
-  })
-  row.add(colorLabel)
-
-  victoryPoints = badge(player.victoryPoints(), {
-    right: 5,
-  })
-  row.add(victoryPoints)
-
-  section.add(row)
+  for player in game.players
+    row = Ti.UI.createTableViewRow({playerColor: player.color})
+    colorImage = Ti.UI.createLabel({
+      backgroundImage: 'images/square_' + player.color + '.png',
+      width: 30,
+      height: 30,
+      borderColor: 'black',
+      left: 5,
+    })
+    row.add(colorImage)
+    colorLabel = Ti.UI.createLabel({
+      text: player.color,
+      left: 40,
+      font: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      }
+    })
+    row.add(colorLabel)
+    victoryPoints = badge(player.victoryPoints(), {
+      right: 5,
+    })
+    row.add(victoryPoints)
+    section.add(row)
+  section
 
 gui.playersTable = Ti.UI.createTableView({
-  data: [section],
+  data: [createPlayersRows()],
   moveable: true,
   editable: true,
   scrollable: false,
   style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 })
+
 gameMenuWindow.add(gui.playersTable)
 
 # When clicked, navigate to that player's board.
@@ -67,6 +64,7 @@ gui.playersTable.addEventListener('click', (event) ->
   gui.scrollTo(rowIndex)
 )
 
+# When player is removed from table, remove from game too.
 gui.playersTable.addEventListener('delete', (event) ->
   color = event.row.playerColor
   player = game.playerByColor(event.row.playerColor)
@@ -87,6 +85,9 @@ doneButton = Ti.UI.createButton({
   title: 'Done',
   style: Ti.UI.iPhone.SystemButtonStyle.DONE,
 })
+# When finished editing,
+# reorder the scrollableView and colorNav to match order in players table.
+# If players were removed, remove them from the game as well.
 doneButton.addEventListener('click', (event) ->
   gameMenuWindow.setRightNavButton(editButton)
   gui.playersTable.moving = false
@@ -96,3 +97,22 @@ doneButton.addEventListener('click', (event) ->
     newColorOrder.push(row.playerColor)
   gui.reorderNavigation(newColorOrder)
 )
+
+newGameButton = Ti.UI.createButton({
+  title: 'New game'
+})
+# When button tapped:
+#   Reset game.
+#   Set new rows in players table.
+#   Set new player views.
+#   Set new color nav tabs.
+newGameButton.addEventListener('click', (event) ->
+  gameMenuWindow.setRightNavButton(editButton)
+  gui.playersTable.moving = false
+  controller.resetGame()
+  gui.playersTable.data = [createPlayersRows()]
+  gui.setScrollableViews(createPlayerViews())
+  gui.setColorNavTabs(createColorNavTabs())
+  gui.scrollTo(0)
+)
+gameMenuWindow.setLeftNavButton(newGameButton)
