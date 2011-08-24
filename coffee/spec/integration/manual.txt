@@ -128,3 +128,5 @@ Gameplay
         alerts if player cannot win by showing development card victory points
 
       'Cancel' button does nothing
+
+  if player has enough victory points to win, alert after they get those points

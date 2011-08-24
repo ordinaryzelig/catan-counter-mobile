@@ -71,7 +71,16 @@ gui.changePlayersMenuVictoryPoints = function(player) {
 gui.updatePlayerVictoryPoints = function(player) {
   this.changePlayersMenuVictoryPoints(player);
   if (player === gui.currentPlayer) {
-    return this.changeTitle(player);
+    this.changeTitle(player);
+  }
+  return this.checkIfPlayerHasEnoughVictoryPointsToWin(player);
+};
+gui.checkIfPlayerHasEnoughVictoryPointsToWin = function(player) {
+  var message, title;
+  title = "" + player.color + " has enough victory points to win";
+  message = 'The official rules state that a player can only win when it is his/her turn';
+  if (player.hasEnoughVictoryPointsToWin()) {
+    return basicAlert(title, message);
   }
 };
 gui.updatePlayerVictoryPointsAndBadges = function(player) {

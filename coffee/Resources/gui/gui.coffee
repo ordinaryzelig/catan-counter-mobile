@@ -62,6 +62,12 @@ gui.changePlayersMenuVictoryPoints = (player) ->
 gui.updatePlayerVictoryPoints = (player) ->
   @changePlayersMenuVictoryPoints(player)
   @changeTitle(player) if player == gui.currentPlayer
+  @checkIfPlayerHasEnoughVictoryPointsToWin(player)
+
+gui.checkIfPlayerHasEnoughVictoryPointsToWin = (player) ->
+  title = "#{player.color} has enough victory points to win"
+  message = 'The official rules state that a player can only win when it is his/her turn'
+  basicAlert(title, message) if player.hasEnoughVictoryPointsToWin()
 
 gui.updatePlayerVictoryPointsAndBadges = (player) ->
   @updateBadges(player)
