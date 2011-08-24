@@ -1,6 +1,6 @@
 var cityEvents;
 cityEvents = {
-  BUILD: 'Build from settlement',
+  BUILD: 'Upgrade settlement to city',
   DOWNGRADE: 'Downgrade to settlement',
   CANCEL: 'Cancel'
 };
