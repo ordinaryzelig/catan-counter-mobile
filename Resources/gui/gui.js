@@ -16,10 +16,12 @@ gui.updateBadges = function(player) {
         case 'settlement':
         case 'city':
           return item.badge = player[pluralize(item.componentType)].inPlay().length;
-        case 'longest road':
+        case 'longestRoad':
           return item.badge = player.hasLongestRoad() ? 1 : 0;
         case 'soldier':
           return item.badge = player.soldiers.length;
+        case 'developmentCardVictoryPoint':
+          return item.badge = player.developmentCardVictoryPoints.length;
       }
     })());
   }

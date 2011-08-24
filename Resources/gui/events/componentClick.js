@@ -1,19 +1,14 @@
-var componentClick;
-Ti.include('/gui/events/settlementClick.js');
-Ti.include('/gui/events/cityClick.js');
-Ti.include('/gui/events/longestRoadClick.js');
-Ti.include('/gui/events/soldierClick.js');
+var componentClick, componentType, events, _i, _len, _ref;
+events = {};
+_ref = ['settlement', 'city', 'longestRoad', 'soldier', 'developmentCardVictoryPoint'];
+for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+  componentType = _ref[_i];
+  Ti.include(eventsPath("" + componentType + "Click.js"));
+}
 componentClick = function(event) {
-  var item;
+  var functionName, fxn, item;
   item = event.item;
-  switch (item.componentType) {
-    case 'settlement':
-      return settlementClick(gui.currentPlayer);
-    case 'city':
-      return cityClick(gui.currentPlayer);
-    case 'longest road':
-      return longestRoadClick(gui.currentPlayer);
-    case 'soldier':
-      return soldierClick(gui.currentPlayer);
-  }
+  functionName = "" + item.componentType + "Click";
+  fxn = events[functionName];
+  return fxn.apply(this, [gui.currentPlayer]);
 };

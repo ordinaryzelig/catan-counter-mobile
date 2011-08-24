@@ -1,9 +1,9 @@
-var soldierClick, soldierEvents;
+var soldierEvents;
 soldierEvents = {
   PLAY: 'Play knight card',
   CANCEL: 'Cancel'
 };
-soldierClick = function(player) {
+events.soldierClick = function(player) {
   var dialog, key, options, previousPlayerWithLargestArmy, title, value;
   previousPlayerWithLargestArmy = game.largestArmy.player;
   options = [];

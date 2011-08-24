@@ -3,7 +3,7 @@ soldierEvents = {
   CANCEL:  'Cancel',
 }
 
-soldierClick = (player) ->
+events.soldierClick = (player) ->
 
   previousPlayerWithLargestArmy = game.largestArmy.player
 

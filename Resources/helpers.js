@@ -1,10 +1,25 @@
-var badge, basicAlert, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, pluralize, reorderByColor, viewsPath;
-pluralize = function(str) {
-  switch (str) {
-    case 'settlement':
-      return 'settlements';
-    case 'city':
-      return 'cities';
+var badge, basicAlert, confirmationAlert, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, pluralize, reorderByColor, viewsPath;
+pluralize = function(str, num) {
+  var newStr;
+  if (num == null) {
+    num = null;
+  }
+  newStr = (function() {
+    switch (str) {
+      case 'city':
+        return 'cities';
+      default:
+        return str + 's';
+    }
+  })();
+  if (num != null) {
+    if (num === 1) {
+      return "" + num + " " + str;
+    } else {
+      return "" + num + " " + newStr;
+    }
+  } else {
+    return newStr;
   }
 };
 badge = function(text, options) {
@@ -28,6 +43,16 @@ badge = function(text, options) {
     labelOpts[attr] = value;
   }
   return Ti.UI.createLabel(labelOpts);
+};
+dashboardItem = function(atts) {
+  var item;
+  item = Ti.UI.createDashboardItem({
+    image: atts['image'],
+    canDelete: false
+  });
+  item.componentType = atts['componentType'];
+  item.badge = atts['badge'];
+  return item;
 };
 reorderByColor = function(colors, coloredObjects) {
   var color, object, reordered, _i, _j, _len, _len2;
@@ -64,13 +89,11 @@ basicAlert = function(title, message) {
 illegalActionAlert = function(message) {
   return basicAlert("You can't do that", message);
 };
-dashboardItem = function(atts) {
-  var item;
-  item = Ti.UI.createDashboardItem({
-    image: atts['image'],
-    canDelete: false
+confirmationAlert = function(title, message) {
+  return Ti.UI.createAlertDialog({
+    title: title,
+    message: message,
+    buttonNames: ['OK', 'Cancel'],
+    cancel: 1
   });
-  item.componentType = atts['componentType'];
-  item.badge = atts['badge'];
-  return item;
 };

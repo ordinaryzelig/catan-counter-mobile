@@ -1,11 +1,11 @@
-var settlementClick, settlementEvents;
+var settlementEvents;
 settlementEvents = {
   BUILD: 'Build',
   UPGRADE: 'Upgrade to city',
   DESTROY: 'Destroy',
   CANCEL: 'Cancel'
 };
-settlementClick = function(player) {
+events.settlementClick = function(player) {
   var dialog, key, options, settlements, value;
   settlements = player.settlements;
   options = [];

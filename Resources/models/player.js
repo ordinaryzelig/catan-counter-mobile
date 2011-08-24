@@ -6,6 +6,7 @@ Player = (function() {
     }
     this.game = atts['game'];
     this.soldiers = new PlayableSet();
+    this.developmentCardVictoryPoints = new PlayableSet();
   }
   Player.prototype.setup = function() {
     var i, _results;
@@ -18,7 +19,7 @@ Player = (function() {
     return _results;
   };
   Player.prototype.victoryPoints = function() {
-    return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0) + (this.hasLongestRoad() ? 2 : 0);
+    return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0) + (this.hasLongestRoad() ? 2 : 0) + this.developmentCardVictoryPoints.length;
   };
   Player.prototype.hasEnoughVictoryPointsToWin = function() {
     return this.victoryPoints() >= this.game.victoryPointsRequiredToWin;
@@ -112,6 +113,29 @@ Player = (function() {
   };
   Player.prototype.takeLongestRoad = function() {
     return this.game.awardLongestRoadTo(this);
+  };
+  Player.prototype.showDevelopmentCardVictoryPoints = function(numCards) {
+    var card, _i, _len, _ref, _results;
+    _ref = this.game.developmentCardVictoryPoints.notInPlay().slice(0, (numCards - 1 + 1) || 9e9);
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      card = _ref[_i];
+      card.build();
+      card.player = this;
+      _results.push(this.developmentCardVictoryPoints.push(card));
+    }
+    return _results;
+  };
+  Player.prototype.winByPlayingDevelopmentCardVictoryPoints = function() {
+    if (this.canWinByShowingAllDevelopmentCardVictoryPoints()) {
+      return this.showDevelopmentCardVictoryPoints(this.numDevelopmentCardVictoryPointsNeededToWin());
+    }
+  };
+  Player.prototype.numDevelopmentCardVictoryPointsNeededToWin = function() {
+    return this.game.victoryPointsRequiredToWin - (this.victoryPoints() - this.developmentCardVictoryPoints.length);
+  };
+  Player.prototype.canWinByShowingAllDevelopmentCardVictoryPoints = function() {
+    return (this.game.victoryPointsRequiredToWin - this.victoryPoints()) <= this.game.developmentCardVictoryPoints.notInPlay().length;
   };
   return Player;
 })();

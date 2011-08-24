@@ -1,6 +1,8 @@
 var Game;
 Game = (function() {
-  function Game() {}
+  function Game() {
+    this.players = [];
+  }
   Game.prototype.setup = function(options) {
     if (options == null) {
       options = {};
@@ -8,12 +10,12 @@ Game = (function() {
     this.createPlayers(options['numPlayers']);
     this.createSoldiers();
     this.createLargestArmy();
-    return this.createLongestRoad();
+    this.createLongestRoad();
+    return this.createDevelopmentCardVictoryPoints();
   };
   Game.prototype.victoryPointsRequiredToWin = 10;
   Game.prototype.createPlayers = function(num) {
     var i, player, _results;
-    this.players = [];
     _results = [];
     for (i = 1; 1 <= num ? i <= num : i >= num; 1 <= num ? i++ : i--) {
       player = new Player({
@@ -44,6 +46,17 @@ Game = (function() {
     return this.largestArmy = new LargestArmy({
       game: this
     });
+  };
+  Game.prototype.createDevelopmentCardVictoryPoints = function() {
+    var idx, _results;
+    this.developmentCardVictoryPoints = new PlayableSet();
+    _results = [];
+    for (idx = 1; idx <= 5; idx++) {
+      _results.push(this.developmentCardVictoryPoints.push(new DevelopmentCardVictoryPoint({
+        game: this
+      })));
+    }
+    return _results;
   };
   Game.prototype.awardLargestArmyTo = function(player) {
     return this.largestArmy.player = player;

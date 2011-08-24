@@ -5,7 +5,7 @@ settlementEvents = {
   CANCEL:  'Cancel',
 }
 
-settlementClick = (player) ->
+events.settlementClick = (player) ->
 
   # Construct option dialog.
   settlements = player.settlements

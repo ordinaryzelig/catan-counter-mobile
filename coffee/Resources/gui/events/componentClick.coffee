@@ -1,16 +1,11 @@
-Ti.include('/gui/events/settlementClick.js')
-Ti.include('/gui/events/cityClick.js')
-Ti.include('/gui/events/longestRoadClick.js')
-Ti.include('/gui/events/soldierClick.js')
+events = {}
+
+for componentType in ['settlement', 'city', 'longestRoad', 'soldier', 'developmentCardVictoryPoint']
+  Ti.include(eventsPath("#{componentType}Click.js"))
 
 componentClick = (event) ->
   item = event.item
-  switch item.componentType
-    when 'settlement'
-      settlementClick(gui.currentPlayer)
-    when 'city'
-      cityClick(gui.currentPlayer)
-    when 'longest road'
-      longestRoadClick(gui.currentPlayer)
-    when 'soldier'
-      soldierClick(gui.currentPlayer)
+  # E.g. settlementClick(gui.currentPlayer).
+  functionName = "#{item.componentType}Click"
+  fxn = events[functionName]
+  fxn.apply(@, [gui.currentPlayer])

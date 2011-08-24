@@ -31,7 +31,7 @@ createPlayerViews = ->
     # Create longest road dashboard item.
     item = dashboardItem({
       image: imagesPath('longest_road.png'),
-      componentType: 'longest road',
+      componentType: 'longestRoad',
     })
     dashboardItems.push(item)
 
@@ -39,6 +39,13 @@ createPlayerViews = ->
     item = dashboardItem({
       image: imagesPath('soldier.png'),
       componentType: 'soldier',
+    })
+    dashboardItems.push(item)
+
+    # Create development card victory point dashboard item.
+    item = dashboardItem({
+      image: imagesPath('development_card_victory_point.png'),
+      componentType: 'developmentCardVictoryPoint',
     })
     dashboardItems.push(item)
 

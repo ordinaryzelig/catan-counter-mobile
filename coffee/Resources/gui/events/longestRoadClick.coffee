@@ -3,7 +3,7 @@ longestRoadEvents = {
   CANCEL:  'Cancel',
 }
 
-longestRoadClick = (player) ->
+events.longestRoadClick = (player) ->
 
   previousPlayerWithLongestRoad = game.longestRoad.player
 

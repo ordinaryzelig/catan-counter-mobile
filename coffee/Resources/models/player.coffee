@@ -3,6 +3,7 @@ class Player
   constructor: (atts = {}) ->
     @game = atts['game']
     @soldiers = new PlayableSet()
+    @developmentCardVictoryPoints = new PlayableSet()
 
   setup: ->
     @createSettlements()
@@ -13,10 +14,11 @@ class Player
   # Victory points.
 
   victoryPoints: ->
-    (@settlements.inPlay().length * 1) +
-    (@cities.inPlay().length * 2) +
+    (@settlements.inPlay().length * 1)   +
+    (@cities.inPlay().length * 2)        +
     (if @hasLargestArmy() then 2 else 0) +
-    (if @hasLongestRoad() then 2 else 0)
+    (if @hasLongestRoad() then 2 else 0) +
+    (@developmentCardVictoryPoints.length)
 
   hasEnoughVictoryPointsToWin: ->
     @victoryPoints() >= @game.victoryPointsRequiredToWin
@@ -30,7 +32,7 @@ class Player
   createSettlements: ->
     @settlements = new PlayableSet()
     for i in [1..5]
-      @settlements.push(new Settlement(player: this))
+      @settlements.push(new Settlement(player: @))
 
   destroySettlement: ->
     settlementToDestroy = @settlements.inPlay()[0]
@@ -55,7 +57,7 @@ class Player
   createCities: ->
     @cities = new PlayableSet()
     for i in [1..4]
-      @cities.push(new City(player: this))
+      @cities.push(new City(player: @))
 
   downgradeCity: ->
     @cities.inPlay()[0].downgradeToSettlement()
@@ -84,7 +86,7 @@ class Player
 
   checkForLargestArmy: ->
     if @soldiers.length >= @game.largestArmy.numSoldiersNeeded()
-      @game.awardLargestArmyTo(this)
+      @game.awardLargestArmyTo(@)
 
   # Longest road.
 
@@ -94,3 +96,22 @@ class Player
 
   takeLongestRoad: ->
     @game.awardLongestRoadTo @
+
+  # Development card victory points.
+
+  showDevelopmentCardVictoryPoints: (numCards) ->
+    for card in @game.developmentCardVictoryPoints.notInPlay()[0..numCards - 1]
+      card.build()
+      card.player = @
+      @developmentCardVictoryPoints.push(card)
+
+  winByPlayingDevelopmentCardVictoryPoints: ->
+    @showDevelopmentCardVictoryPoints(@numDevelopmentCardVictoryPointsNeededToWin()) if @canWinByShowingAllDevelopmentCardVictoryPoints()
+
+  # How many TOTAL development card victory points need to be SHOWN to win.
+  # Edge case: Should not include cards already possessed because this should be called even before the cards are shown.
+  numDevelopmentCardVictoryPointsNeededToWin: ->
+    @game.victoryPointsRequiredToWin - (@victoryPoints() - @developmentCardVictoryPoints.length)
+
+  canWinByShowingAllDevelopmentCardVictoryPoints: ->
+    (@game.victoryPointsRequiredToWin - @victoryPoints()) <= @game.developmentCardVictoryPoints.notInPlay().length

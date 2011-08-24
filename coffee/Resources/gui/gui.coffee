@@ -14,10 +14,12 @@ gui.updateBadges = (player) ->
     switch item.componentType
       when 'settlement', 'city'
         item.badge = player[pluralize(item.componentType)].inPlay().length
-      when 'longest road'
+      when 'longestRoad'
         item.badge = if player.hasLongestRoad() then 1 else 0
       when 'soldier'
         item.badge = player.soldiers.length
+      when 'developmentCardVictoryPoint'
+        item.badge = player.developmentCardVictoryPoints.length
 
 # Change title of players window.
 gui.changeTitle = (player) ->

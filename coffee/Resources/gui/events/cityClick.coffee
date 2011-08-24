@@ -4,7 +4,7 @@ cityEvents = {
   CANCEL:  'Cancel',
 }
 
-cityClick = (player) ->
+events.cityClick = (player) ->
 
   # Construct option dialog.
   cities = player.cities

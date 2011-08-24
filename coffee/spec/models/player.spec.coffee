@@ -52,3 +52,30 @@ describe 'Player', ->
       player.buildSettlement()
       player.buildCity()
     expect(player.canBuildCity()).toEqual(false)
+
+  it '#numDevelopmentCardVictoryPointsNeededToWin', ->
+    game = new Game()
+    game.setup(numPlayers: 1)
+    player = game.players[0]
+    player.showDevelopmentCardVictoryPoints(2)
+    expect(player.numDevelopmentCardVictoryPointsNeededToWin()).toEqual(8)
+
+  it '#canWinByShowingAllDevelopmentCardVictoryPoints', ->
+    game = new Game()
+    game.setup(numPlayers: 1)
+    player = game.players[0]
+    expect(player.canWinByShowingAllDevelopmentCardVictoryPoints()).toEqual(false)
+    for idx in [1..3]
+      player.buildSettlement()
+    expect(player.canWinByShowingAllDevelopmentCardVictoryPoints()).toEqual(true)
+
+  it '#winByPlayingDevelopmentCardVictoryPoints', ->
+    game = new Game()
+    game.setup(numPlayers: 1)
+    player = game.players[0]
+    player.winByPlayingDevelopmentCardVictoryPoints()
+    expect(player.victoryPoints()).toEqual(2)
+    for idx in [1..3]
+      player.buildSettlement()
+    player.winByPlayingDevelopmentCardVictoryPoints()
+    expect(player.victoryPoints()).toEqual(10)

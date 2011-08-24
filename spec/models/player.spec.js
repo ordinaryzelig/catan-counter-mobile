@@ -53,7 +53,7 @@ describe('Player', function() {
     player.buildSettlement();
     return expect(player).toHaveEnoughVictoryPointsToWin();
   });
-  return it('#canBuildCity', function() {
+  it('#canBuildCity', function() {
     var game, idx, player, settlement, _i, _len, _ref;
     game = new Game();
     game.setup({
@@ -72,5 +72,43 @@ describe('Player', function() {
       player.buildCity();
     }
     return expect(player.canBuildCity()).toEqual(false);
+  });
+  it('#numDevelopmentCardVictoryPointsNeededToWin', function() {
+    var game, player;
+    game = new Game();
+    game.setup({
+      numPlayers: 1
+    });
+    player = game.players[0];
+    player.showDevelopmentCardVictoryPoints(2);
+    return expect(player.numDevelopmentCardVictoryPointsNeededToWin()).toEqual(8);
+  });
+  it('#canWinByShowingAllDevelopmentCardVictoryPoints', function() {
+    var game, idx, player;
+    game = new Game();
+    game.setup({
+      numPlayers: 1
+    });
+    player = game.players[0];
+    expect(player.canWinByShowingAllDevelopmentCardVictoryPoints()).toEqual(false);
+    for (idx = 1; idx <= 3; idx++) {
+      player.buildSettlement();
+    }
+    return expect(player.canWinByShowingAllDevelopmentCardVictoryPoints()).toEqual(true);
+  });
+  return it('#winByPlayingDevelopmentCardVictoryPoints', function() {
+    var game, idx, player;
+    game = new Game();
+    game.setup({
+      numPlayers: 1
+    });
+    player = game.players[0];
+    player.winByPlayingDevelopmentCardVictoryPoints();
+    expect(player.victoryPoints()).toEqual(2);
+    for (idx = 1; idx <= 3; idx++) {
+      player.buildSettlement();
+    }
+    player.winByPlayingDevelopmentCardVictoryPoints();
+    return expect(player.victoryPoints()).toEqual(10);
   });
 });

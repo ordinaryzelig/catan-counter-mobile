@@ -1,9 +1,9 @@
-var longestRoadClick, longestRoadEvents;
+var longestRoadEvents;
 longestRoadEvents = {
   AWARD: 'Take longest road',
   CANCEL: 'Cancel'
 };
-longestRoadClick = function(player) {
+events.longestRoadClick = function(player) {
   var dialog, key, options, previousPlayerWithLongestRoad, title, value;
   previousPlayerWithLongestRoad = game.longestRoad.player;
   options = [];
