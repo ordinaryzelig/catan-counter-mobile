@@ -1,8 +1,6 @@
 var Game;
 Game = (function() {
-  function Game() {
-    this.players = [];
-  }
+  function Game() {}
   Game.prototype.setup = function(options) {
     if (options == null) {
       options = {};
@@ -16,6 +14,7 @@ Game = (function() {
   Game.prototype.victoryPointsRequiredToWin = 10;
   Game.prototype.createPlayers = function(num) {
     var i, player, _results;
+    this.players = [];
     _results = [];
     for (i = 1; 1 <= num ? i <= num : i >= num; 1 <= num ? i++ : i--) {
       player = new Player({

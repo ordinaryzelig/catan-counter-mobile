@@ -1,8 +1,5 @@
 class Game
 
-  constructor: ->
-    @players = []
-
   setup: (options = {}) ->
     @createPlayers(options['numPlayers'])
     @createSoldiers()
@@ -13,6 +10,7 @@ class Game
   victoryPointsRequiredToWin: 10
 
   createPlayers: (num) ->
+    @players = []
     for i in [1..num]
       player = new Player(game: @)
       player.setup()
