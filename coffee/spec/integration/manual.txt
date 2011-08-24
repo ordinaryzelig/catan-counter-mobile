@@ -1,0 +1,130 @@
+There's no good way to test the GUI, so we're just going to do it manually.
+This is a list of things that should be tested.
+
+Main navigation
+
+  game menu tab changes window to game menu window
+
+  players tab changes window to players window
+
+Game menu
+
+  list of all 6 colors in table
+
+    each row has image of color, text of color and victory points badge on right
+
+    when user taps on color (the row), window changes to player window and scrolls to that player
+
+  'Edit' button makes table editable
+
+    rows are removable and movable by tapping 'Edit' button in top right
+
+      after tapping 'Done', the players window should match the table and be in order
+
+  'New game' button resets game with fresh set of players
+
+    players window is reset
+
+    works when tapped while table is in edit mode
+
+Players window
+
+  each color has its own view with a dashboard
+
+    dashboard contains game components
+
+    dashboard items have badges indicating how many of that item the user has built/earned/etc.
+
+  title bar shows player color and total victory points
+
+    changes as player gets victory points and when scrolling to another player
+
+    changes when navigating from game menu
+
+  each color is represented by color in tabbed bar at bottom
+
+    when tapped, window scrolls to respective player
+
+    updated when players reordered and/or removed
+
+    resets to first color when players reordered and/or removed
+
+Gameplay
+
+  settlement
+
+    tapping brings up option dialog
+
+      title shows how many settlements out of 5 are built
+
+      'Build' button builds settlement, gives player 1 victory point, and updates badge
+
+        alerts if no more settlements left to build
+
+      'Upgrade to city' button removes 1 settlement, adds 1 victory point, and updates settlement badge and city badge
+
+        alerts if no settlements to upgrade
+
+        alerts if no cities left to build
+
+      'Destroy' button is red, removes 1 settlement, subtracts victory point, updates badge
+
+      'Cancel' does nothing
+
+  city
+
+    tapping brings up option dialog
+
+      'Upgrade settlement to city' button builds city, removes settlement, adds 1 victory point, updates city badge and settlement badge
+
+        alerts if no settlements left to upgrade
+
+        alerts if no more cities left to build
+
+      'Downgrade to settlement' button removes city, adds settlement, removes 1 victory point, updates city badge and settlement badge
+
+        alerts if no settlements to downgrade to and city is completely destroyed
+
+      'Cancel' button does nothing
+
+  longest road
+
+    tapping brings up option dialog
+
+      'Take longest road' button adds longest road, adds 2 victory points
+
+        alerts if stolen from another player
+
+      'Cancel' button does nothing
+
+  soldier
+
+    tapping brings up option dialog
+
+      'Play knight card' button adds soldier to player, updates soldier badge
+
+        alerts if player takes largest army, adds 2 victory points
+
+          alert also notes if player steals largest army
+
+      'Cancel' button does nothing
+
+  development card victory point
+
+    tapping brings up option dialog
+
+      title explains what button does
+
+      'Show all development cards' button
+
+        if player can win by showing development card victory points
+
+          asks for confirmation
+
+            'OK' button adds enough development card victory points for player to win
+
+            'Cancel' button does nothing
+
+        alerts if player cannot win by showing development card victory points
+
+      'Cancel' button does nothing
