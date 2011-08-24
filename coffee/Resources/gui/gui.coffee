@@ -23,7 +23,7 @@ gui.updateBadges = (player) ->
 
 # Change title of players window.
 gui.changeTitle = (player) ->
-  playersWindow.title = player.color + ' (' + player.victoryPoints() + ')'
+  playersWindow.title = player.color + ': ' + player.victoryPoints() + ' victory points'
 
 gui.flexSpace = Ti.UI.createButton({systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE})
 

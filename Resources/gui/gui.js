@@ -28,7 +28,7 @@ gui.updateBadges = function(player) {
   return _results;
 };
 gui.changeTitle = function(player) {
-  return playersWindow.title = player.color + ' (' + player.victoryPoints() + ')';
+  return playersWindow.title = player.color + ': ' + player.victoryPoints() + ' victory points';
 };
 gui.flexSpace = Ti.UI.createButton({
   systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE
