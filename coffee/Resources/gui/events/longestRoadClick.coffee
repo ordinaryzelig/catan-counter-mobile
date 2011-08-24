@@ -1,5 +1,5 @@
 longestRoadEvents = {
-  AWARD: 'Take',
+  AWARD: 'Take longest road',
   CANCEL:  'Cancel',
 }
 

@@ -1,6 +1,6 @@
 var longestRoadClick, longestRoadEvents;
 longestRoadEvents = {
-  AWARD: 'Take',
+  AWARD: 'Take longest road',
   CANCEL: 'Cancel'
 };
 longestRoadClick = function(player) {
