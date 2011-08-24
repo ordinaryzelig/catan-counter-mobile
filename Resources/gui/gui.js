@@ -18,6 +18,8 @@ gui.updateBadges = function(player) {
           return item.badge = player[pluralize(item.componentType)].inPlay().length;
         case 'longest road':
           return item.badge = player.hasLongestRoad() ? 1 : 0;
+        case 'soldier':
+          return item.badge = player.soldiers.length;
       }
     })());
   }
@@ -66,7 +68,9 @@ gui.changePlayersMenuVictoryPoints = function(player) {
 };
 gui.updatePlayerVictoryPoints = function(player) {
   this.changePlayersMenuVictoryPoints(player);
-  return this.changeTitle(player);
+  if (player === gui.currentPlayer) {
+    return this.changeTitle(player);
+  }
 };
 gui.updatePlayerVictoryPointsAndBadges = function(player) {
   this.updateBadges(player);

@@ -35,6 +35,13 @@ createPlayerViews = ->
     })
     dashboardItems.push(item)
 
+    # Create soldier dashboard item.
+    item = dashboardItem({
+      image: imagesPath('soldier.png'),
+      componentType: 'soldier',
+    })
+    dashboardItems.push(item)
+
     # Create dashboard and add it to a view.
     dashboard = Ti.UI.createDashboardView({
       data: dashboardItems,

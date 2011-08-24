@@ -29,6 +29,11 @@ createPlayerViews = function() {
       componentType: 'longest road'
     });
     dashboardItems.push(item);
+    item = dashboardItem({
+      image: imagesPath('soldier.png'),
+      componentType: 'soldier'
+    });
+    dashboardItems.push(item);
     dashboard = Ti.UI.createDashboardView({
       data: dashboardItems,
       editable: false,

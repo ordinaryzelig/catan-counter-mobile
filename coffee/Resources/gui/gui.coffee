@@ -16,6 +16,8 @@ gui.updateBadges = (player) ->
         item.badge = player[pluralize(item.componentType)].inPlay().length
       when 'longest road'
         item.badge = if player.hasLongestRoad() then 1 else 0
+      when 'soldier'
+        item.badge = player.soldiers.length
 
 # Change title of players window.
 gui.changeTitle = (player) ->
@@ -53,10 +55,11 @@ gui.changePlayersMenuVictoryPoints = (player) ->
     if row.playerColor == player.color
       row.children[2].text = player.victoryPoints()
 
-# Update player's victory points in title bar and players menu.
+# Update player's victory points in game menu.
+# If player is current player, change title bar too.
 gui.updatePlayerVictoryPoints = (player) ->
   @changePlayersMenuVictoryPoints(player)
-  @changeTitle(player)
+  @changeTitle(player) if player == gui.currentPlayer
 
 gui.updatePlayerVictoryPointsAndBadges = (player) ->
   @updateBadges(player)
