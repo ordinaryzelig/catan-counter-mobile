@@ -21,7 +21,7 @@ Game menu
 
       after tapping 'Done', the players window should match the table and be in order
 
-  'New game' button resets game with fresh set of players
+  'Reset game' button resets game with fresh set of players
 
     players window is reset
 

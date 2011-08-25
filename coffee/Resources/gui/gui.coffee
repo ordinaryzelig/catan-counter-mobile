@@ -1,5 +1,7 @@
 # This is probably the wrong way to do namespaces.
 
+Ti.UI.setBackgroundImage(imagesPath('water.png'))
+
 gui = {}
 
 gui.dashboardItems = {}

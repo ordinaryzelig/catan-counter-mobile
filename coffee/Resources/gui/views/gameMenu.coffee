@@ -13,7 +13,7 @@ gui.navigation.addTab(tab)
 
 createPlayersRows = ->
   section = Ti.UI.createTableViewSection({
-    headerTitle: 'Players',
+    headerTitle: 'Players and scores',
     footerTitle: 'Tap Edit to remove or reorder players',
   })
   for player in game.players
@@ -98,15 +98,15 @@ doneButton.addEventListener('click', (event) ->
   gui.reorderNavigation(newColorOrder)
 )
 
-newGameButton = Ti.UI.createButton({
-  title: 'New game'
+resetGameButton = Ti.UI.createButton({
+  title: 'Reset game'
 })
 # When button tapped:
 #   Reset game.
 #   Set new rows in players table.
 #   Set new player views.
 #   Set new color nav tabs.
-newGameButton.addEventListener('click', (event) ->
+resetGameButton.addEventListener('click', (event) ->
   gameMenuWindow.setRightNavButton(editButton)
   gui.playersTable.moving = false
   controller.resetGame()
@@ -115,4 +115,4 @@ newGameButton.addEventListener('click', (event) ->
   gui.setColorNavTabs(createColorNavTabs())
   gui.scrollTo(0)
 )
-gameMenuWindow.setLeftNavButton(newGameButton)
+gameMenuWindow.setLeftNavButton(resetGameButton)

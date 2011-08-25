@@ -1,4 +1,5 @@
 var gui;
+Ti.UI.setBackgroundImage(imagesPath('water.png'));
 gui = {};
 gui.dashboardItems = {};
 gui.tabs = {

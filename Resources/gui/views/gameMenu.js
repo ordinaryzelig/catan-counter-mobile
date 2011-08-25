@@ -1,4 +1,4 @@
-var createPlayersRows, doneButton, editButton, gameMenuWindow, newGameButton, tab;
+var createPlayersRows, doneButton, editButton, gameMenuWindow, resetGameButton, tab;
 gameMenuWindow = Ti.UI.createWindow({
   title: 'Game'
 });
@@ -10,7 +10,7 @@ gui.navigation.addTab(tab);
 createPlayersRows = function() {
   var colorImage, colorLabel, player, row, section, victoryPoints, _i, _len, _ref;
   section = Ti.UI.createTableViewSection({
-    headerTitle: 'Players',
+    headerTitle: 'Players and scores',
     footerTitle: 'Tap Edit to remove or reorder players'
   });
   _ref = game.players;
@@ -89,10 +89,10 @@ doneButton.addEventListener('click', function(event) {
   }
   return gui.reorderNavigation(newColorOrder);
 });
-newGameButton = Ti.UI.createButton({
-  title: 'New game'
+resetGameButton = Ti.UI.createButton({
+  title: 'Reset game'
 });
-newGameButton.addEventListener('click', function(event) {
+resetGameButton.addEventListener('click', function(event) {
   gameMenuWindow.setRightNavButton(editButton);
   gui.playersTable.moving = false;
   controller.resetGame();
@@ -101,4 +101,4 @@ newGameButton.addEventListener('click', function(event) {
   gui.setColorNavTabs(createColorNavTabs());
   return gui.scrollTo(0);
 });
-gameMenuWindow.setLeftNavButton(newGameButton);
+gameMenuWindow.setLeftNavButton(resetGameButton);
