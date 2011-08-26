@@ -1,8 +1,9 @@
 var controller, game;
-game = new Game();
+game = null;
 controller = {};
 controller.resetGame = function() {
   var player, _i, _len, _ref, _results;
+  game = new Game();
   game.setup({
     numPlayers: Game.COLORS.length
   });

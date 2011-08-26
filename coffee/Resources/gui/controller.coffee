@@ -1,8 +1,9 @@
-game = new Game()
+game = null
 
 controller = {}
 
 controller.resetGame = ->
+  game = new Game()
   game.setup({numPlayers: Game.COLORS.length})
   # Assign colors.
   for player in game.players
