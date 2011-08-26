@@ -105,7 +105,9 @@ Gameplay
 
         alerts if player takes largest army, adds 2 victory points
 
-          alert also notes if player steals largest army
+          alert if player steals largest army
+
+        alerts if no more knights to play
 
       'Cancel' button does nothing
 

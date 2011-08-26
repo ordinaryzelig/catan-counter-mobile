@@ -21,18 +21,23 @@ events.soldierClick = function(player) {
     var hadLargestArmyBefore, justObtainedLargestArmy, message;
     switch (options[event.index]) {
       case soldierEvents.PLAY:
-        hadLargestArmyBefore = player.hasLargestArmy();
-        player.playSoldier();
-        justObtainedLargestArmy = !hadLargestArmyBefore && player.hasLargestArmy();
-        if (justObtainedLargestArmy) {
-          if (previousPlayerWithLargestArmy != null) {
-            if (previousPlayerWithLargestArmy !== player) {
-              message = "Largest army was stolen from " + previousPlayerWithLargestArmy.color;
+        if (game.soldiers.notInPlay().length > 0) {
+          hadLargestArmyBefore = player.hasLargestArmy();
+          player.playSoldier();
+          justObtainedLargestArmy = !hadLargestArmyBefore && player.hasLargestArmy();
+          if (justObtainedLargestArmy) {
+            if (previousPlayerWithLargestArmy != null) {
+              if (previousPlayerWithLargestArmy !== player) {
+                message = "Largest army was stolen from " + previousPlayerWithLargestArmy.color;
+              }
+            } else {
+              message = "" + player.color + " is awarded the largest army";
             }
-          } else {
-            message = "" + player.color + " is awarded the largest army";
+            basicAlert('Largest army', message);
           }
-          basicAlert('Largest army', message);
+        } else {
+          illegalActionAlert('No more knights left.');
+          return;
         }
         break;
       case soldierEvents.CANCEL:
