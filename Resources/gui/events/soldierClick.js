@@ -11,7 +11,7 @@ events.soldierClick = function(player) {
     value = soldierEvents[key];
     options.push(value);
   }
-  title = previousPlayerWithLargestArmy != null ? "" + previousPlayerWithLargestArmy.color + " has the largest army with " + previousPlayerWithLargestArmy.soldiers.length + " soldiers" : '';
+  title = previousPlayerWithLargestArmy != null ? "" + previousPlayerWithLargestArmy.color + " has the largest army with " + previousPlayerWithLargestArmy.soldiers.length + " knights" : 'Nobody has the largest army yet';
   dialog = Ti.UI.createOptionDialog({
     options: options,
     cancel: options.indexOf(soldierEvents['CANCEL']),

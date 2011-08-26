@@ -11,7 +11,10 @@ events.soldierClick = (player) ->
   options = []
   for key, value of soldierEvents
     options.push value
-  title = if previousPlayerWithLargestArmy? then "#{previousPlayerWithLargestArmy.color} has the largest army with #{previousPlayerWithLargestArmy.soldiers.length} soldiers" else ''
+  title = if previousPlayerWithLargestArmy?
+    "#{previousPlayerWithLargestArmy.color} has the largest army with #{previousPlayerWithLargestArmy.soldiers.length} knights"
+  else
+    'Nobody has the largest army yet'
   dialog = Ti.UI.createOptionDialog({
     options: options
     cancel: options.indexOf(soldierEvents['CANCEL']),
