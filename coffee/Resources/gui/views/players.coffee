@@ -6,7 +6,8 @@
 playersWindow = Ti.UI.createWindow()
 tab = Ti.UI.createTab({
   window: playersWindow,
-  icon:   Ti.UI.iPhone.SystemIcon.CONTACTS
+  icon:   tabsPath('players.png'),
+  title:  'Players',
 })
 gui.navigation.addTab(tab)
 

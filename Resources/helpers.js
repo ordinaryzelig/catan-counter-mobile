@@ -1,4 +1,4 @@
-var badge, basicAlert, confirmationAlert, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, pluralize, reorderByColor, viewsPath;
+var badge, basicAlert, confirmationAlert, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, pluralize, reorderByColor, tabsPath, viewsPath;
 pluralize = function(str, num) {
   var newStr;
   if (num == null) {
@@ -79,6 +79,9 @@ eventsPath = function(path) {
 };
 imagesPath = function(path) {
   return "/images/" + path;
+};
+tabsPath = function(path) {
+  return imagesPath("tabs/" + path);
 };
 basicAlert = function(title, message) {
   return Ti.UI.createAlertDialog({

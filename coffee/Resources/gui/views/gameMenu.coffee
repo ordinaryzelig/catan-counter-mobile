@@ -3,11 +3,12 @@
 # Tapping on player will take user to player's dashboard.
 
 gameMenuWindow = Ti.UI.createWindow({
-  title: 'Game',
+  title: 'Setup/Scores',
 })
 tab = Ti.UI.createTab({
   window: gameMenuWindow,
-  icon:   Ti.UI.iPhone.SystemIcon.BOOKMARKS
+  icon:   tabsPath('game.png'),
+  title:  'Setup/Scores'
 })
 gui.navigation.addTab(tab)
 

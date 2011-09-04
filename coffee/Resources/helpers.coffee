@@ -63,6 +63,9 @@ eventsPath = (path) ->
 imagesPath = (path) ->
   "/images/#{path}"
 
+tabsPath = (path) ->
+  imagesPath("tabs/#{path}")
+
 # Alerts.
 
 basicAlert = (title, message) ->
