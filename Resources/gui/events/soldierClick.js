@@ -1,6 +1,7 @@
 var soldierEvents;
 soldierEvents = {
   PLAY: 'Play knight card',
+  REMOVE: 'Remove knight card',
   CANCEL: 'Cancel'
 };
 events.soldierClick = function(player) {
@@ -15,10 +16,11 @@ events.soldierClick = function(player) {
   dialog = Ti.UI.createOptionDialog({
     options: options,
     cancel: options.indexOf(soldierEvents['CANCEL']),
+    destructive: 1,
     title: title
   });
   dialog.addEventListener('click', function(event) {
-    var hadLargestArmyBefore, justObtainedLargestArmy, message;
+    var hadLargestArmyBefore, justObtainedLargestArmy, message, numSoldiers;
     switch (options[event.index]) {
       case soldierEvents.PLAY:
         if (game.soldiers.notInPlay().length > 0) {
@@ -36,7 +38,16 @@ events.soldierClick = function(player) {
             basicAlert('Largest army', message);
           }
         } else {
-          illegalActionAlert('No more knights left.');
+          illegalActionAlert('No more knights left');
+          return;
+        }
+        break;
+      case soldierEvents.REMOVE:
+        numSoldiers = player.soldiers.length;
+        if (numSoldiers > 0) {
+          player.destroySoldier();
+        } else {
+          illegalActionAlert('Player has no knights');
           return;
         }
         break;

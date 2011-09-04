@@ -2,14 +2,23 @@ describe 'Player', ->
 
   beforeEach ->
     @addMatchers {
+
       toAllBelongToPlayer: (player) ->
         for object in @actual
           return false unless object.player == player
         true
+
       toHaveEnoughVictoryPointsToWin: ->
         @actual.hasEnoughVictoryPointsToWin()
+
       toNotHaveEnoughVictoryPointsToWin: ->
         !@actual.hasEnoughVictoryPointsToWin()
+
+      toHaveLargestArmy: ->
+        @actual.hasLargestArmy()
+
+      toNotHaveLargestArmy: ->
+        !@actual.hasLargestArmy()
     }
 
   it '#setup creates settlements and cities', ->
@@ -79,3 +88,32 @@ describe 'Player', ->
       player.buildSettlement()
     player.winByPlayingDevelopmentCardVictoryPoints()
     expect(player.victoryPoints()).toEqual(10)
+
+  it '#destroySoldier removes knight and unassigns self from it', ->
+    game = new Game()
+    game.setup(numPlayers: 1)
+    player = game.players[0]
+    for idx in [1..2]
+      player.playSoldier()
+    soldier = player.soldiers[0]
+    player.destroySoldier()
+    expect(soldier.player).toBeNull()
+    expect(soldier.inPlay).toEqual(false)
+    expect(player.soldiers.length).toEqual(1)
+
+  it '#destroySoldier reassigns largest army if necessary', ->
+    game = new Game()
+    game.setup(numPlayers: 2)
+    player1 = game.players[0]
+    player2 = game.players[1]
+    player1.playSoldier()
+    player1.destroySoldier()
+    expect(player1).toNotHaveLargestArmy()
+    for idx in [1..3]
+      player1.playSoldier()
+      player2.playSoldier()
+    expect(player1).toHaveLargestArmy()
+    player2.playSoldier()
+    expect(player2).toHaveLargestArmy()
+    player2.destroySoldier()
+    expect(player1).toHaveLargestArmy()

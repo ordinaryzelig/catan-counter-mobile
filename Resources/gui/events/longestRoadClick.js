@@ -1,6 +1,7 @@
 var longestRoadEvents;
 longestRoadEvents = {
   AWARD: 'Take longest road',
+  REMOVE: 'Remove longest road',
   CANCEL: 'Cancel'
 };
 events.longestRoadClick = function(player) {
@@ -15,6 +16,7 @@ events.longestRoadClick = function(player) {
   dialog = Ti.UI.createOptionDialog({
     options: options,
     cancel: options.indexOf(longestRoadEvents['CANCEL']),
+    destructive: 1,
     title: title
   });
   dialog.addEventListener('click', function(event) {
@@ -27,6 +29,14 @@ events.longestRoadClick = function(player) {
             basicAlert('Longest road stolen', "Longest road was stolen from " + previousPlayerWithLongestRoad.color);
           }
           player.takeLongestRoad();
+        }
+        break;
+      case longestRoadEvents.REMOVE:
+        if (player.hasLongestRoad()) {
+          game.longestRoad.player = null;
+        } else {
+          illegalActionAlert('Player does not have the longest road');
+          return;
         }
         break;
       case longestRoadEvents.CANCEL:

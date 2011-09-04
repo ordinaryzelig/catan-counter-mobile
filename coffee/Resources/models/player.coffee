@@ -80,6 +80,16 @@ class Player
       @soldiers.push soldierToPlay
     @checkForLargestArmy()
 
+  destroySoldier: ->
+    hadLargestArmy = @hasLargestArmy()
+    soldier = @soldiers[0]
+    if soldier?
+      soldier.destroy()
+      soldier.player = null
+      @soldiers.splice(@soldiers.indexOf(soldier), 1)
+      if hadLargestArmy
+        @game.reassignPreviousPlayerWithLargestArmy()
+
   hasLargestArmy: ->
     return false unless @game.largestArmy.awarded()
     @game.largestArmy.player == @

@@ -18,6 +18,7 @@ class Game
 
   createSoldiers: ->
     @soldiers = new PlayableSet()
+    @previousPlayersWithLargestArmy = []
     for i in [1..14]
       @soldiers.push(new Soldier(game: @))
 
@@ -33,7 +34,16 @@ class Game
       @developmentCardVictoryPoints.push(new DevelopmentCardVictoryPoint(game: @))
 
   awardLargestArmyTo: (player) ->
+    @previousPlayersWithLargestArmy.push(@largestArmy.player)
     @largestArmy.player = player
+
+  # Keep a stack record of players so we can unwind if needed.
+  previousPlayerWithLargestArmy: ->
+    @previousPlayersWithLargestArmy[@previousPlayersWithLargestArmy.length - 1]
+
+  reassignPreviousPlayerWithLargestArmy: ->
+    reassignTo = @previousPlayersWithLargestArmy.pop()
+    @largestArmy.player = reassignTo
 
   awardLongestRoadTo: (player) ->
     @longestRoad.player = player

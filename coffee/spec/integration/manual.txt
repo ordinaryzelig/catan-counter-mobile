@@ -95,6 +95,12 @@ Gameplay
 
         alerts if stolen from another player
 
+      'Remove longest road' button removes the longest road from player if they have it
+
+        removes largest army if necessary and reassigns it if necessary
+
+        alerts if player doesn't have it
+
       'Cancel' button does nothing
 
   soldier

@@ -1,5 +1,6 @@
 soldierEvents = {
   PLAY:    'Play knight card',
+  REMOVE:  'Remove knight card',
   CANCEL:  'Cancel',
 }
 
@@ -18,12 +19,15 @@ events.soldierClick = (player) ->
   dialog = Ti.UI.createOptionDialog({
     options: options
     cancel: options.indexOf(soldierEvents['CANCEL']),
-    title: title
+    destructive: 1,
+    title: title,
   })
 
   # Handle clicks.
   dialog.addEventListener('click', (event) ->
     switch options[event.index]
+
+      # Play soldier card.
       when soldierEvents.PLAY
         if game.soldiers.notInPlay().length > 0
           hadLargestArmyBefore = player.hasLargestArmy()
@@ -36,8 +40,19 @@ events.soldierClick = (player) ->
               message = "#{player.color} is awarded the largest army"
             basicAlert 'Largest army', message
         else
-          illegalActionAlert('No more knights left.')
+          illegalActionAlert('No more knights left')
           return
+
+      # Remove soldier card.
+      when soldierEvents.REMOVE
+        numSoldiers = player.soldiers.length
+        if numSoldiers > 0
+          player.destroySoldier()
+        else
+          illegalActionAlert 'Player has no knights'
+          return
+
+      # Cancel.
       when soldierEvents.CANCEL
         return
     gui.updatePlayerVictoryPointsAndBadges(player)

@@ -1,6 +1,7 @@
 longestRoadEvents = {
-  AWARD: 'Take longest road',
-  CANCEL:  'Cancel',
+  AWARD:  'Take longest road',
+  REMOVE: 'Remove longest road',
+  CANCEL: 'Cancel',
 }
 
 events.longestRoadClick = (player) ->
@@ -15,7 +16,8 @@ events.longestRoadClick = (player) ->
   dialog = Ti.UI.createOptionDialog({
     options: options
     cancel: options.indexOf(longestRoadEvents['CANCEL']),
-    title: title
+    destructive: 1,
+    title: title,
   })
 
   # Handle clicks.
@@ -28,6 +30,12 @@ events.longestRoadClick = (player) ->
           if previousPlayerWithLongestRoad?
             basicAlert 'Longest road stolen', "Longest road was stolen from #{previousPlayerWithLongestRoad.color}"
           player.takeLongestRoad()
+      when longestRoadEvents.REMOVE
+        if player.hasLongestRoad()
+          game.longestRoad.player = null
+        else
+          illegalActionAlert 'Player does not have the longest road'
+          return
       when longestRoadEvents.CANCEL
         return
     gui.updatePlayerVictoryPointsAndBadges(player)

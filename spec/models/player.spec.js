@@ -17,6 +17,12 @@ describe('Player', function() {
       },
       toNotHaveEnoughVictoryPointsToWin: function() {
         return !this.actual.hasEnoughVictoryPointsToWin();
+      },
+      toHaveLargestArmy: function() {
+        return this.actual.hasLargestArmy();
+      },
+      toNotHaveLargestArmy: function() {
+        return !this.actual.hasLargestArmy();
       }
     });
   });
@@ -96,7 +102,7 @@ describe('Player', function() {
     }
     return expect(player.canWinByShowingAllDevelopmentCardVictoryPoints()).toEqual(true);
   });
-  return it('#winByPlayingDevelopmentCardVictoryPoints', function() {
+  it('#winByPlayingDevelopmentCardVictoryPoints', function() {
     var game, idx, player;
     game = new Game();
     game.setup({
@@ -110,5 +116,42 @@ describe('Player', function() {
     }
     player.winByPlayingDevelopmentCardVictoryPoints();
     return expect(player.victoryPoints()).toEqual(10);
+  });
+  it('#destroySoldier removes knight and unassigns self from it', function() {
+    var game, idx, player, soldier;
+    game = new Game();
+    game.setup({
+      numPlayers: 1
+    });
+    player = game.players[0];
+    for (idx = 1; idx <= 2; idx++) {
+      player.playSoldier();
+    }
+    soldier = player.soldiers[0];
+    player.destroySoldier();
+    expect(soldier.player).toBeNull();
+    expect(soldier.inPlay).toEqual(false);
+    return expect(player.soldiers.length).toEqual(1);
+  });
+  return it('#destroySoldier reassigns largest army if necessary', function() {
+    var game, idx, player1, player2;
+    game = new Game();
+    game.setup({
+      numPlayers: 2
+    });
+    player1 = game.players[0];
+    player2 = game.players[1];
+    player1.playSoldier();
+    player1.destroySoldier();
+    expect(player1).toNotHaveLargestArmy();
+    for (idx = 1; idx <= 3; idx++) {
+      player1.playSoldier();
+      player2.playSoldier();
+    }
+    expect(player1).toHaveLargestArmy();
+    player2.playSoldier();
+    expect(player2).toHaveLargestArmy();
+    player2.destroySoldier();
+    return expect(player1).toHaveLargestArmy();
   });
 });

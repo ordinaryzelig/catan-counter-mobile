@@ -94,6 +94,19 @@ Player = (function() {
     }
     return this.checkForLargestArmy();
   };
+  Player.prototype.destroySoldier = function() {
+    var hadLargestArmy, soldier;
+    hadLargestArmy = this.hasLargestArmy();
+    soldier = this.soldiers[0];
+    if (soldier != null) {
+      soldier.destroy();
+      soldier.player = null;
+      this.soldiers.splice(this.soldiers.indexOf(soldier), 1);
+      if (hadLargestArmy) {
+        return this.game.reassignPreviousPlayerWithLargestArmy();
+      }
+    }
+  };
   Player.prototype.hasLargestArmy = function() {
     if (!this.game.largestArmy.awarded()) {
       return false;
