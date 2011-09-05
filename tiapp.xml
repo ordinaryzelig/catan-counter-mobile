@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
 <id>Catan Counter</id>
-<name>catan_counter</name>
+<name>CatanCounter</name>
 <version>1.0</version>
 <publisher>ningj</publisher>
 <url>asdf</url>
