@@ -45,7 +45,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  growl
-  guard
-  guard-coffeescript
-  jasmine
+  growl (= 1.0.3)
+  guard (= 0.6.2)
+  guard-coffeescript (= 0.3.3)
+  jasmine (= 1.0.2.1)
