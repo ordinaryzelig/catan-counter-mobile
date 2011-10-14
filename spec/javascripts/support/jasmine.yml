@@ -36,7 +36,7 @@ helpers:
 # spec_files:
 #   - **/*[sS]pec.js
 #
-spec_files:
+spec_files: ['../spec/**/*spec.js']
 
 # src_dir
 #
