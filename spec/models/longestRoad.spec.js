@@ -1,8 +1,7 @@
 describe('LongestRoad', function() {
   return it('is worth 2 victory points', function() {
     var game, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];

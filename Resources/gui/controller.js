@@ -1,11 +1,14 @@
 var controller, game;
 game = null;
 controller = {};
-controller.resetGame = function() {
+controller.newGame = function(settings) {
   var player, _i, _len, _ref, _results;
-  game = new Game();
-  game.setup({
-    numPlayers: Game.COLORS.length
+  if (settings == null) {
+    settings = {};
+  }
+  game = new Game({
+    numPlayers: Game.COLORS.length,
+    settings: settings
   });
   _ref = game.players;
   _results = [];

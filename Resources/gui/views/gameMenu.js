@@ -1,58 +1,21 @@
-var createPlayersRows, doneButton, editButton, gameMenuWindow, resetGameButton, tab;
-gameMenuWindow = Ti.UI.createWindow({
+var doneButton, editButton, newGameButton, tab;
+gui.gameMenuWindow = Ti.UI.createWindow({
   title: 'Setup/Scores'
 });
 tab = Ti.UI.createTab({
-  window: gameMenuWindow,
+  window: gui.gameMenuWindow,
   icon: tabsPath('game.png'),
   title: 'Setup/Scores'
 });
 gui.navigation.addTab(tab);
-createPlayersRows = function() {
-  var colorImage, colorLabel, player, row, section, victoryPoints, _i, _len, _ref;
-  section = Ti.UI.createTableViewSection({
-    headerTitle: 'Players and scores',
-    footerTitle: 'Tap Edit to remove or reorder players'
-  });
-  _ref = game.players;
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    player = _ref[_i];
-    row = Ti.UI.createTableViewRow({
-      playerColor: player.color
-    });
-    colorImage = Ti.UI.createLabel({
-      backgroundImage: 'images/square_' + player.color + '.png',
-      width: 30,
-      height: 30,
-      borderColor: 'black',
-      left: 5
-    });
-    row.add(colorImage);
-    colorLabel = Ti.UI.createLabel({
-      text: player.color,
-      left: 40,
-      font: {
-        fontSize: 20,
-        fontWeight: 'bold'
-      }
-    });
-    row.add(colorLabel);
-    victoryPoints = badge(player.victoryPoints(), {
-      right: 5
-    });
-    row.add(victoryPoints);
-    section.add(row);
-  }
-  return section;
-};
 gui.playersTable = Ti.UI.createTableView({
-  data: [createPlayersRows()],
+  data: [gui.createPlayersRows()],
   moveable: true,
   editable: true,
   scrollable: false,
   style: Ti.UI.iPhone.TableViewStyle.GROUPED
 });
-gameMenuWindow.add(gui.playersTable);
+gui.gameMenuWindow.add(gui.playersTable);
 gui.playersTable.addEventListener('click', function(event) {
   var rowIndex, rows;
   gui.navigateTo(gui.tabs.PLAYERS);
@@ -64,23 +27,23 @@ gui.playersTable.addEventListener('delete', function(event) {
   var color, player;
   color = event.row.playerColor;
   player = game.playerByColor(event.row.playerColor);
-  return game.players.remove(player);
+  return game.players.splice(game.players.indexOf(player), 1);
 });
 editButton = Ti.UI.createButton({
   title: 'Edit'
 });
 editButton.addEventListener('click', function(event) {
-  gameMenuWindow.setRightNavButton(doneButton);
+  gui.gameMenuWindow.setRightNavButton(doneButton);
   return gui.playersTable.moving = true;
 });
-gameMenuWindow.setRightNavButton(editButton);
+gui.gameMenuWindow.setRightNavButton(editButton);
 doneButton = Ti.UI.createButton({
   title: 'Done',
   style: Ti.UI.iPhone.SystemButtonStyle.DONE
 });
 doneButton.addEventListener('click', function(event) {
   var newColorOrder, row, rows, _i, _len;
-  gameMenuWindow.setRightNavButton(editButton);
+  gui.gameMenuWindow.setRightNavButton(editButton);
   gui.playersTable.moving = false;
   newColorOrder = [];
   rows = gui.playersTable.data[0].rows;
@@ -90,16 +53,10 @@ doneButton.addEventListener('click', function(event) {
   }
   return gui.reorderNavigation(newColorOrder);
 });
-resetGameButton = Ti.UI.createButton({
-  title: 'Reset game'
+newGameButton = Ti.UI.createButton({
+  title: 'New game'
 });
-resetGameButton.addEventListener('click', function(event) {
-  gameMenuWindow.setRightNavButton(editButton);
-  gui.playersTable.moving = false;
-  controller.resetGame();
-  gui.playersTable.data = [createPlayersRows()];
-  gui.setScrollableViews(createPlayerViews());
-  gui.setColorNavTabs(createColorNavTabs());
-  return gui.scrollTo(0);
+newGameButton.addEventListener('click', function(event) {
+  return gui.showNewGameWindow();
 });
-gameMenuWindow.setLeftNavButton(resetGameButton);
+gui.gameMenuWindow.setLeftNavButton(newGameButton);

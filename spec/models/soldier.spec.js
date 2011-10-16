@@ -1,8 +1,7 @@
 describe('Soldier', function() {
   return it('is played by a player', function() {
     var game, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];

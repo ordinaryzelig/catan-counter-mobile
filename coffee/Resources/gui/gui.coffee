@@ -4,6 +4,8 @@ Ti.UI.setBackgroundImage(imagesPath('water.png'))
 
 gui = {}
 
+Ti.include('/gui/views/newGameWindow.js')
+
 gui.dashboardItems = {}
 
 gui.tabs = {
@@ -74,3 +76,43 @@ gui.checkIfPlayerHasEnoughVictoryPointsToWin = (player) ->
 gui.updatePlayerVictoryPointsAndBadges = (player) ->
   @updateBadges(player)
   @updatePlayerVictoryPoints(player)
+
+gui.createPlayersRows = ->
+  section = Ti.UI.createTableViewSection({
+    headerTitle: 'Players and scores',
+    footerTitle: 'Tap Edit to remove or reorder players',
+  })
+  for player in game.players
+    row = Ti.UI.createTableViewRow({playerColor: player.color})
+    colorImage = Ti.UI.createLabel({
+      backgroundImage: 'images/square_' + player.color + '.png',
+      width: 30,
+      height: 30,
+      borderColor: 'black',
+      left: 5,
+    })
+    row.add(colorImage)
+    colorLabel = Ti.UI.createLabel({
+      text: player.color,
+      left: 40,
+      font: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      }
+    })
+    row.add(colorLabel)
+    victoryPoints = badge(player.victoryPoints(), {
+      right: 5,
+    })
+    row.add(victoryPoints)
+    section.add(row)
+  section
+
+gui.createNewGame = (settings) ->
+  @gameMenuWindow.setRightNavButton(editButton)
+  @playersTable.moving = false
+  controller.newGame({settings: settings})
+  @playersTable.data = [@createPlayersRows()]
+  @setScrollableViews(@createPlayerViews())
+  @setColorNavTabs(@createColorNavTabs())
+  @scrollTo(0)

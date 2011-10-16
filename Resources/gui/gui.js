@@ -1,6 +1,7 @@
 var gui;
 Ti.UI.setBackgroundImage(imagesPath('water.png'));
 gui = {};
+Ti.include('/gui/views/newGameWindow.js');
 gui.dashboardItems = {};
 gui.tabs = {
   PLAYERS_MENU: 0,
@@ -87,4 +88,52 @@ gui.checkIfPlayerHasEnoughVictoryPointsToWin = function(player) {
 gui.updatePlayerVictoryPointsAndBadges = function(player) {
   this.updateBadges(player);
   return this.updatePlayerVictoryPoints(player);
+};
+gui.createPlayersRows = function() {
+  var colorImage, colorLabel, player, row, section, victoryPoints, _i, _len, _ref;
+  section = Ti.UI.createTableViewSection({
+    headerTitle: 'Players and scores',
+    footerTitle: 'Tap Edit to remove or reorder players'
+  });
+  _ref = game.players;
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    player = _ref[_i];
+    row = Ti.UI.createTableViewRow({
+      playerColor: player.color
+    });
+    colorImage = Ti.UI.createLabel({
+      backgroundImage: 'images/square_' + player.color + '.png',
+      width: 30,
+      height: 30,
+      borderColor: 'black',
+      left: 5
+    });
+    row.add(colorImage);
+    colorLabel = Ti.UI.createLabel({
+      text: player.color,
+      left: 40,
+      font: {
+        fontSize: 20,
+        fontWeight: 'bold'
+      }
+    });
+    row.add(colorLabel);
+    victoryPoints = badge(player.victoryPoints(), {
+      right: 5
+    });
+    row.add(victoryPoints);
+    section.add(row);
+  }
+  return section;
+};
+gui.createNewGame = function(settings) {
+  this.gameMenuWindow.setRightNavButton(editButton);
+  this.playersTable.moving = false;
+  controller.newGame({
+    settings: settings
+  });
+  this.playersTable.data = [this.createPlayersRows()];
+  this.setScrollableViews(this.createPlayerViews());
+  this.setColorNavTabs(this.createColorNavTabs());
+  return this.scrollTo(0);
 };

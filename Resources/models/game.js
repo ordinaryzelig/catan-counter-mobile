@@ -1,7 +1,12 @@
 var Game;
+var __indexOf = Array.prototype.indexOf || function(item) {
+  for (var i = 0, l = this.length; i < l; i++) {
+    if (this[i] === item) return i;
+  }
+  return -1;
+};
 Game = (function() {
-  function Game() {}
-  Game.prototype.setup = function(options) {
+  function Game(options) {
     if (options == null) {
       options = {};
     }
@@ -9,8 +14,9 @@ Game = (function() {
     this.createSoldiers();
     this.createLargestArmy();
     this.createLongestRoad();
-    return this.createDevelopmentCardVictoryPoints();
-  };
+    this.createDevelopmentCardVictoryPoints();
+    this.settings = options['settings'];
+  }
   Game.prototype.victoryPointsRequiredToWin = 10;
   Game.prototype.createPlayers = function(num) {
     var i, player, _results;
@@ -20,7 +26,6 @@ Game = (function() {
       player = new Player({
         game: this
       });
-      player.setup();
       _results.push(this.players.push(player));
     }
     return _results;
@@ -86,6 +91,10 @@ Game = (function() {
     }
     return this.playersByColor[color];
   };
+  Game.prototype.usesExpansion = function(expansion) {
+    return __indexOf.call(this.settings.expansions, expansion) >= 0;
+  };
   return Game;
 })();
 Game.COLORS = ['red', 'blue', 'orange', 'white', 'green', 'brown'];
+Game.EXPANSIONS = [CitiesAndKnights];

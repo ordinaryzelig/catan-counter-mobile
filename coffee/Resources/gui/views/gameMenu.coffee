@@ -2,56 +2,25 @@
 # Each player's victory points are displayed as badges for a bird's eye view of points.
 # Tapping on player will take user to player's dashboard.
 
-gameMenuWindow = Ti.UI.createWindow({
+gui.gameMenuWindow = Ti.UI.createWindow({
   title: 'Setup/Scores',
 })
 tab = Ti.UI.createTab({
-  window: gameMenuWindow,
+  window: gui.gameMenuWindow,
   icon:   tabsPath('game.png'),
   title:  'Setup/Scores'
 })
 gui.navigation.addTab(tab)
 
-createPlayersRows = ->
-  section = Ti.UI.createTableViewSection({
-    headerTitle: 'Players and scores',
-    footerTitle: 'Tap Edit to remove or reorder players',
-  })
-  for player in game.players
-    row = Ti.UI.createTableViewRow({playerColor: player.color})
-    colorImage = Ti.UI.createLabel({
-      backgroundImage: 'images/square_' + player.color + '.png',
-      width: 30,
-      height: 30,
-      borderColor: 'black',
-      left: 5,
-    })
-    row.add(colorImage)
-    colorLabel = Ti.UI.createLabel({
-      text: player.color,
-      left: 40,
-      font: {
-        fontSize: 20,
-        fontWeight: 'bold',
-      }
-    })
-    row.add(colorLabel)
-    victoryPoints = badge(player.victoryPoints(), {
-      right: 5,
-    })
-    row.add(victoryPoints)
-    section.add(row)
-  section
-
 gui.playersTable = Ti.UI.createTableView({
-  data: [createPlayersRows()],
+  data: [gui.createPlayersRows()],
   moveable: true,
   editable: true,
   scrollable: false,
   style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 })
 
-gameMenuWindow.add(gui.playersTable)
+gui.gameMenuWindow.add(gui.playersTable)
 
 # When clicked, navigate to that player's board.
 gui.playersTable.addEventListener('click', (event) ->
@@ -69,7 +38,7 @@ gui.playersTable.addEventListener('click', (event) ->
 gui.playersTable.addEventListener('delete', (event) ->
   color = event.row.playerColor
   player = game.playerByColor(event.row.playerColor)
-  game.players.remove(player)
+  game.players.splice(game.players.indexOf(player), 1)
   # colorNav and scrollableView will be changed when Done button is clicked.
 )
 
@@ -77,10 +46,10 @@ editButton = Ti.UI.createButton({
   title: 'Edit',
 })
 editButton.addEventListener('click', (event) ->
-  gameMenuWindow.setRightNavButton(doneButton)
+  gui.gameMenuWindow.setRightNavButton(doneButton)
   gui.playersTable.moving = true
 )
-gameMenuWindow.setRightNavButton(editButton)
+gui.gameMenuWindow.setRightNavButton(editButton)
 
 doneButton = Ti.UI.createButton({
   title: 'Done',
@@ -90,7 +59,7 @@ doneButton = Ti.UI.createButton({
 # reorder the scrollableView and colorNav to match order in players table.
 # If players were removed, remove them from the game as well.
 doneButton.addEventListener('click', (event) ->
-  gameMenuWindow.setRightNavButton(editButton)
+  gui.gameMenuWindow.setRightNavButton(editButton)
   gui.playersTable.moving = false
   newColorOrder = []
   rows = gui.playersTable.data[0].rows
@@ -99,21 +68,15 @@ doneButton.addEventListener('click', (event) ->
   gui.reorderNavigation(newColorOrder)
 )
 
-resetGameButton = Ti.UI.createButton({
-  title: 'Reset game'
+newGameButton = Ti.UI.createButton({
+  title: 'New game'
 })
 # When button tapped:
-#   Reset game.
+#   New game.
 #   Set new rows in players table.
 #   Set new player views.
 #   Set new color nav tabs.
-resetGameButton.addEventListener('click', (event) ->
-  gameMenuWindow.setRightNavButton(editButton)
-  gui.playersTable.moving = false
-  controller.resetGame()
-  gui.playersTable.data = [createPlayersRows()]
-  gui.setScrollableViews(createPlayerViews())
-  gui.setColorNavTabs(createColorNavTabs())
-  gui.scrollTo(0)
+newGameButton.addEventListener('click', (event) ->
+  gui.showNewGameWindow()
 )
-gameMenuWindow.setLeftNavButton(resetGameButton)
+gui.gameMenuWindow.setLeftNavButton(newGameButton)

@@ -26,10 +26,9 @@ describe('Player', function() {
       }
     });
   });
-  it('#setup creates settlements and cities', function() {
+  it('constructor creates settlements and cities', function() {
     var player;
     player = new Player();
-    player.setup();
     expect(player.settlements.length).toEqual(5);
     expect(player.settlements).toAllBelongToPlayer(player);
     expect(player.cities.length).toEqual(4);
@@ -38,13 +37,11 @@ describe('Player', function() {
   it('starts with 2 settlements built', function() {
     var player;
     player = new Player();
-    player.setup();
     return expect(player.settlements.inPlay().length).toEqual(2);
   });
   it('that has 10 victory points has enough victory points to win', function() {
     var game, i, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -61,8 +58,7 @@ describe('Player', function() {
   });
   it('#canBuildCity', function() {
     var game, idx, player, settlement, _i, _len, _ref;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -81,8 +77,7 @@ describe('Player', function() {
   });
   it('#numDevelopmentCardVictoryPointsNeededToWin', function() {
     var game, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -91,8 +86,7 @@ describe('Player', function() {
   });
   it('#canWinByShowingAllDevelopmentCardVictoryPoints', function() {
     var game, idx, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -104,8 +98,7 @@ describe('Player', function() {
   });
   it('#winByPlayingDevelopmentCardVictoryPoints', function() {
     var game, idx, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -119,8 +112,7 @@ describe('Player', function() {
   });
   it('#destroySoldier removes knight and unassigns self from it', function() {
     var game, idx, player, soldier;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -135,8 +127,7 @@ describe('Player', function() {
   });
   return it('#destroySoldier reassigns largest army if necessary', function() {
     var game, idx, player1, player2;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 2
     });
     player1 = game.players[0];

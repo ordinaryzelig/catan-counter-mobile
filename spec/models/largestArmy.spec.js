@@ -11,8 +11,7 @@ describe('LargestArmy', function() {
   });
   it('awarded to first player to play 3 soldiers', function() {
     var game, i, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -25,8 +24,7 @@ describe('LargestArmy', function() {
   });
   return it('can be stolen when another player plays more soldiers than person with largest army', function() {
     var game, i, player_1, player_2;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 2
     });
     player_1 = game.players[0];

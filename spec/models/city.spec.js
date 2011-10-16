@@ -1,8 +1,7 @@
 describe('City', function() {
   it('is worth 2 victory points each', function() {
     var game, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -12,8 +11,7 @@ describe('City', function() {
   });
   it('can be downgraded to settlement', function() {
     var game, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];
@@ -24,8 +22,7 @@ describe('City', function() {
   });
   return it('is completely destroyed if no more settlements to build', function() {
     var game, idx, player;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: 1
     });
     player = game.players[0];

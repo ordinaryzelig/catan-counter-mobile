@@ -2,19 +2,17 @@ describe('Game', function() {
   it('creates players and soldiers', function() {
     var game, numPlayers;
     numPlayers = 4;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: numPlayers
     });
     expect(game.players.length).toEqual(numPlayers);
     return expect(game.soldiers.length).toEqual(14);
   });
-  return it('access players by color', function() {
+  it('access players by color', function() {
     var color, colors, game, idx, numPlayers, _i, _len, _ref, _results;
     colors = ['red', 'white', 'blue'];
     numPlayers = colors.length;
-    game = new Game();
-    game.setup({
+    game = new Game({
       numPlayers: numPlayers
     });
     for (idx = 0, _ref = numPlayers - 1; 0 <= _ref ? idx <= _ref : idx >= _ref; 0 <= _ref ? idx++ : idx--) {
@@ -26,5 +24,15 @@ describe('Game', function() {
       _results.push(expect(game.playerByColor(color).color).toEqual(color));
     }
     return _results;
+  });
+  return it('accepts settings with expansions at initialization', function() {
+    var game, settings;
+    settings = new GameSettings({
+      expansions: [CitiesAndKnights]
+    });
+    game = new Game({
+      settings: settings
+    });
+    return expect(game.usesExpansion(CitiesAndKnights)).toEqual(true);
   });
 });

@@ -9,8 +9,7 @@ describe 'LargestArmy', ->
     }
 
   it 'awarded to first player to play 3 soldiers', ->
-    game = new Game()
-    game.setup(numPlayers: 1)
+    game = new Game(numPlayers: 1)
     player = game.players[0]
     expect(player).toNotHaveLargestArmy()
     for i in [1..3]
@@ -19,8 +18,7 @@ describe 'LargestArmy', ->
     expect(player.victoryPoints()).toEqual(4)
 
   it 'can be stolen when another player plays more soldiers than person with largest army', ->
-    game = new Game()
-    game.setup(numPlayers: 2)
+    game = new Game(numPlayers: 2)
     player_1 = game.players[0]
     for i in [1..3]
       player_1.playSoldier()

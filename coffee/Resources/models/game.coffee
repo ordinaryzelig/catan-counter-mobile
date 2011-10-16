@@ -1,11 +1,12 @@
 class Game
 
-  setup: (options = {}) ->
+  constructor: (options = {}) ->
     @createPlayers(options['numPlayers'])
     @createSoldiers()
     @createLargestArmy()
     @createLongestRoad()
     @createDevelopmentCardVictoryPoints()
+    @settings = options['settings']
 
   victoryPointsRequiredToWin: 10
 
@@ -13,7 +14,6 @@ class Game
     @players = []
     for i in [1..num]
       player = new Player(game: @)
-      player.setup()
       @players.push(player)
 
   createSoldiers: ->
@@ -55,4 +55,10 @@ class Game
       @playersByColor[player.color] = player
     @playersByColor[color]
 
+  usesExpansion: (expansion) ->
+    expansion in @settings.expansions
+
 Game.COLORS = ['red', 'blue', 'orange', 'white', 'green', 'brown']
+Game.EXPANSIONS = [
+  CitiesAndKnights,
+]

@@ -21,9 +21,8 @@ describe 'Player', ->
         !@actual.hasLargestArmy()
     }
 
-  it '#setup creates settlements and cities', ->
+  it 'constructor creates settlements and cities', ->
     player = new Player()
-    player.setup()
     expect(player.settlements.length).toEqual(5)
     expect(player.settlements).toAllBelongToPlayer(player)
     expect(player.cities.length).toEqual(4)
@@ -31,12 +30,10 @@ describe 'Player', ->
 
   it 'starts with 2 settlements built', ->
     player = new Player()
-    player.setup()
     expect(player.settlements.inPlay().length).toEqual(2)
 
   it 'that has 10 victory points has enough victory points to win', ->
-    game = new Game()
-    game.setup(numPlayers: 1)
+    game = new Game(numPlayers: 1)
     player = game.players[0]
     expect(player).toNotHaveEnoughVictoryPointsToWin()
     for i in [1..3]
@@ -48,8 +45,7 @@ describe 'Player', ->
     expect(player).toHaveEnoughVictoryPointsToWin()
 
   it '#canBuildCity', ->
-    game = new Game()
-    game.setup(numPlayers: 1)
+    game = new Game(numPlayers: 1)
     player = game.players[0]
     expect(player.canBuildCity()).toEqual(true)
     # If no settlements to build city, then should return false.
@@ -63,15 +59,13 @@ describe 'Player', ->
     expect(player.canBuildCity()).toEqual(false)
 
   it '#numDevelopmentCardVictoryPointsNeededToWin', ->
-    game = new Game()
-    game.setup(numPlayers: 1)
+    game = new Game(numPlayers: 1)
     player = game.players[0]
     player.showDevelopmentCardVictoryPoints(2)
     expect(player.numDevelopmentCardVictoryPointsNeededToWin()).toEqual(8)
 
   it '#canWinByShowingAllDevelopmentCardVictoryPoints', ->
-    game = new Game()
-    game.setup(numPlayers: 1)
+    game = new Game(numPlayers: 1)
     player = game.players[0]
     expect(player.canWinByShowingAllDevelopmentCardVictoryPoints()).toEqual(false)
     for idx in [1..3]
@@ -79,8 +73,7 @@ describe 'Player', ->
     expect(player.canWinByShowingAllDevelopmentCardVictoryPoints()).toEqual(true)
 
   it '#winByPlayingDevelopmentCardVictoryPoints', ->
-    game = new Game()
-    game.setup(numPlayers: 1)
+    game = new Game(numPlayers: 1)
     player = game.players[0]
     player.winByPlayingDevelopmentCardVictoryPoints()
     expect(player.victoryPoints()).toEqual(2)
@@ -90,8 +83,7 @@ describe 'Player', ->
     expect(player.victoryPoints()).toEqual(10)
 
   it '#destroySoldier removes knight and unassigns self from it', ->
-    game = new Game()
-    game.setup(numPlayers: 1)
+    game = new Game(numPlayers: 1)
     player = game.players[0]
     for idx in [1..2]
       player.playSoldier()
@@ -102,8 +94,7 @@ describe 'Player', ->
     expect(player.soldiers.length).toEqual(1)
 
   it '#destroySoldier reassigns largest army if necessary', ->
-    game = new Game()
-    game.setup(numPlayers: 2)
+    game = new Game(numPlayers: 2)
     player1 = game.players[0]
     player2 = game.players[1]
     player1.playSoldier()

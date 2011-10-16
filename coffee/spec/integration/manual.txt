@@ -21,11 +21,17 @@ Game menu
 
       after tapping 'Done', the players window should match the table and be in order
 
-  'Reset game' button resets game with fresh set of players
+  'Reset game' button brings up modal window for new game with settings
 
-    players window is reset
+    'Create game' button
 
-    works when tapped while table is in edit mode
+      resets game with fresh set of players
+
+      players window is reset
+
+      works when tapped while table is in edit mode
+
+    'Cancel' button dismisses modal window with no changes
 
 Players window
 

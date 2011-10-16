@@ -13,7 +13,7 @@ gui.navigation.addTab(tab)
 
 Ti.include('/gui/events/componentClick.js')
 
-createPlayerViews = ->
+gui.createPlayerViews = ->
   views = []
   for player in game.players
 
@@ -64,12 +64,12 @@ createPlayerViews = ->
   views
 
 gui.scrollableView = Ti.UI.createScrollableView({
-  views: createPlayerViews(),
+  views: gui.createPlayerViews(),
 })
 playersWindow.add(gui.scrollableView)
 
 # Toolbar with buttons to scroll to player.
-createColorNavTabs = ->
+gui.createColorNavTabs = ->
   tabbedBarButtonData = []
   for player in game.players
     imagePath = 'images/square_' + player.color + '.png'
@@ -79,7 +79,7 @@ createColorNavTabs = ->
     })
   tabbedBarButtonData
 gui.colorNav = Ti.UI.createTabbedBar({
-  labels: createColorNavTabs(),
+  labels: gui.createColorNavTabs(),
   index: 0
 })
 

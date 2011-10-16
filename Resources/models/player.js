@@ -1,23 +1,19 @@
 var Player;
 Player = (function() {
   function Player(atts) {
+    var i;
     if (atts == null) {
       atts = {};
     }
     this.game = atts['game'];
     this.soldiers = new PlayableSet();
     this.developmentCardVictoryPoints = new PlayableSet();
-  }
-  Player.prototype.setup = function() {
-    var i, _results;
     this.createSettlements();
     this.createCities();
-    _results = [];
     for (i = 1; i <= 2; i++) {
-      _results.push(this.buildSettlement());
+      this.buildSettlement();
     }
-    return _results;
-  };
+  }
   Player.prototype.victoryPoints = function() {
     return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0) + (this.hasLongestRoad() ? 2 : 0) + this.developmentCardVictoryPoints.length;
   };

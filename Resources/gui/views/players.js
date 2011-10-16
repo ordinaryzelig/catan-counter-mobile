@@ -1,4 +1,4 @@
-var createColorNavTabs, createPlayerViews, playersWindow, tab;
+var playersWindow, tab;
 playersWindow = Ti.UI.createWindow();
 tab = Ti.UI.createTab({
   window: playersWindow,
@@ -7,7 +7,7 @@ tab = Ti.UI.createTab({
 });
 gui.navigation.addTab(tab);
 Ti.include('/gui/events/componentClick.js');
-createPlayerViews = function() {
+gui.createPlayerViews = function() {
   var componentType, dashboard, dashboardItems, item, player, view, views, _i, _j, _len, _len2, _ref, _ref2;
   views = [];
   _ref = game.players;
@@ -54,10 +54,10 @@ createPlayerViews = function() {
   return views;
 };
 gui.scrollableView = Ti.UI.createScrollableView({
-  views: createPlayerViews()
+  views: gui.createPlayerViews()
 });
 playersWindow.add(gui.scrollableView);
-createColorNavTabs = function() {
+gui.createColorNavTabs = function() {
   var imagePath, player, tabbedBarButtonData, _i, _len, _ref;
   tabbedBarButtonData = [];
   _ref = game.players;
@@ -72,7 +72,7 @@ createColorNavTabs = function() {
   return tabbedBarButtonData;
 };
 gui.colorNav = Ti.UI.createTabbedBar({
-  labels: createColorNavTabs(),
+  labels: gui.createColorNavTabs(),
   index: 0
 });
 gui.colorNav.addEventListener('click', function(event) {

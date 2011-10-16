@@ -4,8 +4,6 @@ class Player
     @game = atts['game']
     @soldiers = new PlayableSet()
     @developmentCardVictoryPoints = new PlayableSet()
-
-  setup: ->
     @createSettlements()
     @createCities()
     for i in [1..2]
