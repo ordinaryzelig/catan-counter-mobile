@@ -38,6 +38,7 @@ gui.showNewGameWindow = ->
     row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
     expansionsTable.add(row)
 
+  # Get expansions that are switched on.
   expansionsTable.expansions = ->
     expansions = []
     for onOffSwitch in @switches

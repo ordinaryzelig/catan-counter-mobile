@@ -17,38 +17,28 @@ gui.createPlayerViews = ->
   views = []
   for player in game.players
 
-    dashboardItems = []
+    dashboardItems = [
+      @createSettlementDashboardItem(player),
+      @createCityDashboardItem(player),
+      @createLongestRoadDashboardItem(),
+    ]
 
-    # Create settlement and city dashboard items.
-    for componentType in ['settlement', 'city']
-      item = dashboardItem({
-        image: imagesPath(componentType + '_' + player.color + '.png'),
-        badge: player[pluralize(componentType)].inPlay().length,
-        componentType: componentType
-      })
-      dashboardItems.push(item)
-      gui.dashboardItems[player.color] = dashboardItems
+    if game.usesExpansion(CitiesAndKnights)
+      items = [
+        @createKnightDashboardItem(player),
+      ]
+      for item in items
+        dashboardItems.push(item)
+    else
+      items = [
+        @createSoldierDashboardItem(),
+        @createDevelopmentCardVictoryPointDashboardItem(),
+      ]
+      for item in items
+        dashboardItems.push(item)
 
-    # Create longest road dashboard item.
-    item = dashboardItem({
-      image: imagesPath('longest_road.png'),
-      componentType: 'longestRoad',
-    })
-    dashboardItems.push(item)
-
-    # Create soldier dashboard item.
-    item = dashboardItem({
-      image: imagesPath('soldier.png'),
-      componentType: 'soldier',
-    })
-    dashboardItems.push(item)
-
-    # Create development card victory point dashboard item.
-    item = dashboardItem({
-      image: imagesPath('development_card_victory_point.png'),
-      componentType: 'developmentCardVictoryPoint',
-    })
-    dashboardItems.push(item)
+    # Add all dashboard items to gui so badges can be updated easily.
+    gui.dashboardItems[player.color] = dashboardItems
 
     # Create dashboard and add it to a view.
     dashboard = Ti.UI.createDashboardView({
@@ -61,7 +51,48 @@ gui.createPlayerViews = ->
     view.add(dashboard)
     view.playerColor = player.color
     views.push(view)
+
   views
+
+# =======================================
+# Dashboard item creation.
+
+# Settlement, city, and knight dashboard items are made the same way.
+gui.createPlayerDashboardItem = (componentType, player) ->
+  dashboardItem({
+    image: imagesPath(componentType + '_' + player.color + '.png'),
+    badge: player[pluralize(componentType)].inPlay().length,
+    componentType: componentType
+  })
+
+gui.createSettlementDashboardItem = (player) ->
+  @createPlayerDashboardItem('settlement', player)
+
+gui.createCityDashboardItem = (player) ->
+  @createPlayerDashboardItem('city', player)
+
+gui.createLongestRoadDashboardItem = ->
+  dashboardItem({
+    image: imagesPath('longest_road.png'),
+    componentType: 'longestRoad',
+  })
+
+gui.createSoldierDashboardItem = ->
+  dashboardItem({
+    image: imagesPath('soldier.png'),
+    componentType: 'soldier',
+  })
+
+gui.createDevelopmentCardVictoryPointDashboardItem = ->
+  dashboardItem({
+    image: imagesPath('development_card_victory_point.png'),
+    componentType: 'developmentCardVictoryPoint',
+  })
+
+gui.createKnightDashboardItem = (player) ->
+  @createPlayerDashboardItem('knight', player)
+
+# =======================================
 
 gui.scrollableView = Ti.UI.createScrollableView({
   views: gui.createPlayerViews(),

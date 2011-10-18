@@ -1,5 +1,5 @@
 # Include lib.
-for file in ['buildable', 'playableSet']
+for file in ['buildable', 'arrayFilters']
   Ti.include('lib/' + file + '.js')
 
 # Include expansions.
@@ -17,5 +17,6 @@ for file in [
   'soldier',
   'developmentCardVictoryPoint',
   'gameSettings',
+  'knight',
 ]
   Ti.include('models/' + file + '.js')

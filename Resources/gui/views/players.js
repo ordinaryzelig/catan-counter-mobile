@@ -8,38 +8,26 @@ tab = Ti.UI.createTab({
 gui.navigation.addTab(tab);
 Ti.include('/gui/events/componentClick.js');
 gui.createPlayerViews = function() {
-  var componentType, dashboard, dashboardItems, item, player, view, views, _i, _j, _len, _len2, _ref, _ref2;
+  var dashboard, dashboardItems, item, items, player, view, views, _i, _j, _k, _len, _len2, _len3, _ref;
   views = [];
   _ref = game.players;
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     player = _ref[_i];
-    dashboardItems = [];
-    _ref2 = ['settlement', 'city'];
-    for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-      componentType = _ref2[_j];
-      item = dashboardItem({
-        image: imagesPath(componentType + '_' + player.color + '.png'),
-        badge: player[pluralize(componentType)].inPlay().length,
-        componentType: componentType
-      });
-      dashboardItems.push(item);
-      gui.dashboardItems[player.color] = dashboardItems;
+    dashboardItems = [this.createSettlementDashboardItem(player), this.createCityDashboardItem(player), this.createLongestRoadDashboardItem()];
+    if (game.usesExpansion(CitiesAndKnights)) {
+      items = [this.createKnightDashboardItem(player)];
+      for (_j = 0, _len2 = items.length; _j < _len2; _j++) {
+        item = items[_j];
+        dashboardItems.push(item);
+      }
+    } else {
+      items = [this.createSoldierDashboardItem(), this.createDevelopmentCardVictoryPointDashboardItem()];
+      for (_k = 0, _len3 = items.length; _k < _len3; _k++) {
+        item = items[_k];
+        dashboardItems.push(item);
+      }
     }
-    item = dashboardItem({
-      image: imagesPath('longest_road.png'),
-      componentType: 'longestRoad'
-    });
-    dashboardItems.push(item);
-    item = dashboardItem({
-      image: imagesPath('soldier.png'),
-      componentType: 'soldier'
-    });
-    dashboardItems.push(item);
-    item = dashboardItem({
-      image: imagesPath('development_card_victory_point.png'),
-      componentType: 'developmentCardVictoryPoint'
-    });
-    dashboardItems.push(item);
+    gui.dashboardItems[player.color] = dashboardItems;
     dashboard = Ti.UI.createDashboardView({
       data: dashboardItems,
       editable: false,
@@ -52,6 +40,40 @@ gui.createPlayerViews = function() {
     views.push(view);
   }
   return views;
+};
+gui.createPlayerDashboardItem = function(componentType, player) {
+  return dashboardItem({
+    image: imagesPath(componentType + '_' + player.color + '.png'),
+    badge: player[pluralize(componentType)].inPlay().length,
+    componentType: componentType
+  });
+};
+gui.createSettlementDashboardItem = function(player) {
+  return this.createPlayerDashboardItem('settlement', player);
+};
+gui.createCityDashboardItem = function(player) {
+  return this.createPlayerDashboardItem('city', player);
+};
+gui.createLongestRoadDashboardItem = function() {
+  return dashboardItem({
+    image: imagesPath('longest_road.png'),
+    componentType: 'longestRoad'
+  });
+};
+gui.createSoldierDashboardItem = function() {
+  return dashboardItem({
+    image: imagesPath('soldier.png'),
+    componentType: 'soldier'
+  });
+};
+gui.createDevelopmentCardVictoryPointDashboardItem = function() {
+  return dashboardItem({
+    image: imagesPath('development_card_victory_point.png'),
+    componentType: 'developmentCardVictoryPoint'
+  });
+};
+gui.createKnightDashboardItem = function(player) {
+  return this.createPlayerDashboardItem('knight', player);
 };
 gui.scrollableView = Ti.UI.createScrollableView({
   views: gui.createPlayerViews()

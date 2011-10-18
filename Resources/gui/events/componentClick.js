@@ -1,6 +1,6 @@
 var componentClick, componentType, events, _i, _len, _ref;
 events = {};
-_ref = ['settlement', 'city', 'longestRoad', 'soldier', 'developmentCardVictoryPoint'];
+_ref = ['settlement', 'city', 'longestRoad', 'soldier', 'developmentCardVictoryPoint', 'knight'];
 for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   componentType = _ref[_i];
   Ti.include(eventsPath("" + componentType + "Click.js"));

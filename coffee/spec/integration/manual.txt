@@ -143,4 +143,38 @@ Gameplay
 
       'Cancel' button does nothing
 
+  knight
+
+    tapping brings up modal window
+
+      shows built knights with activation status
+
+        tapping knight brings up option dialog
+
+          tapping 'Upgrade' button upgrades knight
+
+          tapping 'Activate' button
+
+            activates knight
+
+            updates player's and game's total activated knight strength
+
+          tapping 'Deactivate' button
+
+            deactivates knight
+
+            updates player's and game's total activated knight strength
+
+          tapping 'Desert' button brings up modal window
+
+            prompts for player that steals knight
+
+            tapping on player
+
+              adds equivalent knight to player if they are able to build knight
+
+              does not add equivalent knight to player if they are not able to build knight
+
+              updates both players' and game's total activated knight strengths
+
   if player has enough victory points to win, alert after they get those points

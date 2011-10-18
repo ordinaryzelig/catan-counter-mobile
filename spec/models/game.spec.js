@@ -1,14 +1,13 @@
 describe('Game', function() {
-  it('creates players and soldiers', function() {
+  it('creates players', function() {
     var game, numPlayers;
     numPlayers = 4;
     game = new Game({
       numPlayers: numPlayers
     });
-    expect(game.players.length).toEqual(numPlayers);
-    return expect(game.soldiers.length).toEqual(14);
+    return expect(game.players.length).toEqual(numPlayers);
   });
-  it('access players by color', function() {
+  it('accesses players by color', function() {
     var color, colors, game, idx, numPlayers, _i, _len, _ref, _results;
     colors = ['red', 'white', 'blue'];
     numPlayers = colors.length;

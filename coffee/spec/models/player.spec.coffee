@@ -21,17 +21,6 @@ describe 'Player', ->
         !@actual.hasLargestArmy()
     }
 
-  it 'constructor creates settlements and cities', ->
-    player = new Player()
-    expect(player.settlements.length).toEqual(5)
-    expect(player.settlements).toAllBelongToPlayer(player)
-    expect(player.cities.length).toEqual(4)
-    expect(player.cities).toAllBelongToPlayer(player)
-
-  it 'starts with 2 settlements built', ->
-    player = new Player()
-    expect(player.settlements.inPlay().length).toEqual(2)
-
   it 'that has 10 victory points has enough victory points to win', ->
     game = new Game(numPlayers: 1)
     player = game.players[0]
@@ -108,3 +97,20 @@ describe 'Player', ->
     expect(player2).toHaveLargestArmy()
     player2.destroySoldier()
     expect(player1).toHaveLargestArmy()
+
+  describe 'with Cities and Knights', ->
+
+    beforeEach ->
+      @settings = new GameSettings(expansions: [CitiesAndKnights])
+
+    it '#knightStrength returns sum of activated knights levels', ->
+      game = new Game(numPlayers: 1, settings: @settings)
+      player = game.players[0]
+      # Build 1 level 3 active knight.
+      player.buildKnight().promote().promote().activate()
+      # Build 2 level 2 active knights.
+      for idx in [1..2]
+        player.buildKnight().promote().activate()
+      # Build 1 level 1 inactive knight.
+      player.buildKnight()
+      expect(player.knightStrength()).toEqual(7)

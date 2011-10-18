@@ -1,4 +1,6 @@
-# This is probably the wrong way to do namespaces.
+# This is probably the wrong way to do namespacing.
+# Plus this is pretty disorganized. There's plenty of gui code in view files.
+# So I guess this is a general place for functions that don't belong in their own view files.
 
 Ti.UI.setBackgroundImage(imagesPath('water.png'))
 
@@ -6,13 +8,12 @@ gui = {}
 
 Ti.include('/gui/views/newGameWindow.js')
 
-gui.dashboardItems = {}
-
 gui.tabs = {
   PLAYERS_MENU: 0,
   PLAYERS: 1,
 }
 
+gui.dashboardItems = {}
 gui.updateBadges = (player) ->
   for item in @dashboardItems[player.color]
     switch item.componentType
@@ -111,7 +112,7 @@ gui.createPlayersRows = ->
 gui.createNewGame = (settings) ->
   @gameMenuWindow.setRightNavButton(editButton)
   @playersTable.moving = false
-  controller.newGame({settings: settings})
+  controller.newGame(settings)
   @playersTable.data = [@createPlayersRows()]
   @setScrollableViews(@createPlayerViews())
   @setColorNavTabs(@createColorNavTabs())

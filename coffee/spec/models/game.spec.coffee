@@ -1,12 +1,11 @@
 describe 'Game', ->
 
-  it 'creates players and soldiers', ->
+  it 'creates players', ->
     numPlayers = 4
     game = new Game(numPlayers: numPlayers)
     expect(game.players.length).toEqual(numPlayers)
-    expect(game.soldiers.length).toEqual(14)
 
-  it 'access players by color', ->
+  it 'accesses players by color', ->
     colors = ['red', 'white', 'blue']
     numPlayers = colors.length
     game = new Game(numPlayers: numPlayers)

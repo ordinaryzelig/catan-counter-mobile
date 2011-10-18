@@ -10,14 +10,21 @@ Game = (function() {
     if (options == null) {
       options = {};
     }
-    this.createPlayers(options['numPlayers']);
-    this.createSoldiers();
-    this.createLargestArmy();
-    this.createLongestRoad();
-    this.createDevelopmentCardVictoryPoints();
     this.settings = options['settings'];
+    if (this.settings == null) {
+      this.settings = {};
+    }
+    this.createPlayers(options['numPlayers']);
+    this.victoryPointsRequiredToWin = 10;
+    this.createLongestRoad();
+    if (this.usesExpansion(CitiesAndKnights)) {
+      this.victoryPointsRequiredToWin = this.victoryPointsRequiredToWin + 3;
+    } else {
+      this.createSoldiers();
+      this.createLargestArmy();
+      this.createDevelopmentCardVictoryPoints();
+    }
   }
-  Game.prototype.victoryPointsRequiredToWin = 10;
   Game.prototype.createPlayers = function(num) {
     var i, player, _results;
     this.players = [];
@@ -32,7 +39,7 @@ Game = (function() {
   };
   Game.prototype.createSoldiers = function() {
     var i, _results;
-    this.soldiers = new PlayableSet();
+    this.soldiers = [];
     this.previousPlayersWithLargestArmy = [];
     _results = [];
     for (i = 1; i <= 14; i++) {
@@ -54,7 +61,7 @@ Game = (function() {
   };
   Game.prototype.createDevelopmentCardVictoryPoints = function() {
     var idx, _results;
-    this.developmentCardVictoryPoints = new PlayableSet();
+    this.developmentCardVictoryPoints = [];
     _results = [];
     for (idx = 1; idx <= 5; idx++) {
       _results.push(this.developmentCardVictoryPoints.push(new DevelopmentCardVictoryPoint({

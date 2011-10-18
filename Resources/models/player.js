@@ -6,16 +6,61 @@ Player = (function() {
       atts = {};
     }
     this.game = atts['game'];
-    this.soldiers = new PlayableSet();
-    this.developmentCardVictoryPoints = new PlayableSet();
     this.createSettlements();
     this.createCities();
     for (i = 1; i <= 2; i++) {
       this.buildSettlement();
     }
+    if (this.game.usesExpansion(CitiesAndKnights)) {
+      this.createKnights();
+      this.buildCity();
+    } else {
+      this.soldiers = [];
+      this.developmentCardVictoryPoints = [];
+    }
   }
   Player.prototype.victoryPoints = function() {
-    return (this.settlements.inPlay().length * 1) + (this.cities.inPlay().length * 2) + (this.hasLargestArmy() ? 2 : 0) + (this.hasLongestRoad() ? 2 : 0) + this.developmentCardVictoryPoints.length;
+    var component, components, sum, _i, _j, _len, _len2, _ref;
+    components = ['settlements', 'cities', 'longest road'];
+    if (this.game.usesExpansion(CitiesAndKnights)) {} else {
+      _ref = ['largest army', 'development card victory points'];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        component = _ref[_i];
+        components.push(component);
+      }
+    }
+    sum = 0;
+    for (_j = 0, _len2 = components.length; _j < _len2; _j++) {
+      component = components[_j];
+      sum = sum + this.victoryPointsFor(component);
+    }
+    return sum;
+  };
+  Player.prototype.victoryPointsFor = function(component) {
+    switch (component) {
+      case 'settlements':
+        return this.settlements.inPlay().length;
+      case 'cities':
+        return this.cities.inPlay().length * 2;
+      case 'longest road':
+        if (this.hasLongestRoad()) {
+          return 2;
+        } else {
+          return 0;
+        }
+        break;
+      case 'largest army':
+        if (this.hasLargestArmy()) {
+          return 2;
+        } else {
+          return 0;
+        }
+        break;
+      case 'development card victory points':
+        return this.developmentCardVictoryPoints.length;
+      default:
+        throw "don't know how to calculate victory points for " + component;
+    }
   };
   Player.prototype.hasEnoughVictoryPointsToWin = function() {
     return this.victoryPoints() >= this.game.victoryPointsRequiredToWin;
@@ -27,7 +72,7 @@ Player = (function() {
   };
   Player.prototype.createSettlements = function() {
     var i, _results;
-    this.settlements = new PlayableSet();
+    this.settlements = [];
     _results = [];
     for (i = 1; i <= 5; i++) {
       _results.push(this.settlements.push(new Settlement({
@@ -60,7 +105,7 @@ Player = (function() {
   };
   Player.prototype.createCities = function() {
     var i, _results;
-    this.cities = new PlayableSet();
+    this.cities = [];
     _results = [];
     for (i = 1; i <= 4; i++) {
       _results.push(this.cities.push(new City({
@@ -145,6 +190,44 @@ Player = (function() {
   };
   Player.prototype.canWinByShowingAllDevelopmentCardVictoryPoints = function() {
     return (this.game.victoryPointsRequiredToWin - this.victoryPoints()) <= this.game.developmentCardVictoryPoints.notInPlay().length;
+  };
+  Player.prototype.createKnights = function() {
+    var idx, knight, level, _results;
+    this.knights = [];
+    _results = [];
+    for (level = 1; level <= 3; level++) {
+      _results.push((function() {
+        var _results2;
+        _results2 = [];
+        for (idx = 1; idx <= 2; idx++) {
+          knight = new Knight({
+            level: level,
+            player: this
+          });
+          _results2.push(this.knights.push(knight));
+        }
+        return _results2;
+      }).call(this));
+    }
+    return _results;
+  };
+  Player.prototype.buildKnight = function() {
+    var knightToBuild;
+    knightToBuild = this.knights.notInPlay().level(1)[0];
+    if (knightToBuild != null) {
+      knightToBuild.build();
+      return knightToBuild;
+    }
+  };
+  Player.prototype.knightStrength = function() {
+    var knight, strength, _i, _len, _ref;
+    strength = 0;
+    _ref = this.knights.inPlay().active();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      knight = _ref[_i];
+      strength = strength + knight.level;
+    }
+    return strength;
   };
   return Player;
 })();

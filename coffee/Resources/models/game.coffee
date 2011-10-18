@@ -1,14 +1,17 @@
 class Game
 
   constructor: (options = {}) ->
-    @createPlayers(options['numPlayers'])
-    @createSoldiers()
-    @createLargestArmy()
-    @createLongestRoad()
-    @createDevelopmentCardVictoryPoints()
     @settings = options['settings']
-
-  victoryPointsRequiredToWin: 10
+    @settings = {} unless @settings?
+    @createPlayers(options['numPlayers'])
+    @victoryPointsRequiredToWin = 10
+    @createLongestRoad()
+    if @usesExpansion(CitiesAndKnights)
+      @victoryPointsRequiredToWin = @victoryPointsRequiredToWin + 3
+    else
+      @createSoldiers()
+      @createLargestArmy()
+      @createDevelopmentCardVictoryPoints()
 
   createPlayers: (num) ->
     @players = []
@@ -17,7 +20,7 @@ class Game
       @players.push(player)
 
   createSoldiers: ->
-    @soldiers = new PlayableSet()
+    @soldiers = []
     @previousPlayersWithLargestArmy = []
     for i in [1..14]
       @soldiers.push(new Soldier(game: @))
@@ -29,7 +32,7 @@ class Game
     @largestArmy = new LargestArmy(game: @)
 
   createDevelopmentCardVictoryPoints: ->
-    @developmentCardVictoryPoints = new PlayableSet()
+    @developmentCardVictoryPoints = []
     for idx in [1..5]
       @developmentCardVictoryPoints.push(new DevelopmentCardVictoryPoint(game: @))
 

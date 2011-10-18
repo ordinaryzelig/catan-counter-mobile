@@ -2,11 +2,11 @@ var gui;
 Ti.UI.setBackgroundImage(imagesPath('water.png'));
 gui = {};
 Ti.include('/gui/views/newGameWindow.js');
-gui.dashboardItems = {};
 gui.tabs = {
   PLAYERS_MENU: 0,
   PLAYERS: 1
 };
+gui.dashboardItems = {};
 gui.updateBadges = function(player) {
   var item, _i, _len, _ref, _results;
   _ref = this.dashboardItems[player.color];
@@ -129,9 +129,7 @@ gui.createPlayersRows = function() {
 gui.createNewGame = function(settings) {
   this.gameMenuWindow.setRightNavButton(editButton);
   this.playersTable.moving = false;
-  controller.newGame({
-    settings: settings
-  });
+  controller.newGame(settings);
   this.playersTable.data = [this.createPlayersRows()];
   this.setScrollableViews(this.createPlayerViews());
   this.setColorNavTabs(this.createColorNavTabs());

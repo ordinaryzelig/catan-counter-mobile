@@ -8,6 +8,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Soldier = (function() {
+  __extends(Soldier, Buildable);
   function Soldier(atts) {
     if (atts == null) {
       atts = {};
@@ -16,6 +17,5 @@ Soldier = (function() {
     this.game = atts['game'];
     this.player = null;
   }
-  __extends(Soldier, Buildable);
   return Soldier;
 })();

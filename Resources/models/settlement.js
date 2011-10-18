@@ -8,6 +8,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Settlement = (function() {
+  __extends(Settlement, Buildable);
   function Settlement(atts) {
     if (atts == null) {
       atts = {};
@@ -15,7 +16,6 @@ Settlement = (function() {
     Settlement.__super__.constructor.apply(this, arguments);
     this.player = atts['player'];
   }
-  __extends(Settlement, Buildable);
   Settlement.prototype.upgradeToCity = function() {
     var cityToBuild;
     if (this.inPlay) {

@@ -26,19 +26,6 @@ describe('Player', function() {
       }
     });
   });
-  it('constructor creates settlements and cities', function() {
-    var player;
-    player = new Player();
-    expect(player.settlements.length).toEqual(5);
-    expect(player.settlements).toAllBelongToPlayer(player);
-    expect(player.cities.length).toEqual(4);
-    return expect(player.cities).toAllBelongToPlayer(player);
-  });
-  it('starts with 2 settlements built', function() {
-    var player;
-    player = new Player();
-    return expect(player.settlements.inPlay().length).toEqual(2);
-  });
   it('that has 10 victory points has enough victory points to win', function() {
     var game, i, player;
     game = new Game({
@@ -125,7 +112,7 @@ describe('Player', function() {
     expect(soldier.inPlay).toEqual(false);
     return expect(player.soldiers.length).toEqual(1);
   });
-  return it('#destroySoldier reassigns largest army if necessary', function() {
+  it('#destroySoldier reassigns largest army if necessary', function() {
     var game, idx, player1, player2;
     game = new Game({
       numPlayers: 2
@@ -144,5 +131,26 @@ describe('Player', function() {
     expect(player2).toHaveLargestArmy();
     player2.destroySoldier();
     return expect(player1).toHaveLargestArmy();
+  });
+  return describe('with Cities and Knights', function() {
+    beforeEach(function() {
+      return this.settings = new GameSettings({
+        expansions: [CitiesAndKnights]
+      });
+    });
+    return it('#knightStrength returns sum of activated knights levels', function() {
+      var game, idx, player;
+      game = new Game({
+        numPlayers: 1,
+        settings: this.settings
+      });
+      player = game.players[0];
+      player.buildKnight().promote().promote().activate();
+      for (idx = 1; idx <= 2; idx++) {
+        player.buildKnight().promote().activate();
+      }
+      player.buildKnight();
+      return expect(player.knightStrength()).toEqual(7);
+    });
   });
 });

@@ -8,6 +8,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 City = (function() {
+  __extends(City, Buildable);
   function City(atts) {
     if (atts == null) {
       atts = {};
@@ -15,7 +16,6 @@ City = (function() {
     City.__super__.constructor.apply(this, arguments);
     this.player = atts['player'];
   }
-  __extends(City, Buildable);
   City.prototype.downgradeToSettlement = function() {
     this.destroy();
     if (this.player.canBuildSettlement()) {
