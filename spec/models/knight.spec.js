@@ -37,6 +37,16 @@ describe('Knight', function() {
     expect(this.player.knights.inPlay().level(1).length).toEqual(0);
     return expect(this.player.knights.inPlay().level(2).active().length).toEqual(1);
   });
+  it('assigned with id', function() {
+    var ids, knight, _i, _len, _ref;
+    ids = [];
+    _ref = this.player.knights;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      knight = _ref[_i];
+      ids.push(knight.id);
+    }
+    return expect(ids).toEqual([1, 2, 3, 4, 5, 6]);
+  });
   it('#promote throws error if attempted on level 3 knight', function() {
     var knight, level;
     knight = this.player.buildKnight();
@@ -57,6 +67,18 @@ describe('Knight', function() {
     return expect(function() {
       return knight.promote();
     }).toThrow('no level 2 knights available');
+  });
+  it('#promote passes button to new knight and reassign button.knightId', function() {
+    var button, knight, newKnight;
+    knight = this.player.buildKnight();
+    button = {
+      knightId: knight.id
+    };
+    knight.button = button;
+    newKnight = knight.promote();
+    expect(newKnight.button).toEqual(button);
+    expect(knight.button).toBeNull();
+    return expect(button.knightId).toEqual(newKnight.id);
   });
   it('#desertFor destroys knight for 1 player, adds equal knight to other player', function() {
     var knight, player2, player2Knight;

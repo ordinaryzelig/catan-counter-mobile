@@ -1,8 +1,3 @@
-events = {}
-
-for componentType in ['settlement', 'city', 'longestRoad', 'soldier', 'developmentCardVictoryPoint', 'knight']
-  Ti.include(eventsPath("#{componentType}Click.js"))
-
 # When a dashboard item is tapped, delegate the event to the appropriate event handler.
 # Each component's handler is in its own file of the same name.
 # E.g. settlementClick, knightClick, etc.

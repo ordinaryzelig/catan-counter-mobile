@@ -5,9 +5,6 @@ gui.showNewGameWindow = ->
     fontWeight: 'bold',
   }
 
-  # Create window.
-  newGameWindow = Ti.UI.createWindow()
-
   expansions = []
 
   # Each expansion is a row with an on/off switch.
@@ -90,9 +87,12 @@ gui.showNewGameWindow = ->
     data: [expansionsTable],
     scrollabel: false,
     style: Ti.UI.iPhone.TableViewStyle.GROUPED,
-    separatorColor:  'transparent',
   })
 
+  # Create window.
+  newGameWindow = Ti.UI.createWindow(
+    title: 'New game',
+  )
   newGameWindow.add(table)
 
   # Show window as modal.

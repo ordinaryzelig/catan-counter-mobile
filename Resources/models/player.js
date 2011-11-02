@@ -192,24 +192,30 @@ Player = (function() {
     return (this.game.victoryPointsRequiredToWin - this.victoryPoints()) <= this.game.developmentCardVictoryPoints.notInPlay().length;
   };
   Player.prototype.createKnights = function() {
-    var idx, knight, level, _results;
+    var idx, knight, knightId, level;
     this.knights = [];
-    _results = [];
+    knightId = 1;
     for (level = 1; level <= 3; level++) {
-      _results.push((function() {
-        var _results2;
-        _results2 = [];
-        for (idx = 1; idx <= 2; idx++) {
-          knight = new Knight({
-            level: level,
-            player: this
-          });
-          _results2.push(this.knights.push(knight));
-        }
-        return _results2;
-      }).call(this));
+      for (idx = 1; idx <= 2; idx++) {
+        knight = new Knight({
+          level: level,
+          player: this,
+          id: knightId
+        });
+        this.knights.push(knight);
+        knightId = knightId + 1;
+      }
     }
-    return _results;
+    this.knights.findById = function(id) {
+      var knight, _i, _len;
+      for (_i = 0, _len = this.length; _i < _len; _i++) {
+        knight = this[_i];
+        if (knight.id === id) {
+          return knight;
+        }
+      }
+    };
+    return this.knights;
   };
   Player.prototype.buildKnight = function() {
     var knightToBuild;
@@ -228,6 +234,12 @@ Player = (function() {
       strength = strength + knight.level;
     }
     return strength;
+  };
+  Player.prototype.canBuildKnight = function() {
+    return this.knights.notInPlay().level(1).length > 0;
+  };
+  Player.prototype.canPromoteToMightyKnight = function() {
+    return true;
   };
   return Player;
 })();

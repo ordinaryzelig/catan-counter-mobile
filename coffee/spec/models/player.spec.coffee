@@ -114,3 +114,9 @@ describe 'Player', ->
       # Build 1 level 1 inactive knight.
       player.buildKnight()
       expect(player.knightStrength()).toEqual(7)
+
+    it '@knights.findById returns knight with matching id', ->
+      game = new Game(numPlayers: 1, settings: @settings)
+      player = game.players[0]
+      knight = player.knights.findById(2)
+      expect(knight.id).toEqual(2)

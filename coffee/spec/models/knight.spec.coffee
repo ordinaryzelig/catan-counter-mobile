@@ -29,6 +29,12 @@ describe 'Knight', ->
     expect(@player.knights.inPlay().level(1).length).toEqual(0)
     expect(@player.knights.inPlay().level(2).active().length).toEqual(1)
 
+  it 'assigned with id', ->
+    ids = []
+    for knight in @player.knights
+      ids.push(knight.id)
+    expect(ids).toEqual([1, 2, 3, 4, 5, 6])
+
   it '#promote throws error if attempted on level 3 knight', ->
     knight = @player.buildKnight()
     for level in [2..3]
@@ -41,6 +47,17 @@ describe 'Knight', ->
       @player.buildKnight().promote()
     knight = @player.buildKnight()
     expect(->knight.promote()).toThrow('no level 2 knights available')
+
+  it '#promote passes button to new knight and reassign button.knightId', ->
+    knight = @player.buildKnight()
+    button = {
+      knightId: knight.id,
+    }
+    knight.button = button
+    newKnight = knight.promote()
+    expect(newKnight.button).toEqual(button)
+    expect(knight.button).toBeNull()
+    expect(button.knightId).toEqual(newKnight.id)
 
   it '#desertFor destroys knight for 1 player, adds equal knight to other player', ->
     knight = @player.buildKnight().promote()

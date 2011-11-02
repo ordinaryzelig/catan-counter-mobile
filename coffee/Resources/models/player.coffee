@@ -142,13 +142,22 @@ class Player
     (@game.victoryPointsRequiredToWin - @victoryPoints()) <= @game.developmentCardVictoryPoints.notInPlay().length
 
   # Knights.
+  # When creating knights, assign id (1 - 6)that is unique to player.
+  # This makes it easier to find since we can't attach the knight object to the knight button.
+  # Use player.knights.findById(id).
 
   createKnights: ->
     @knights = []
+    knightId = 1
     for level in [1..3]
       for idx in [1..2]
-        knight = new Knight(level: level, player: @)
+        knight = new Knight(level: level, player: @, id: knightId)
         @knights.push(knight)
+        knightId = knightId + 1
+    @knights.findById = (id) ->
+      for knight in @
+        return knight if knight.id == id
+    @knights
 
   # Get level 1 knight not in play and build.
   buildKnight: ->
@@ -162,3 +171,9 @@ class Player
     for knight in @knights.inPlay().active()
       strength = strength + knight.level
     strength
+
+  canBuildKnight: ->
+    @knights.notInPlay().level(1).length > 0
+
+  canPromoteToMightyKnight: ->
+    true

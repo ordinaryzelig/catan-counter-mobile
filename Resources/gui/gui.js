@@ -24,6 +24,8 @@ gui.updateBadges = function(player) {
           return item.badge = player.soldiers.length;
         case 'developmentCardVictoryPoint':
           return item.badge = player.developmentCardVictoryPoints.length;
+        case 'knights':
+          return item.badge = player.knightStrength();
       }
     })());
   }
@@ -53,6 +55,16 @@ gui.reorderNavigation = function(colors) {
   reorderedViews = reorderByColor(colors, this.scrollableView.views);
   this.setScrollableViews(reorderedViews);
   return this.scrollTo(0);
+};
+gui.colorOrder = function() {
+  var colors, label, _i, _len, _ref;
+  colors = [];
+  _ref = this.colorNav.labels;
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    label = _ref[_i];
+    colors.push(label.playerColor);
+  }
+  return colors;
 };
 gui.setScrollableViews = function(newViews) {
   return this.scrollableView.views = newViews;
@@ -134,4 +146,15 @@ gui.createNewGame = function(settings) {
   this.setScrollableViews(this.createPlayerViews());
   this.setColorNavTabs(this.createColorNavTabs());
   return this.scrollTo(0);
+};
+gui.setKnightsTableSectionHeaderTitle = function(tableSection, numKnights) {
+  if (numKnights > 0) {
+    return tableSection.headerTitle = 'Tap on knight to perform actions.';
+  } else {
+    return tableSection.headerTitle = 'Tap + to build a knight';
+  }
+};
+gui.removeKnightRow = function(knight) {
+  gui.knightsTableSection.remove(knight.row);
+  return gui.knightsTable.data = [gui.knightsTableSection];
 };

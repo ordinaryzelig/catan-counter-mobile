@@ -25,6 +25,8 @@ gui.updateBadges = (player) ->
         item.badge = player.soldiers.length
       when 'developmentCardVictoryPoint'
         item.badge = player.developmentCardVictoryPoints.length
+      when 'knights'
+        item.badge = player.knightStrength()
 
 # Change title of players window.
 gui.changeTitle = (player) ->
@@ -50,6 +52,13 @@ gui.reorderNavigation = (colors) ->
   reorderedViews = reorderByColor(colors, @scrollableView.views)
   @setScrollableViews(reorderedViews)
   @scrollTo(0)
+
+# Return colors in order they are in colorNav.
+gui.colorOrder = ->
+  colors = []
+  for label in @colorNav.labels
+    colors.push label.playerColor
+  colors
 
 gui.setScrollableViews = (newViews) ->
   @scrollableView.views = newViews
@@ -83,8 +92,10 @@ gui.createPlayersRows = ->
     headerTitle: 'Players and scores',
     footerTitle: 'Tap Edit to remove or reorder players',
   })
+  # Row for each player.
   for player in game.players
     row = Ti.UI.createTableViewRow({playerColor: player.color})
+    # Color label image.
     colorImage = Ti.UI.createLabel({
       backgroundImage: 'images/square_' + player.color + '.png',
       width: 30,
@@ -93,6 +104,7 @@ gui.createPlayersRows = ->
       left: 5,
     })
     row.add(colorImage)
+    # Color label.
     colorLabel = Ti.UI.createLabel({
       text: player.color,
       left: 40,
@@ -102,6 +114,7 @@ gui.createPlayersRows = ->
       }
     })
     row.add(colorLabel)
+    # Victory points badge.
     victoryPoints = badge(player.victoryPoints(), {
       right: 5,
     })
@@ -117,3 +130,13 @@ gui.createNewGame = (settings) ->
   @setScrollableViews(@createPlayerViews())
   @setColorNavTabs(@createColorNavTabs())
   @scrollTo(0)
+
+gui.setKnightsTableSectionHeaderTitle = (tableSection, numKnights) ->
+  if numKnights > 0
+    tableSection.headerTitle = 'Tap on knight to perform actions.'
+  else
+    tableSection.headerTitle = 'Tap + to build a knight'
+
+gui.removeKnightRow = (knight) ->
+  gui.knightsTableSection.remove(knight.row)
+  gui.knightsTable.data = [gui.knightsTableSection]

@@ -1,4 +1,4 @@
-var badge, basicAlert, confirmationAlert, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, pluralize, reorderByColor, tabsPath, viewsPath;
+var badge, basicAlert, confirmationAlert, createKnightButton, createKnightRow, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, knightImagePath, pluralize, reorderByColor, tabsPath, viewsPath;
 pluralize = function(str, num) {
   var newStr;
   if (num == null) {
@@ -83,6 +83,15 @@ imagesPath = function(path) {
 tabsPath = function(path) {
   return imagesPath("tabs/" + path);
 };
+knightImagePath = function(knight) {
+  var path;
+  path = 'knights/' + knight.player.color + '_' + knight.level;
+  if (knight.active) {
+    path = path + '_activated';
+  }
+  path = path + '.png';
+  return imagesPath(path);
+};
 basicAlert = function(title, message) {
   return Ti.UI.createAlertDialog({
     title: title,
@@ -99,4 +108,32 @@ confirmationAlert = function(title, message) {
     buttonNames: ['OK', 'Cancel'],
     cancel: 1
   });
+};
+createKnightButton = function(knight) {
+  return Ti.UI.createButton({
+    backgroundImage: knightImagePath(knight),
+    playerColor: knight.player.color,
+    knightId: knight.id,
+    height: 60,
+    width: 60
+  });
+};
+createKnightRow = function(knight) {
+  var knightButton, row;
+  row = Ti.UI.createTableViewRow({
+    backgroundColor: 'transparent',
+    height: 60
+  });
+  knightButton = createKnightButton(knight);
+  knightButton.addEventListener('click', function(event) {
+    var button, player;
+    button = event.source;
+    player = game.playersByColor[button.playerColor];
+    knight = player.knights.findById(button.knightId);
+    return events.knightClick(knight);
+  });
+  knight.button = knightButton;
+  knight.row = row;
+  row.add(knightButton);
+  return row;
 };

@@ -11,7 +11,7 @@ tab = Ti.UI.createTab({
 })
 gui.navigation.addTab(tab)
 
-Ti.include('/gui/events/componentClick.js')
+Ti.include('/gui/events/events.js')
 
 gui.createPlayerViews = ->
   views = []
@@ -90,7 +90,11 @@ gui.createDevelopmentCardVictoryPointDashboardItem = ->
   })
 
 gui.createKnightDashboardItem = (player) ->
-  @createPlayerDashboardItem('knight', player)
+  dashboardItem({
+    image: imagesPath('knights/' + player.color + '_1.png'),
+    badge: player.knightStrength(),
+    componentType: 'knights',
+  })
 
 # =======================================
 

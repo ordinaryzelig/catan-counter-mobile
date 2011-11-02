@@ -6,7 +6,7 @@ tab = Ti.UI.createTab({
   title: 'Players'
 });
 gui.navigation.addTab(tab);
-Ti.include('/gui/events/componentClick.js');
+Ti.include('/gui/events/events.js');
 gui.createPlayerViews = function() {
   var dashboard, dashboardItems, item, items, player, view, views, _i, _j, _k, _len, _len2, _len3, _ref;
   views = [];
@@ -73,7 +73,11 @@ gui.createDevelopmentCardVictoryPointDashboardItem = function() {
   });
 };
 gui.createKnightDashboardItem = function(player) {
-  return this.createPlayerDashboardItem('knight', player);
+  return dashboardItem({
+    image: imagesPath('knights/' + player.color + '_1.png'),
+    badge: player.knightStrength(),
+    componentType: 'knights'
+  });
 };
 gui.scrollableView = Ti.UI.createScrollableView({
   views: gui.createPlayerViews()

@@ -138,7 +138,7 @@ describe('Player', function() {
         expansions: [CitiesAndKnights]
       });
     });
-    return it('#knightStrength returns sum of activated knights levels', function() {
+    it('#knightStrength returns sum of activated knights levels', function() {
       var game, idx, player;
       game = new Game({
         numPlayers: 1,
@@ -151,6 +151,16 @@ describe('Player', function() {
       }
       player.buildKnight();
       return expect(player.knightStrength()).toEqual(7);
+    });
+    return it('@knights.findById returns knight with matching id', function() {
+      var game, knight, player;
+      game = new Game({
+        numPlayers: 1,
+        settings: this.settings
+      });
+      player = game.players[0];
+      knight = player.knights.findById(2);
+      return expect(knight.id).toEqual(2);
     });
   });
 });

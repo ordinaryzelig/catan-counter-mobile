@@ -4,7 +4,6 @@ gui.showNewGameWindow = function() {
     fontSize: 16,
     fontWeight: 'bold'
   };
-  newGameWindow = Ti.UI.createWindow();
   expansions = [];
   expansionsTable = Ti.UI.createTableViewSection({
     headerTitle: 'Choose expansions'
@@ -83,8 +82,10 @@ gui.showNewGameWindow = function() {
   table = Ti.UI.createTableView({
     data: [expansionsTable],
     scrollabel: false,
-    style: Ti.UI.iPhone.TableViewStyle.GROUPED,
-    separatorColor: 'transparent'
+    style: Ti.UI.iPhone.TableViewStyle.GROUPED
+  });
+  newGameWindow = Ti.UI.createWindow({
+    title: 'New game'
   });
   newGameWindow.add(table);
   return newGameWindow.open({

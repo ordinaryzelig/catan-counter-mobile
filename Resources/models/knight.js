@@ -17,6 +17,7 @@ Knight = (function() {
     this.player = atts['player'];
     this.level = atts['level'];
     this.active = false;
+    this.id = atts['id'];
   }
   Knight.prototype.activate = function() {
     return this.active = true;
@@ -40,20 +41,40 @@ Knight = (function() {
       knightToBuild.activate();
       this.deactivate();
     }
+    this.moveGuiComponentsTo(knightToBuild);
     return knightToBuild;
   };
-  Knight.prototype.desertFor = function(anotherPlayer) {
-    var anotherPlayersKnight;
-    anotherPlayersKnight = anotherPlayer.knights.notInPlay().level(this.level)[0];
-    if (anotherPlayersKnight != null) {
-      anotherPlayersKnight.build();
+  Knight.prototype.desertFor = function(otherPlayer) {
+    var otherPlayersKnight;
+    otherPlayersKnight = otherPlayer.knights.notInPlay().level(this.level)[0];
+    if (otherPlayersKnight != null) {
+      otherPlayersKnight.build();
       if (this.active) {
-        anotherPlayersKnight.activate();
+        otherPlayersKnight.activate();
       }
     }
     this.destroy();
     this.deactivate();
-    return anotherPlayersKnight;
+    return otherPlayersKnight;
+  };
+  Knight.prototype.moveGuiComponentsTo = function(knight) {
+    if (this.button != null) {
+      this.button.knightId = knight.id;
+      knight.button = this.button;
+      this.button = null;
+    }
+    if (this.row != null) {
+      return knight.row = this.row;
+    }
+  };
+  Knight.prototype.humanize = function() {
+    var string;
+    string = 'level ' + this.level;
+    if (this.active) {
+      string = string + ' activated';
+    }
+    string = string + ' knight';
+    return string;
   };
   return Knight;
 })();

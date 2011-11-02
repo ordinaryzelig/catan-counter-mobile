@@ -39,7 +39,7 @@ dashboardItem = (atts) ->
   item.badge = atts['badge']
   item
 
-# Reorder an array of objects by the given colors.
+# Return new, reordered array of objects by the given colors.
 # Assumes that each colored object has playerColor attribute.
 reorderByColor = (colors, coloredObjects) ->
   reordered = []
@@ -66,6 +66,12 @@ imagesPath = (path) ->
 tabsPath = (path) ->
   imagesPath("tabs/#{path}")
 
+knightImagePath = (knight) ->
+  path = 'knights/' + knight.player.color + '_' + knight.level
+  path = path + '_activated' if knight.active
+  path = path + '.png'
+  imagesPath(path)
+
 # Alerts.
 
 basicAlert = (title, message) ->
@@ -90,3 +96,31 @@ confirmationAlert = (title, message) ->
     buttonNames: ['OK', 'Cancel'],
     cancel: 1
   })
+
+# Create a label with knight as image.
+createKnightButton = (knight) ->
+  Ti.UI.createButton(
+    backgroundImage: knightImagePath(knight),
+    playerColor: knight.player.color,
+    knightId: knight.id,
+    height: 60,
+    width: 60,
+  )
+
+# Create table row with knight button.
+createKnightRow = (knight) ->
+  row = Ti.UI.createTableViewRow(
+    backgroundColor: 'transparent',
+    height: 60,
+  )
+  knightButton = createKnightButton(knight)
+  knightButton.addEventListener('click', (event) ->
+    button = event.source
+    player = game.playersByColor[button.playerColor]
+    knight = player.knights.findById(button.knightId)
+    events.knightClick(knight)
+  )
+  knight.button = knightButton
+  knight.row = row
+  row.add(knightButton)
+  row
