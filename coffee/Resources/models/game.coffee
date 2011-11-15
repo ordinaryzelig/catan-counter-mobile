@@ -8,6 +8,8 @@ class Game
     @createLongestRoad()
     if @usesExpansion(CitiesAndKnights)
       @victoryPointsRequiredToWin = @victoryPointsRequiredToWin + 3
+      @createBarbarians()
+      @createCatanDefense()
     else
       @createSoldiers()
       @createLargestArmy()
@@ -36,6 +38,12 @@ class Game
     for idx in [1..5]
       @developmentCardVictoryPoints.push(new DevelopmentCardVictoryPoint(game: @))
 
+  createBarbarians: ->
+    @barbarians = new Barbarians(game: @)
+
+  createCatanDefense: ->
+    @catanDefense = new CatanDefense(game: @)
+
   awardLargestArmyTo: (player) ->
     @previousPlayersWithLargestArmy.push(@largestArmy.player)
     @largestArmy.player = player
@@ -58,8 +66,20 @@ class Game
       @playersByColor[player.color] = player
     @playersByColor[color]
 
+  playersByKnightStrength: ->
+    players = @players.slice(0)
+    players.sort((a, b) ->
+      b.knightStrength() - a.knightStrength()
+    )
+
   usesExpansion: (expansion) ->
     expansion in @settings.expansions
+
+  barbariansStrength: ->
+    strength = 0
+    for player in @players
+      strength = strength + player.cities.inPlay().length
+    strength
 
 Game.COLORS = ['red', 'blue', 'orange', 'white', 'green', 'brown']
 Game.EXPANSIONS = [

@@ -40,6 +40,9 @@ events.cityClick = function(player) {
       case cityEvents.CANCEL:
         return;
     }
+    if (game.usesExpansion(CitiesAndKnights)) {
+      gui.updateAttackStrengths();
+    }
     return gui.updatePlayerVictoryPointsAndBadges(player);
   });
   return dialog.show();

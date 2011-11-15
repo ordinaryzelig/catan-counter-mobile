@@ -31,7 +31,7 @@ events.knightsClick = (player) ->
     playerColor:  player.color,
   )
   addKnightButton.addEventListener('click', (event) ->
-    player = game.playersByColor[event.source.playerColor]
+    player = game.playerByColor(event.source.playerColor)
     if player.canBuildKnight()
       knight = player.buildKnight()
       row = createKnightRow(knight)

@@ -98,14 +98,25 @@ describe 'Player', ->
     player2.destroySoldier()
     expect(player1).toHaveLargestArmy()
 
+  describe 'with no expansions', ->
+
+    beforeEach ->
+      @game = new Game(numPlayers: 1)
+      @player = @game.players[0]
+
+    it 'begins with 2 settlements and 0 cities', ->
+      expect(@player.settlements.inPlay().length).toEqual(2)
+      expect(@player.cities.inPlay().length).toEqual(0)
+
   describe 'with Cities and Knights', ->
 
     beforeEach ->
       @settings = new GameSettings(expansions: [CitiesAndKnights])
+      @game = new Game(numPlayers: 2, settings: @settings)
+      @player = @game.players[0]
 
     it '#knightStrength returns sum of activated knights levels', ->
-      game = new Game(numPlayers: 1, settings: @settings)
-      player = game.players[0]
+      player = @game.players[0]
       # Build 1 level 3 active knight.
       player.buildKnight().promote().promote().activate()
       # Build 2 level 2 active knights.
@@ -116,7 +127,24 @@ describe 'Player', ->
       expect(player.knightStrength()).toEqual(7)
 
     it '@knights.findById returns knight with matching id', ->
-      game = new Game(numPlayers: 1, settings: @settings)
-      player = game.players[0]
+      @game = new Game(numPlayers: 1, settings: @settings)
+      player = @game.players[0]
       knight = player.knights.findById(2)
       expect(knight.id).toEqual(2)
+
+    it 'begins with 1 settlement and 1 city', ->
+      expect(@player.settlements.inPlay().length).toEqual(1)
+      expect(@player.cities.inPlay().length).toEqual(1)
+
+    it 'begins with 2 inactive knights of each level', ->
+      expect(@player.knights.length).toEqual(6)
+      expect(@player.knights.inactive().length).toEqual(6)
+      expect(@player.knights.notInPlay().length).toEqual(6)
+      for level in [1..3]
+        expect(@player.knights.level(level).length).toEqual(2)
+
+    it 'does not create development card victory points', ->
+      expect(@player.developmentCardVictoryPoints).toBeUndefined()
+
+    it 'does not create soldiers', ->
+      expect(@player.soldiers).toBeUndefined()

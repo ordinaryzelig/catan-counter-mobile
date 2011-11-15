@@ -132,19 +132,32 @@ describe('Player', function() {
     player2.destroySoldier();
     return expect(player1).toHaveLargestArmy();
   });
+  describe('with no expansions', function() {
+    beforeEach(function() {
+      this.game = new Game({
+        numPlayers: 1
+      });
+      return this.player = this.game.players[0];
+    });
+    return it('begins with 2 settlements and 0 cities', function() {
+      expect(this.player.settlements.inPlay().length).toEqual(2);
+      return expect(this.player.cities.inPlay().length).toEqual(0);
+    });
+  });
   return describe('with Cities and Knights', function() {
     beforeEach(function() {
-      return this.settings = new GameSettings({
+      this.settings = new GameSettings({
         expansions: [CitiesAndKnights]
       });
-    });
-    it('#knightStrength returns sum of activated knights levels', function() {
-      var game, idx, player;
-      game = new Game({
-        numPlayers: 1,
+      this.game = new Game({
+        numPlayers: 2,
         settings: this.settings
       });
-      player = game.players[0];
+      return this.player = this.game.players[0];
+    });
+    it('#knightStrength returns sum of activated knights levels', function() {
+      var idx, player;
+      player = this.game.players[0];
       player.buildKnight().promote().promote().activate();
       for (idx = 1; idx <= 2; idx++) {
         player.buildKnight().promote().activate();
@@ -152,15 +165,36 @@ describe('Player', function() {
       player.buildKnight();
       return expect(player.knightStrength()).toEqual(7);
     });
-    return it('@knights.findById returns knight with matching id', function() {
-      var game, knight, player;
-      game = new Game({
+    it('@knights.findById returns knight with matching id', function() {
+      var knight, player;
+      this.game = new Game({
         numPlayers: 1,
         settings: this.settings
       });
-      player = game.players[0];
+      player = this.game.players[0];
       knight = player.knights.findById(2);
       return expect(knight.id).toEqual(2);
+    });
+    it('begins with 1 settlement and 1 city', function() {
+      expect(this.player.settlements.inPlay().length).toEqual(1);
+      return expect(this.player.cities.inPlay().length).toEqual(1);
+    });
+    it('begins with 2 inactive knights of each level', function() {
+      var level, _results;
+      expect(this.player.knights.length).toEqual(6);
+      expect(this.player.knights.inactive().length).toEqual(6);
+      expect(this.player.knights.notInPlay().length).toEqual(6);
+      _results = [];
+      for (level = 1; level <= 3; level++) {
+        _results.push(expect(this.player.knights.level(level).length).toEqual(2));
+      }
+      return _results;
+    });
+    it('does not create development card victory points', function() {
+      return expect(this.player.developmentCardVictoryPoints).toBeUndefined();
+    });
+    return it('does not create soldiers', function() {
+      return expect(this.player.soldiers).toBeUndefined();
     });
   });
 });

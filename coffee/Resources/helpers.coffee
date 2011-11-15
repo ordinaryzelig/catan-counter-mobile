@@ -72,6 +72,9 @@ knightImagePath = (knight) ->
   path = path + '.png'
   imagesPath(path)
 
+barbariansImagePath = (path) ->
+  imagesPath('barbarians/' + path)
+
 # Alerts.
 
 basicAlert = (title, message) ->
@@ -116,7 +119,7 @@ createKnightRow = (knight) ->
   knightButton = createKnightButton(knight)
   knightButton.addEventListener('click', (event) ->
     button = event.source
-    player = game.playersByColor[button.playerColor]
+    player = game.playerByColor(button.playerColor)
     knight = player.knights.findById(button.knightId)
     events.knightClick(knight)
   )
@@ -124,3 +127,24 @@ createKnightRow = (knight) ->
   knight.row = row
   row.add(knightButton)
   row
+
+# For the barbarians vs catan matchup,
+# create a view for a team.
+# Make image in background and strength in foreground.
+createBarbariansAttackTeamView = (teamName, options) ->
+  view = Ti.UI.createView(options)
+  view.height = 60
+  view.width  = 60
+  view.backgroundImage = barbariansImagePath(teamName + '.png')
+  team = if teamName == 'barbarians' then game.barbarians else game.catanDefense
+  strengthLabel = Ti.UI.createLabel(
+    text: '' + team.strength(),
+    textAlign: 'center',
+    font: {
+      fontSize: 50,
+      fontWeight: 'bold',
+    },
+  )
+  gui.attackStrengths[teamName] = strengthLabel
+  view.add(strengthLabel)
+  view

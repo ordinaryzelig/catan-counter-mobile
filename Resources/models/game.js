@@ -19,6 +19,8 @@ Game = (function() {
     this.createLongestRoad();
     if (this.usesExpansion(CitiesAndKnights)) {
       this.victoryPointsRequiredToWin = this.victoryPointsRequiredToWin + 3;
+      this.createBarbarians();
+      this.createCatanDefense();
     } else {
       this.createSoldiers();
       this.createLargestArmy();
@@ -70,6 +72,16 @@ Game = (function() {
     }
     return _results;
   };
+  Game.prototype.createBarbarians = function() {
+    return this.barbarians = new Barbarians({
+      game: this
+    });
+  };
+  Game.prototype.createCatanDefense = function() {
+    return this.catanDefense = new CatanDefense({
+      game: this
+    });
+  };
   Game.prototype.awardLargestArmyTo = function(player) {
     this.previousPlayersWithLargestArmy.push(this.largestArmy.player);
     return this.largestArmy.player = player;
@@ -98,8 +110,25 @@ Game = (function() {
     }
     return this.playersByColor[color];
   };
+  Game.prototype.playersByKnightStrength = function() {
+    var players;
+    players = this.players.slice(0);
+    return players.sort(function(a, b) {
+      return b.knightStrength() - a.knightStrength();
+    });
+  };
   Game.prototype.usesExpansion = function(expansion) {
     return __indexOf.call(this.settings.expansions, expansion) >= 0;
+  };
+  Game.prototype.barbariansStrength = function() {
+    var player, strength, _i, _len, _ref;
+    strength = 0;
+    _ref = this.players;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      player = _ref[_i];
+      strength = strength + player.cities.inPlay().length;
+    }
+    return strength;
   };
   return Game;
 })();

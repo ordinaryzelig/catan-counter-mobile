@@ -52,6 +52,7 @@ events.knightClick = (knight) ->
       when knightEvents.CANCEL
         return
     knight.button.image = knightImagePath(knight)
+    gui.updateBarbariansView()
     gui.updateBadges(knight.player)
   )
 

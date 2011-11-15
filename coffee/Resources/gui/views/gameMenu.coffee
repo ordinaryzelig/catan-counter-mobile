@@ -2,6 +2,8 @@
 # Each player's victory points are displayed as badges for a bird's eye view of points.
 # Tapping on player will take user to player's dashboard.
 
+Ti.include('/gui/views/newGame.js')
+
 gui.gameMenuWindow = Ti.UI.createWindow({
   title: 'Setup/Scores',
 })
@@ -13,7 +15,7 @@ tab = Ti.UI.createTab({
 gui.navigation.addTab(tab)
 
 gui.playersTable = Ti.UI.createTableView({
-  data: [gui.createPlayersRows()],
+  data: [gui.createPlayersTableSection()],
   moveable: true,
   editable: true,
   scrollable: false,
@@ -58,6 +60,7 @@ doneButton = Ti.UI.createButton({
 # When finished editing,
 # reorder the scrollableView and colorNav to match order in players table.
 # If players were removed, remove them from the game as well.
+# Update Barbarians view if used.
 doneButton.addEventListener('click', (event) ->
   gui.gameMenuWindow.setRightNavButton(editButton)
   gui.playersTable.moving = false
@@ -66,6 +69,7 @@ doneButton.addEventListener('click', (event) ->
   for row in rows
     newColorOrder.push(row.playerColor)
   gui.reorderNavigation(newColorOrder)
+  gui.updateBarbariansView() if game.usesExpansion(CitiesAndKnights)
 )
 
 newGameButton = Ti.UI.createButton({

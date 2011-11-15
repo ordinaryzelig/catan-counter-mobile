@@ -1,4 +1,4 @@
-var badge, basicAlert, confirmationAlert, createKnightButton, createKnightRow, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, knightImagePath, pluralize, reorderByColor, tabsPath, viewsPath;
+var badge, barbariansImagePath, basicAlert, confirmationAlert, createBarbariansAttackTeamView, createKnightButton, createKnightRow, dashboardItem, eventsPath, guiPath, illegalActionAlert, imagesPath, knightImagePath, pluralize, reorderByColor, tabsPath, viewsPath;
 pluralize = function(str, num) {
   var newStr;
   if (num == null) {
@@ -92,6 +92,9 @@ knightImagePath = function(knight) {
   path = path + '.png';
   return imagesPath(path);
 };
+barbariansImagePath = function(path) {
+  return imagesPath('barbarians/' + path);
+};
 basicAlert = function(title, message) {
   return Ti.UI.createAlertDialog({
     title: title,
@@ -128,7 +131,7 @@ createKnightRow = function(knight) {
   knightButton.addEventListener('click', function(event) {
     var button, player;
     button = event.source;
-    player = game.playersByColor[button.playerColor];
+    player = game.playerByColor(button.playerColor);
     knight = player.knights.findById(button.knightId);
     return events.knightClick(knight);
   });
@@ -136,4 +139,23 @@ createKnightRow = function(knight) {
   knight.row = row;
   row.add(knightButton);
   return row;
+};
+createBarbariansAttackTeamView = function(teamName, options) {
+  var strengthLabel, team, view;
+  view = Ti.UI.createView(options);
+  view.height = 60;
+  view.width = 60;
+  view.backgroundImage = barbariansImagePath(teamName + '.png');
+  team = teamName === 'barbarians' ? game.barbarians : game.catanDefense;
+  strengthLabel = Ti.UI.createLabel({
+    text: '' + team.strength(),
+    textAlign: 'center',
+    font: {
+      fontSize: 50,
+      fontWeight: 'bold'
+    }
+  });
+  gui.attackStrengths[teamName] = strengthLabel;
+  view.add(strengthLabel);
+  return view;
 };

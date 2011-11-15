@@ -1,12 +1,13 @@
 var gui;
 Ti.UI.setBackgroundImage(imagesPath('water.png'));
 gui = {};
-Ti.include('/gui/views/newGameWindow.js');
 gui.tabs = {
   PLAYERS_MENU: 0,
-  PLAYERS: 1
+  PLAYERS: 1,
+  BARBARIANS: 2
 };
 gui.dashboardItems = {};
+gui.attackStrengths = {};
 gui.updateBadges = function(player) {
   var item, _i, _len, _ref, _results;
   _ref = this.dashboardItems[player.color];
@@ -101,15 +102,11 @@ gui.updatePlayerVictoryPointsAndBadges = function(player) {
   this.updateBadges(player);
   return this.updatePlayerVictoryPoints(player);
 };
-gui.createPlayersRows = function() {
-  var colorImage, colorLabel, player, row, section, victoryPoints, _i, _len, _ref;
-  section = Ti.UI.createTableViewSection({
-    headerTitle: 'Players and scores',
-    footerTitle: 'Tap Edit to remove or reorder players'
-  });
-  _ref = game.players;
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    player = _ref[_i];
+gui.createPlayersRows = function(players, badgeFunction) {
+  var colorImage, colorLabel, player, row, rows, victoryPoints, _i, _len;
+  rows = [];
+  for (_i = 0, _len = players.length; _i < _len; _i++) {
+    player = players[_i];
     row = Ti.UI.createTableViewRow({
       playerColor: player.color
     });
@@ -130,10 +127,39 @@ gui.createPlayersRows = function() {
       }
     });
     row.add(colorLabel);
-    victoryPoints = badge(player.victoryPoints(), {
+    victoryPoints = badge(badgeFunction(player), {
       right: 5
     });
     row.add(victoryPoints);
+    rows.push(row);
+  }
+  return rows;
+};
+gui.createPlayersTableSection = function() {
+  var row, rows, section, _i, _len;
+  section = Ti.UI.createTableViewSection({
+    headerTitle: 'Players and scores',
+    footerTitle: 'Tap Edit to remove or reorder players'
+  });
+  rows = this.createPlayersRows(game.players, function(player) {
+    return player.victoryPoints();
+  });
+  for (_i = 0, _len = rows.length; _i < _len; _i++) {
+    row = rows[_i];
+    section.add(row);
+  }
+  return section;
+};
+gui.createKnightStrengthTableSection = function() {
+  var row, rows, section, _i, _len;
+  section = Ti.UI.createTableViewSection({
+    headerTitle: 'Knight strengths'
+  });
+  rows = this.createPlayersRows(game.playersByKnightStrength(), function(player) {
+    return player.knightStrength();
+  });
+  for (_i = 0, _len = rows.length; _i < _len; _i++) {
+    row = rows[_i];
     section.add(row);
   }
   return section;
@@ -145,7 +171,15 @@ gui.createNewGame = function(settings) {
   this.playersTable.data = [this.createPlayersRows()];
   this.setScrollableViews(this.createPlayerViews());
   this.setColorNavTabs(this.createColorNavTabs());
+  this.setExpansionTabs();
   return this.scrollTo(0);
+};
+gui.setExpansionTabs = function() {
+  if (game.usesExpansion(CitiesAndKnights)) {
+    return gui.navigation.addTab(gui.barbariansTab);
+  } else {
+    return gui.navigation.removeTab(gui.barbariansTab);
+  }
 };
 gui.setKnightsTableSectionHeaderTitle = function(tableSection, numKnights) {
   if (numKnights > 0) {
@@ -157,4 +191,15 @@ gui.setKnightsTableSectionHeaderTitle = function(tableSection, numKnights) {
 gui.removeKnightRow = function(knight) {
   gui.knightsTableSection.remove(knight.row);
   return gui.knightsTable.data = [gui.knightsTableSection];
+};
+gui.updateAttackStrengths = function() {
+  this.attackStrengths['barbarians'].text = game.barbarians.strength();
+  return this.attackStrengths['catan'].text = game.catanDefense.strength();
+};
+gui.updateKnightStrengths = function() {
+  return this.knightStrengthTable.setData([gui.createKnightStrengthTableSection()]);
+};
+gui.updateBarbariansView = function() {
+  this.updateAttackStrengths();
+  return this.updateKnightStrengths();
 };

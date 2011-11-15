@@ -25,7 +25,7 @@ events.knightDesertClick = function(knight) {
         return;
       default:
         otherPlayerColor = options[event.index];
-        otherPlayer = game.playersByColor[otherPlayerColor];
+        otherPlayer = game.playerByColor(otherPlayerColor);
         otherPlayerKnight = knight.desertFor(otherPlayer);
         gui.removeKnightRow(knight);
         if (otherPlayerKnight != null) {
@@ -35,6 +35,7 @@ events.knightDesertClick = function(knight) {
           alert(otherPlayer.color + ' already has 2 level ' + knight.level + ' knights.');
         }
     }
+    gui.updateBarbariansView();
     return gui.updateBadges(knight.player);
   });
   return dialog.show();

@@ -58,6 +58,7 @@ events.knightClick = function(knight) {
         return;
     }
     knight.button.image = knightImagePath(knight);
+    gui.updateBarbariansView();
     return gui.updateBadges(knight.player);
   });
   return dialog.show();

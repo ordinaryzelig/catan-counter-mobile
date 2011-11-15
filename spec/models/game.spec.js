@@ -24,7 +24,7 @@ describe('Game', function() {
     }
     return _results;
   });
-  return it('accepts settings with expansions at initialization', function() {
+  it('accepts settings with expansions at initialization', function() {
     var game, settings;
     settings = new GameSettings({
       expansions: [CitiesAndKnights]
@@ -33,5 +33,59 @@ describe('Game', function() {
       settings: settings
     });
     return expect(game.usesExpansion(CitiesAndKnights)).toEqual(true);
+  });
+  describe('with no expansions', function() {
+    beforeEach(function() {
+      return this.game = new Game({
+        numPlayers: 1
+      });
+    });
+    it('sets victory points required to win to 10', function() {
+      return expect(this.game.victoryPointsRequiredToWin).toEqual(10);
+    });
+    it('creates soldiers', function() {
+      return expect(this.game.soldiers.length).toEqual(14);
+    });
+    it('creates largest army', function() {
+      return expect(this.game.largestArmy).toBeDefined();
+    });
+    return it('does not create development card victory points', function() {
+      return expect(this.game.developmentCardVictoryPoints.length).toEqual(5);
+    });
+  });
+  return describe('with Cities and Knights', function() {
+    beforeEach(function() {
+      this.settings = new GameSettings({
+        expansions: [CitiesAndKnights]
+      });
+      return this.game = new Game({
+        numPlayers: 2,
+        settings: this.settings
+      });
+    });
+    it('sets victory points required to win to 13', function() {
+      return expect(this.game.victoryPointsRequiredToWin).toEqual(13);
+    });
+    it('does not create soldiers', function() {
+      return expect(this.game.soldiers).toBeUndefined;
+    });
+    it('does not create largest army', function() {
+      return expect(this.game.largestArmy).toBeUndefined();
+    });
+    it('does not create development card victory points', function() {
+      return expect(this.game.developmentCardVictoryPoints).toBeUndefined();
+    });
+    return it('#playersByKnightStrength returns an array of players in descending order of knight strength', function() {
+      var player, sortedPlayers, strengths, _i, _len;
+      this.game.players[0].buildKnight().activate();
+      this.game.players[1].buildKnight().promote().activate();
+      sortedPlayers = this.game.playersByKnightStrength();
+      strengths = [];
+      for (_i = 0, _len = sortedPlayers.length; _i < _len; _i++) {
+        player = sortedPlayers[_i];
+        strengths.push(player.knightStrength());
+      }
+      return expect(strengths).toEqual([2, 1]);
+    });
   });
 });

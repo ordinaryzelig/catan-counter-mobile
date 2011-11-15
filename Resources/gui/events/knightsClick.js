@@ -23,7 +23,7 @@ events.knightsClick = function(player) {
   });
   addKnightButton.addEventListener('click', function(event) {
     var row;
-    player = game.playersByColor[event.source.playerColor];
+    player = game.playerByColor(event.source.playerColor);
     if (player.canBuildKnight()) {
       knight = player.buildKnight();
       row = createKnightRow(knight);

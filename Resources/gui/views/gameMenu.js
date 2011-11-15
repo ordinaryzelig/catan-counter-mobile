@@ -1,4 +1,5 @@
 var doneButton, editButton, newGameButton, tab;
+Ti.include('/gui/views/newGame.js');
 gui.gameMenuWindow = Ti.UI.createWindow({
   title: 'Setup/Scores'
 });
@@ -9,7 +10,7 @@ tab = Ti.UI.createTab({
 });
 gui.navigation.addTab(tab);
 gui.playersTable = Ti.UI.createTableView({
-  data: [gui.createPlayersRows()],
+  data: [gui.createPlayersTableSection()],
   moveable: true,
   editable: true,
   scrollable: false,
@@ -51,7 +52,10 @@ doneButton.addEventListener('click', function(event) {
     row = rows[_i];
     newColorOrder.push(row.playerColor);
   }
-  return gui.reorderNavigation(newColorOrder);
+  gui.reorderNavigation(newColorOrder);
+  if (game.usesExpansion(CitiesAndKnights)) {
+    return gui.updateBarbariansView();
+  }
 });
 newGameButton = Ti.UI.createButton({
   title: 'New game'

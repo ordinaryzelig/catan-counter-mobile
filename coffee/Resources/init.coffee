@@ -18,5 +18,7 @@ for file in [
   'developmentCardVictoryPoint',
   'gameSettings',
   'knight',
+  'barbarians',
+  'catanDefense',
 ]
   Ti.include('models/' + file + '.js')

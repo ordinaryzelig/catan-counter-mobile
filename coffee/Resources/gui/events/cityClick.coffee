@@ -36,6 +36,7 @@ events.cityClick = (player) ->
         player.downgradeCity()
       when cityEvents.CANCEL
         return
+    gui.updateAttackStrengths() if game.usesExpansion(CitiesAndKnights)
     gui.updatePlayerVictoryPointsAndBadges(player)
   )
 

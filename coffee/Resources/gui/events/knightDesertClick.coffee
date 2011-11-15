@@ -26,7 +26,7 @@ events.knightDesertClick = (knight) ->
       else
         # Desert to another player.
         otherPlayerColor = options[event.index]
-        otherPlayer = game.playersByColor[otherPlayerColor]
+        otherPlayer = game.playerByColor(otherPlayerColor)
         otherPlayerKnight = knight.desertFor(otherPlayer)
         gui.removeKnightRow(knight)
         if otherPlayerKnight?
@@ -34,6 +34,7 @@ events.knightDesertClick = (knight) ->
           alert otherPlayer.color + ' gains a ' + otherPlayerKnight.humanize()
         else
           alert otherPlayer.color + ' already has 2 level ' + knight.level + ' knights.'
+    gui.updateBarbariansView()
     gui.updateBadges(knight.player)
   )
 

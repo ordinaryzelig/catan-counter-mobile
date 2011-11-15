@@ -18,3 +18,47 @@ describe 'Game', ->
     settings = new GameSettings({expansions: [CitiesAndKnights]})
     game = new Game({settings: settings})
     expect(game.usesExpansion(CitiesAndKnights)).toEqual(true)
+
+  describe 'with no expansions', ->
+
+    beforeEach ->
+      @game = new Game(numPlayers: 1)
+
+    it 'sets victory points required to win to 10', ->
+      expect(@game.victoryPointsRequiredToWin).toEqual(10)
+
+    it 'creates soldiers', ->
+      expect(@game.soldiers.length).toEqual(14)
+
+    it 'creates largest army', ->
+      expect(@game.largestArmy).toBeDefined()
+
+    it 'does not create development card victory points', ->
+      expect(@game.developmentCardVictoryPoints.length).toEqual(5)
+
+  describe 'with Cities and Knights', ->
+
+    beforeEach ->
+      @settings = new GameSettings(expansions: [CitiesAndKnights])
+      @game = new Game(numPlayers: 2, settings: @settings)
+
+    it 'sets victory points required to win to 13', ->
+      expect(@game.victoryPointsRequiredToWin).toEqual(13)
+
+    it 'does not create soldiers', ->
+      expect(@game.soldiers).toBeUndefined
+
+    it 'does not create largest army', ->
+      expect(@game.largestArmy).toBeUndefined()
+
+    it 'does not create development card victory points', ->
+      expect(@game.developmentCardVictoryPoints).toBeUndefined()
+
+    it '#playersByKnightStrength returns an array of players in descending order of knight strength', ->
+      @game.players[0].buildKnight().activate()
+      @game.players[1].buildKnight().promote().activate()
+      sortedPlayers = @game.playersByKnightStrength()
+      strengths = []
+      for player in sortedPlayers
+        strengths.push player.knightStrength()
+      expect(strengths).toEqual([2, 1])

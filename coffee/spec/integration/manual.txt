@@ -1,11 +1,13 @@
 There's no good way to test the GUI, so we're just going to do it manually.
 This is a list of things that should be tested.
 
-Main navigation
+Main navigation tabs and windows
 
-  game menu tab changes window to game menu window
+  game menu/setup tab shows editable list of players with victory points and new game creation
 
-  players tab changes window to players window
+  players tab shows player's game components like settlement and city that can perform actions like building
+
+  barbarians tab shows catan vs barbarians with list of players and knight strength
 
 Game menu
 
@@ -21,7 +23,7 @@ Game menu
 
       after tapping 'Done', the players window should match the table and be in order
 
-  'Reset game' button brings up modal window for new game with settings
+  'New game' button brings up modal window for new game with settings
 
     'Create game' button
 
@@ -54,6 +56,14 @@ Players window
     updated when players reordered and/or removed
 
     resets to first color when players reordered and/or removed
+
+Barbarians window
+
+  shows total number of cities vs. total knight strength
+
+  lists players and their knight strength in descending order of knight strength
+
+    tapping on player brings up player's knight modal window (see below)
 
 Gameplay
 
