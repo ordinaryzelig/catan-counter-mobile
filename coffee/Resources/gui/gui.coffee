@@ -162,10 +162,11 @@ gui.createNewGame = (settings) ->
 
 # Add/remove expansion tabs.
 gui.setExpansionTabs = ->
+  tabExistsOnNavigation = gui.barbariansTab? && gui.navigation.tabs.indexOf(gui.barbariansTab) != -1
   if game.usesExpansion(CitiesAndKnights)
-    gui.navigation.addTab(gui.barbariansTab)
+    gui.navigation.addTab(gui.barbariansTab) unless tabExistsOnNavigation
   else
-    gui.navigation.removeTab(gui.barbariansTab)
+    gui.navigation.removeTab(gui.barbariansTab) if tabExistsOnNavigation
 
 gui.setKnightsTableSectionHeaderTitle = (tableSection, numKnights) ->
   if numKnights > 0

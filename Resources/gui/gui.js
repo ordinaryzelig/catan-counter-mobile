@@ -175,10 +175,16 @@ gui.createNewGame = function(settings) {
   return this.scrollTo(0);
 };
 gui.setExpansionTabs = function() {
+  var tabExistsOnNavigation;
+  tabExistsOnNavigation = (gui.barbariansTab != null) && gui.navigation.tabs.indexOf(gui.barbariansTab) !== -1;
   if (game.usesExpansion(CitiesAndKnights)) {
-    return gui.navigation.addTab(gui.barbariansTab);
+    if (!tabExistsOnNavigation) {
+      return gui.navigation.addTab(gui.barbariansTab);
+    }
   } else {
-    return gui.navigation.removeTab(gui.barbariansTab);
+    if (tabExistsOnNavigation) {
+      return gui.navigation.removeTab(gui.barbariansTab);
+    }
   }
 };
 gui.setKnightsTableSectionHeaderTitle = function(tableSection, numKnights) {
