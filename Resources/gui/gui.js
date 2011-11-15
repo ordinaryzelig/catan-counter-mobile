@@ -168,7 +168,7 @@ gui.createNewGame = function(settings) {
   this.gameMenuWindow.setRightNavButton(editButton);
   this.playersTable.moving = false;
   controller.newGame(settings);
-  this.playersTable.data = [this.createPlayersRows()];
+  this.playersTable.data = [this.createPlayersTableSection()];
   this.setScrollableViews(this.createPlayerViews());
   this.setColorNavTabs(this.createColorNavTabs());
   this.setExpansionTabs();

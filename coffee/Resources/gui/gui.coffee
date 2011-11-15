@@ -154,7 +154,7 @@ gui.createNewGame = (settings) ->
   @gameMenuWindow.setRightNavButton(editButton)
   @playersTable.moving = false
   controller.newGame(settings)
-  @playersTable.data = [@createPlayersRows()]
+  @playersTable.data = [@createPlayersTableSection()]
   @setScrollableViews(@createPlayerViews())
   @setColorNavTabs(@createColorNavTabs())
   @setExpansionTabs()
