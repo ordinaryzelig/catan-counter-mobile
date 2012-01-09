@@ -56,3 +56,6 @@ class Knight extends Buildable
     string = string + ' activated' if @active
     string = string + ' knight'
     string
+
+  canBePromoted: ->
+    @player.knights.level(@level + 1).notInPlay().length > 0

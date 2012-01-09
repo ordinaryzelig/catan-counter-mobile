@@ -193,8 +193,27 @@ describe('Player', function() {
     it('does not create development card victory points', function() {
       return expect(this.player.developmentCardVictoryPoints).toBeUndefined();
     });
-    return it('does not create soldiers', function() {
+    it('does not create soldiers', function() {
       return expect(this.player.soldiers).toBeUndefined();
+    });
+    it('#unmetropolizedCities excludes cities with a metropolis', function() {
+      var metroplizedCity;
+      expect(this.player.unmetropolizedCities()).toEqual(this.player.cities.inPlay());
+      metroplizedCity = this.player.cities.inPlay()[0];
+      metroplizedCity.metropolis = true;
+      return expect(this.player.unmetropolizedCities()).toEqual([]);
+    });
+    it('#immune returns true if player has no unmetropolizedCities', function() {
+      var metroplizedCity;
+      expect(this.player.immune()).toEqual(false);
+      metroplizedCity = this.player.cities.inPlay()[0];
+      metroplizedCity.metropolis = true;
+      return expect(this.player.immune()).toEqual(true);
+    });
+    return it('#deactivateAllKnights deactivates all knights', function() {
+      this.player.buildKnight().activate();
+      this.player.deactivateAllKnights();
+      return expect(this.player.knightStrength()).toEqual(0);
     });
   });
 });

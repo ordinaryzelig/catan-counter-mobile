@@ -75,7 +75,7 @@ describe('Game', function() {
     it('does not create development card victory points', function() {
       return expect(this.game.developmentCardVictoryPoints).toBeUndefined();
     });
-    return it('#playersByKnightStrength returns an array of players in descending order of knight strength', function() {
+    it('#playersByKnightStrength returns an array of players in descending order of knight strength', function() {
       var player, sortedPlayers, strengths, _i, _len;
       this.game.players[0].buildKnight().activate();
       this.game.players[1].buildKnight().promote().activate();
@@ -86,6 +86,30 @@ describe('Game', function() {
         strengths.push(player.knightStrength());
       }
       return expect(strengths).toEqual([2, 1]);
+    });
+    it('#playersWhoContributeMostKnights returns players who have biggest knight strength', function() {
+      var player1;
+      expect(this.game.playersWhoContributeMostKnights()).toEqual(this.game.players);
+      player1 = this.game.players[0];
+      player1.buildKnight().activate();
+      return expect(this.game.playersWhoContributeMostKnights()).toEqual([player1]);
+    });
+    return describe('#playersNotImmuneWhoContributeLeastKnights', function() {
+      it('returns players who have at least 1 unmetropolized city and have lowest knight strength', function() {
+        var player1, player2;
+        expect(this.game.playersNotImmuneWhoContributeLeastKnights()).toEqual(this.game.players);
+        player1 = this.game.players[0];
+        player1.buildKnight().activate();
+        player2 = this.game.players[1];
+        return expect(this.game.playersNotImmuneWhoContributeLeastKnights()).toEqual([player2]);
+      });
+      return it('excludes players who have no cities', function() {
+        var player1, player2;
+        player1 = this.game.players[0];
+        player1.downgradeCity();
+        player2 = this.game.players[1];
+        return expect(this.game.playersNotImmuneWhoContributeLeastKnights()).toEqual([player2]);
+      });
     });
   });
 });

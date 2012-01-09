@@ -59,7 +59,7 @@ Players window
 
 Barbarians window
 
-  shows total number of cities vs. total knight strength
+  shows total number of barbarians' strength vs. catan defense strength
 
   lists players and their knight strength in descending order of knight strength
 

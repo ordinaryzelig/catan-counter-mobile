@@ -76,5 +76,8 @@ Knight = (function() {
     string = string + ' knight';
     return string;
   };
+  Knight.prototype.canBePromoted = function() {
+    return this.player.knights.level(this.level + 1).notInPlay().length > 0;
+  };
   return Knight;
 })();

@@ -68,9 +68,27 @@ class Game
 
   playersByKnightStrength: ->
     players = @players.slice(0)
-    players.sort((a, b) ->
+    players.sort (a, b) ->
       b.knightStrength() - a.knightStrength()
-    )
+
+  playersWhoContributeMostKnights: ->
+    defenders = []
+    playersByKnightStrength = @playersByKnightStrength()
+    maxKnightStrength = playersByKnightStrength[0].knightStrength()
+    for player in playersByKnightStrength
+      defenders.push player if player.knightStrength() == maxKnightStrength
+    defenders
+
+  playersNotImmuneWhoContributeLeastKnights: ->
+    playersNotImmune = []
+    for player in @playersByKnightStrength()
+      playersNotImmune.push player unless player.immune()
+    return [] if playersNotImmune.length == 0
+    minKnightStrength = playersNotImmune[playersNotImmune.length - 1].knightStrength()
+    players = []
+    for player in playersNotImmune
+      players.push player if player.knightStrength() == minKnightStrength
+    players
 
   usesExpansion: (expansion) ->
     expansion in @settings.expansions

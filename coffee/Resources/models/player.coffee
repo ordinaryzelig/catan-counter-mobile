@@ -13,6 +13,7 @@ class Player
       @soldiers = []
       @developmentCardVictoryPoints = []
 
+  # ================================================
   # Victory points.
 
   victoryPoints: ->
@@ -38,6 +39,7 @@ class Player
   hasEnoughVictoryPointsToWin: ->
     @victoryPoints() >= @game.victoryPointsRequiredToWin
 
+  # ================================================
   # Settlements.
 
   buildSettlement: ->
@@ -60,6 +62,7 @@ class Player
   hasSettlementsToUpgrade: ->
     @settlements.inPlay().length > 0
 
+  # ================================================
   # Cities.
 
   buildCity: ->
@@ -86,6 +89,16 @@ class Player
   destroysCityIfDowngraded: ->
     !@canBuildSettlement()
 
+  unmetropolizedCities: ->
+    cities = []
+    for city in @cities.inPlay()
+      cities.push city unless city.metropolis
+    cities
+
+  immune: ->
+    @unmetropolizedCities().length == 0
+
+  # ================================================
   # Soldiers.
 
   playSoldier: ->
@@ -113,6 +126,7 @@ class Player
     if @soldiers.length >= @game.largestArmy.numSoldiersNeeded()
       @game.awardLargestArmyTo(@)
 
+  # ================================================
   # Longest road.
 
   hasLongestRoad: ->
@@ -122,6 +136,7 @@ class Player
   takeLongestRoad: ->
     @game.awardLongestRoadTo @
 
+  # ================================================
   # Development card victory points.
 
   showDevelopmentCardVictoryPoints: (numCards) ->
@@ -141,12 +156,14 @@ class Player
   canWinByShowingAllDevelopmentCardVictoryPoints: ->
     (@game.victoryPointsRequiredToWin - @victoryPoints()) <= @game.developmentCardVictoryPoints.notInPlay().length
 
+  # ================================================
   # Knights.
   # When creating knights, assign id (1 - 6)that is unique to player.
   # This makes it easier to find since we can't attach the knight object to the knight button.
   # Use player.knights.findById(id).
 
   createKnights: ->
+
     @knights = []
     knightId = 1
     for level in [1..3]
@@ -154,9 +171,12 @@ class Player
         knight = new Knight(level: level, player: @, id: knightId)
         @knights.push(knight)
         knightId = knightId + 1
+
+    # Define knights.findById().
     @knights.findById = (id) ->
       for knight in @
         return knight if knight.id == id
+
     @knights
 
   # Get level 1 knight not in play and build.
@@ -175,5 +195,6 @@ class Player
   canBuildKnight: ->
     @knights.notInPlay().level(1).length > 0
 
-  canPromoteToMightyKnight: ->
-    true
+  deactivateAllKnights: ->
+    for knight in @knights.inPlay().active()
+      knight.deactivate()

@@ -37,18 +37,19 @@ events.knightClick = function(knight) {
         }
         break;
       case knightEvents.PROMOTE:
-        if (knight.level === 1) {
-          knight = knight.promote();
-        } else if (knight.level === 2) {
-          if (knight.player.canPromoteToMightyKnight()) {
-            knight = knight.promote();
-          } else {
-            alert('Player cannot yet promote to mighty knights');
+        switch (knight.level) {
+          case 1:
+          case 2:
+            if (knight.canBePromoted()) {
+              knight = knight.promote();
+            } else {
+              alert("There are no available level " + (knight.level + 1) + " knights");
+              return;
+            }
+            break;
+          case 3:
+            alert('Level 3 Knight cannot be promoted');
             return;
-          }
-        } else {
-          alert('Level 3 Knight cannot be promoted');
-          return;
         }
         break;
       case knightEvents.DESERT:

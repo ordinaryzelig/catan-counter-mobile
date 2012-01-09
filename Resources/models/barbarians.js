@@ -13,5 +13,8 @@ Barbarians = (function() {
     }
     return cities;
   };
+  Barbarians.prototype.attack = function() {
+    return new BarbariansBattleOutcome(this);
+  };
   return Barbarians;
 })();

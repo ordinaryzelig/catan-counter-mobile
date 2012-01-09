@@ -1,4 +1,4 @@
-var edgeMargin, matchup, matchupHeaderView;
+var barbariansAttackButton, edgeMargin, matchup, matchupHeaderView;
 gui.barbariansWindow = Ti.UI.createWindow({
   title: 'Homeland Security'
 });
@@ -11,7 +11,7 @@ matchupHeaderView = Ti.UI.createView({
   height: 80
 });
 matchup = {};
-edgeMargin = 20;
+edgeMargin = 10;
 matchup.barbarians = createBarbariansAttackTeamView('barbarians', {
   left: edgeMargin
 });
@@ -20,6 +20,15 @@ matchup.catan = createBarbariansAttackTeamView('catan', {
 });
 matchupHeaderView.add(matchup.barbarians);
 matchupHeaderView.add(matchup.catan);
+barbariansAttackButton = Ti.UI.createButton({
+  title: 'Barbarians Attack!',
+  height: 40,
+  width: 160
+});
+matchupHeaderView.add(barbariansAttackButton);
+barbariansAttackButton.addEventListener('click', function() {
+  return events.barbariansAttack();
+});
 gui.knightStrengthTable = Ti.UI.createTableView({
   style: Ti.UI.iPhone.TableViewStyle.GROUPED,
   headerView: matchupHeaderView

@@ -92,7 +92,7 @@ describe('Knight', function() {
     expect(player2Knight.level).toEqual(2);
     return expect(player2Knight.active).toEqual(true);
   });
-  return it('#desertFor returns undefined if another player cannot build equal knight', function() {
+  it('#desertFor returns undefined if another player cannot build equal knight', function() {
     var knight, player2, player2Knight, times;
     knight = this.player.buildKnight();
     player2 = this.game.players[1];
@@ -101,5 +101,15 @@ describe('Knight', function() {
     }
     player2Knight = knight.desertFor(player2);
     return expect(player2Knight).toBeUndefined();
+  });
+  return it('#canBePromoted returns true if there are knights of level + 1 not in play', function() {
+    var idx, knight, knight2;
+    for (idx = 1; idx <= 2; idx++) {
+      this.player.buildKnight().promote();
+    }
+    knight = this.player.buildKnight();
+    expect(knight.canBePromoted()).toEqual(false);
+    knight2 = this.player.knights.level(2)[0];
+    return expect(knight2.canBePromoted()).toEqual(true);
   });
 });

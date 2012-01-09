@@ -1,15 +1,16 @@
 events = {}
 
 files = [
-  'componentClick',
-  'settlementClick',
+  'barbariansAttackClick',
   'cityClick',
-  'longestRoadClick',
-  'soldierClick',
+  'componentClick',
   'developmentCardVictoryPointClick',
-  'knightsClick',
   'knightClick',
   'knightDesertClick',
+  'knightsClick',
+  'longestRoadClick',
+  'settlementClick',
+  'soldierClick',
 ]
 
 for file in files

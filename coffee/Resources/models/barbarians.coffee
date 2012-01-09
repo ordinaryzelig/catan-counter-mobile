@@ -8,3 +8,6 @@ class Barbarians
     for player in @game.players
       cities = cities + player.cities.inPlay().length
     cities
+
+  attack: ->
+    new BarbariansBattleOutcome(@)

@@ -126,6 +126,21 @@ Player = (function() {
   Player.prototype.destroysCityIfDowngraded = function() {
     return !this.canBuildSettlement();
   };
+  Player.prototype.unmetropolizedCities = function() {
+    var cities, city, _i, _len, _ref;
+    cities = [];
+    _ref = this.cities.inPlay();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      city = _ref[_i];
+      if (!city.metropolis) {
+        cities.push(city);
+      }
+    }
+    return cities;
+  };
+  Player.prototype.immune = function() {
+    return this.unmetropolizedCities().length === 0;
+  };
   Player.prototype.playSoldier = function() {
     var soldierToPlay;
     soldierToPlay = this.game.soldiers.notInPlay()[0];
@@ -238,8 +253,15 @@ Player = (function() {
   Player.prototype.canBuildKnight = function() {
     return this.knights.notInPlay().level(1).length > 0;
   };
-  Player.prototype.canPromoteToMightyKnight = function() {
-    return true;
+  Player.prototype.deactivateAllKnights = function() {
+    var knight, _i, _len, _ref, _results;
+    _ref = this.knights.inPlay().active();
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      knight = _ref[_i];
+      _results.push(knight.deactivate());
+    }
+    return _results;
   };
   return Player;
 })();

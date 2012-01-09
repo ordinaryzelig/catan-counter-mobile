@@ -1,5 +1,5 @@
 # Include lib.
-for file in ['buildable', 'arrayFilters']
+for file in ['buildable', 'arrayFilters', 'underscore']
   Ti.include('lib/' + file + '.js')
 
 # Include expansions.
@@ -20,5 +20,6 @@ for file in [
   'knight',
   'barbarians',
   'catanDefense',
+  'barbariansBattleOutcome',
 ]
   Ti.include('models/' + file + '.js')

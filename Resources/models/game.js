@@ -117,6 +117,42 @@ Game = (function() {
       return b.knightStrength() - a.knightStrength();
     });
   };
+  Game.prototype.playersWhoContributeMostKnights = function() {
+    var defenders, maxKnightStrength, player, playersByKnightStrength, _i, _len;
+    defenders = [];
+    playersByKnightStrength = this.playersByKnightStrength();
+    maxKnightStrength = playersByKnightStrength[0].knightStrength();
+    for (_i = 0, _len = playersByKnightStrength.length; _i < _len; _i++) {
+      player = playersByKnightStrength[_i];
+      if (player.knightStrength() === maxKnightStrength) {
+        defenders.push(player);
+      }
+    }
+    return defenders;
+  };
+  Game.prototype.playersNotImmuneWhoContributeLeastKnights = function() {
+    var minKnightStrength, player, players, playersNotImmune, _i, _j, _len, _len2, _ref;
+    playersNotImmune = [];
+    _ref = this.playersByKnightStrength();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      player = _ref[_i];
+      if (!player.immune()) {
+        playersNotImmune.push(player);
+      }
+    }
+    if (playersNotImmune.length === 0) {
+      return [];
+    }
+    minKnightStrength = playersNotImmune[playersNotImmune.length - 1].knightStrength();
+    players = [];
+    for (_j = 0, _len2 = playersNotImmune.length; _j < _len2; _j++) {
+      player = playersNotImmune[_j];
+      if (player.knightStrength() === minKnightStrength) {
+        players.push(player);
+      }
+    }
+    return players;
+  };
   Game.prototype.usesExpansion = function(expansion) {
     return __indexOf.call(this.settings.expansions, expansion) >= 0;
   };

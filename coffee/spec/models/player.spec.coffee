@@ -148,3 +148,20 @@ describe 'Player', ->
 
     it 'does not create soldiers', ->
       expect(@player.soldiers).toBeUndefined()
+
+    it '#unmetropolizedCities excludes cities with a metropolis', ->
+      expect(@player.unmetropolizedCities()).toEqual(@player.cities.inPlay())
+      metroplizedCity = @player.cities.inPlay()[0]
+      metroplizedCity.metropolis = true
+      expect(@player.unmetropolizedCities()).toEqual([])
+
+    it '#immune returns true if player has no unmetropolizedCities', ->
+      expect(@player.immune()).toEqual(false)
+      metroplizedCity = @player.cities.inPlay()[0]
+      metroplizedCity.metropolis = true
+      expect(@player.immune()).toEqual(true)
+
+    it '#deactivateAllKnights deactivates all knights', ->
+      @player.buildKnight().activate()
+      @player.deactivateAllKnights()
+      expect(@player.knightStrength()).toEqual(0)

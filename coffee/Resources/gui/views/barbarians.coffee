@@ -19,12 +19,25 @@ matchupHeaderView = Ti.UI.createView(
 )
 
 matchup = {}
-edgeMargin = 20
+edgeMargin = 10
 matchup.barbarians = createBarbariansAttackTeamView('barbarians', left: edgeMargin)
 matchup.catan      = createBarbariansAttackTeamView('catan',      right: edgeMargin)
 
 matchupHeaderView.add(matchup.barbarians)
 matchupHeaderView.add(matchup.catan)
+
+# Attack buttons.
+barbariansAttackButton = Ti.UI.createButton(
+    title:  'Barbarians Attack!',
+    height: 40,
+    width:  160,
+  )
+
+matchupHeaderView.add(barbariansAttackButton)
+
+barbariansAttackButton.addEventListener('click', ->
+  events.barbariansAttack()
+)
 
 gui.knightStrengthTable = Ti.UI.createTableView(
   style: Ti.UI.iPhone.TableViewStyle.GROUPED,

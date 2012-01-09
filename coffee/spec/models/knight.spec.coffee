@@ -77,3 +77,13 @@ describe 'Knight', ->
       player2.buildKnight()
     player2Knight = knight.desertFor(player2)
     expect(player2Knight).toBeUndefined()
+
+  it '#canBePromoted returns true if there are knights of level + 1 not in play', ->
+    # Build 2 level 2 knights.
+    for idx in [1..2]
+      @player.buildKnight().promote()
+    # Build level 1 knight who should not be able to be promoted.
+    knight = @player.buildKnight()
+    expect(knight.canBePromoted()).toEqual(false)
+    knight2 = @player.knights.level(2)[0]
+    expect(knight2.canBePromoted()).toEqual(true)

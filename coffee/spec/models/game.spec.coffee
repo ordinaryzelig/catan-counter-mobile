@@ -62,3 +62,24 @@ describe 'Game', ->
       for player in sortedPlayers
         strengths.push player.knightStrength()
       expect(strengths).toEqual([2, 1])
+
+    it '#playersWhoContributeMostKnights returns players who have biggest knight strength', ->
+      expect(@game.playersWhoContributeMostKnights()).toEqual(@game.players)
+      player1 = @game.players[0]
+      player1.buildKnight().activate()
+      expect(@game.playersWhoContributeMostKnights()).toEqual([player1])
+
+    describe '#playersNotImmuneWhoContributeLeastKnights', ->
+
+      it 'returns players who have at least 1 unmetropolized city and have lowest knight strength', ->
+        expect(@game.playersNotImmuneWhoContributeLeastKnights()).toEqual(@game.players)
+        player1 = @game.players[0]
+        player1.buildKnight().activate()
+        player2 = @game.players[1]
+        expect(@game.playersNotImmuneWhoContributeLeastKnights()).toEqual([player2])
+
+      it 'excludes players who have no cities', ->
+        player1 = @game.players[0]
+        player1.downgradeCity()
+        player2 = @game.players[1]
+        expect(@game.playersNotImmuneWhoContributeLeastKnights()).toEqual([player2])
