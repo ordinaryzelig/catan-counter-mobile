@@ -10,7 +10,6 @@ tab = Ti.UI.createTab({
 });
 gui.navigation.addTab(tab);
 gui.playersTable = Ti.UI.createTableView({
-  data: [gui.createPlayersTableSection()],
   moveable: true,
   editable: true,
   scrollable: false,

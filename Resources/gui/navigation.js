@@ -10,8 +10,3 @@ for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
   navTab = _ref2[_j];
   Ti.include('/gui/views/' + navTab + '.js');
 }
-gui.currentPlayer = game.playerByColor(Game.COLORS[0]);
-gui.setExpansionTabs();
-gui.scrollTo(0);
-gui.navigateTo(gui.tabs.PLAYERS_MENU);
-gui.navigation.open();

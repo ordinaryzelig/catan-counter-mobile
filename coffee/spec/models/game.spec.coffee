@@ -83,3 +83,6 @@ describe 'Game', ->
         player1.downgradeCity()
         player2 = @game.players[1]
         expect(@game.playersNotImmuneWhoContributeLeastKnights()).toEqual([player2])
+
+    it 'creates defenders of Catan cards', ->
+      expect(@game.defenderOfCatanCards.length).toEqual(8)

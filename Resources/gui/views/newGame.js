@@ -1,5 +1,8 @@
-gui.showNewGameWindow = function() {
+gui.showNewGameWindow = function(allowCancel) {
   var buttonHeight, buttonOffset, buttonWidth, buttonsView, cancelButton, createGameButton, expansion, expansions, expansionsTable, fontOptions, label, newGameWindow, onOffSwitch, row, table, _i, _len, _ref;
+  if (allowCancel == null) {
+    allowCancel = true;
+  }
   fontOptions = {
     fontSize: 16,
     fontWeight: 'bold'
@@ -51,24 +54,28 @@ gui.showNewGameWindow = function() {
   buttonHeight = 40;
   buttonWidth = 140;
   buttonOffset = 15;
-  cancelButton = Ti.UI.createButton({
-    title: 'Cancel',
-    height: buttonHeight,
-    width: buttonWidth,
-    font: fontOptions,
-    left: buttonOffset
-  });
-  cancelButton.addEventListener('click', function() {
-    return newGameWindow.close();
-  });
-  buttonsView.add(cancelButton);
+  if (allowCancel) {
+    cancelButton = Ti.UI.createButton({
+      title: 'Cancel',
+      height: buttonHeight,
+      width: buttonWidth,
+      font: fontOptions,
+      left: buttonOffset
+    });
+    cancelButton.addEventListener('click', function() {
+      return newGameWindow.close();
+    });
+    buttonsView.add(cancelButton);
+  }
   createGameButton = Ti.UI.createButton({
     title: 'Create game',
     height: buttonHeight,
     width: buttonWidth,
-    font: fontOptions,
-    right: buttonOffset
+    font: fontOptions
   });
+  if (allowCancel) {
+    createGameButton.right = buttonOffset;
+  }
   createGameButton.addEventListener('click', function() {
     var settings;
     settings = new GameSettings({

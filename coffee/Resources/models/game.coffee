@@ -10,6 +10,7 @@ class Game
       @victoryPointsRequiredToWin = @victoryPointsRequiredToWin + 3
       @createBarbarians()
       @createCatanDefense()
+      @createDefenderOfCatanCards()
     else
       @createSoldiers()
       @createLargestArmy()
@@ -43,6 +44,11 @@ class Game
 
   createCatanDefense: ->
     @catanDefense = new CatanDefense(game: @)
+
+  createDefenderOfCatanCards: ->
+    @defenderOfCatanCards = []
+    for idx in [1..8]
+      @defenderOfCatanCards.push(new DefenderOfCatanCard())
 
   awardLargestArmyTo: (player) ->
     @previousPlayersWithLargestArmy.push(@largestArmy.player)
@@ -98,6 +104,13 @@ class Game
     for player in @players
       strength = strength + player.cities.inPlay().length
     strength
+
+  # Remove defender card from stack and give to player.
+  awardDefenderOfCatanCardTo: (player) ->
+    card = @defenderOfCatanCards.pop()
+    return null unless card?
+    player.defenderOfCatanCards.push(card)
+    card
 
 Game.COLORS = ['red', 'blue', 'orange', 'white', 'green', 'brown']
 Game.EXPANSIONS = [

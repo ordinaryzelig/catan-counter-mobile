@@ -43,7 +43,6 @@ gui.knightStrengthTable = Ti.UI.createTableView(
   style: Ti.UI.iPhone.TableViewStyle.GROUPED,
   headerView: matchupHeaderView,
 )
-gui.updateKnightStrengths()
 
 # When tapped, bring up player's modal knight window.
 # Same as tapping player's knight dashboard item.

@@ -15,7 +15,7 @@ gui.createPlayerViews = function() {
     player = _ref[_i];
     dashboardItems = [this.createSettlementDashboardItem(player), this.createCityDashboardItem(player), this.createLongestRoadDashboardItem()];
     if (game.usesExpansion(CitiesAndKnights)) {
-      items = [this.createKnightDashboardItem(player)];
+      items = [this.createKnightDashboardItem(player), this.createDefenderOfCatanCardItem(player)];
       for (_j = 0, _len2 = items.length; _j < _len2; _j++) {
         item = items[_j];
         dashboardItems.push(item);
@@ -44,7 +44,6 @@ gui.createPlayerViews = function() {
 gui.createPlayerDashboardItem = function(componentType, player) {
   return dashboardItem({
     image: imagesPath(componentType + '_' + player.color + '.png'),
-    badge: player[pluralize(componentType)].inPlay().length,
     componentType: componentType
   });
 };
@@ -75,13 +74,16 @@ gui.createDevelopmentCardVictoryPointDashboardItem = function() {
 gui.createKnightDashboardItem = function(player) {
   return dashboardItem({
     image: imagesPath('knights/' + player.color + '_1.png'),
-    badge: player.knightStrength(),
     componentType: 'knights'
   });
 };
-gui.scrollableView = Ti.UI.createScrollableView({
-  views: gui.createPlayerViews()
-});
+gui.createDefenderOfCatanCardItem = function(player) {
+  return dashboardItem({
+    image: imagesPath('defender_of_catan_card.png'),
+    componentType: 'defenderOfCatanCard'
+  });
+};
+gui.scrollableView = Ti.UI.createScrollableView();
 playersWindow.add(gui.scrollableView);
 gui.createColorNavTabs = function() {
   var imagePath, player, tabbedBarButtonData, _i, _len, _ref;
@@ -98,7 +100,6 @@ gui.createColorNavTabs = function() {
   return tabbedBarButtonData;
 };
 gui.colorNav = Ti.UI.createTabbedBar({
-  labels: gui.createColorNavTabs(),
   index: 0
 });
 gui.colorNav.addEventListener('click', function(event) {
@@ -106,5 +107,4 @@ gui.colorNav.addEventListener('click', function(event) {
   gui.scrollTo(event.index);
   return player = game.players[event.index];
 });
-gui.changeTitle(game.players[0], playersWindow);
 playersWindow.setToolbar([gui.flexSpace, gui.colorNav, gui.flexSpace]);

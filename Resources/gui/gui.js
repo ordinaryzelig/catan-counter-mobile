@@ -27,6 +27,8 @@ gui.updateBadges = function(player) {
           return item.badge = player.developmentCardVictoryPoints.length;
         case 'knights':
           return item.badge = player.knightStrength();
+        case 'defenderOfCatanCard':
+          return item.badge = player.defenderOfCatanCards.length;
       }
     })());
   }
@@ -165,13 +167,16 @@ gui.createKnightStrengthTableSection = function() {
   return section;
 };
 gui.createNewGame = function(settings) {
+  controller.newGame(settings);
   this.gameMenuWindow.setRightNavButton(editButton);
   this.playersTable.moving = false;
-  controller.newGame(settings);
   this.playersTable.data = [this.createPlayersTableSection()];
   this.setScrollableViews(this.createPlayerViews());
   this.setColorNavTabs(this.createColorNavTabs());
   this.setExpansionTabs();
+  if (game.usesExpansion(CitiesAndKnights)) {
+    this.updateBarbariansView();
+  }
   return this.scrollTo(0);
 };
 gui.setExpansionTabs = function() {

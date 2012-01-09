@@ -1,4 +1,4 @@
-gui.showNewGameWindow = ->
+gui.showNewGameWindow = (allowCancel = true) ->
 
   fontOptions = {
     fontSize: 16,
@@ -49,20 +49,22 @@ gui.showNewGameWindow = ->
   buttonHeight = 40
   buttonWidth =  140
   buttonOffset = 15
-  # Cancel button.
-  cancelButton = Ti.UI.createButton({
-    title: 'Cancel',
-    height: buttonHeight,
-    width: buttonWidth,
-    font:  fontOptions,
-    left: buttonOffset,
-  })
 
-  # When tapped, close window.
-  cancelButton.addEventListener('click', ->
-    newGameWindow.close()
-  )
-  buttonsView.add(cancelButton)
+  if allowCancel
+    # Cancel button.
+    cancelButton = Ti.UI.createButton({
+      title: 'Cancel',
+      height: buttonHeight,
+      width: buttonWidth,
+      font:  fontOptions,
+      left: buttonOffset,
+    })
+
+    # When tapped, close window.
+    cancelButton.addEventListener('click', ->
+      newGameWindow.close()
+    )
+    buttonsView.add(cancelButton)
 
   # Add button to create game.
   createGameButton = Ti.UI.createButton({
@@ -70,8 +72,8 @@ gui.showNewGameWindow = ->
     height: buttonHeight,
     width: buttonWidth,
     font:  fontOptions,
-    right: buttonOffset,
   })
+  createGameButton.right = buttonOffset if allowCancel
 
   # When clicked, create game with settings.
   createGameButton.addEventListener('click', ->

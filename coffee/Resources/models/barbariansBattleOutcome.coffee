@@ -13,6 +13,8 @@ class BarbariansBattleOutcome
 
   calculateDefendersOfCatan: ->
     @defendersOfCatan = if @catanSuccessfullyDefends then @game.playersWhoContributeMostKnights() else []
+    if @defendersOfCatan.length == 1
+      @game.awardDefenderOfCatanCardTo(@defendersOfCatan[0])
 
   calculatePlayersWhoLoseCity: ->
     @playersWhoLoseCity = if @barbariansWin then @game.playersNotImmuneWhoContributeLeastKnights() else []

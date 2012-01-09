@@ -15,7 +15,6 @@ tab = Ti.UI.createTab({
 gui.navigation.addTab(tab)
 
 gui.playersTable = Ti.UI.createTableView({
-  data: [gui.createPlayersTableSection()],
   moveable: true,
   editable: true,
   scrollable: false,
@@ -75,11 +74,7 @@ doneButton.addEventListener('click', (event) ->
 newGameButton = Ti.UI.createButton({
   title: 'New game'
 })
-# When button tapped:
-#   New game.
-#   Set new rows in players table.
-#   Set new player views.
-#   Set new color nav tabs.
+# Display modal new game window.
 newGameButton.addEventListener('click', (event) ->
   gui.showNewGameWindow()
 )

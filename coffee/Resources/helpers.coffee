@@ -136,9 +136,7 @@ createBarbariansAttackTeamView = (teamName, options) ->
   view.height = 60
   view.width  = 60
   view.backgroundImage = barbariansImagePath(teamName + '.png')
-  team = if teamName == 'barbarians' then game.barbarians else game.catanDefense
   strengthLabel = Ti.UI.createLabel(
-    text: '' + team.strength(),
     textAlign: 'center',
     font: {
       fontSize: 50,

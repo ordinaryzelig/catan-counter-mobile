@@ -11,7 +11,10 @@ BarbariansBattleOutcome = (function() {
     this.composeSummary();
   }
   BarbariansBattleOutcome.prototype.calculateDefendersOfCatan = function() {
-    return this.defendersOfCatan = this.catanSuccessfullyDefends ? this.game.playersWhoContributeMostKnights() : [];
+    this.defendersOfCatan = this.catanSuccessfullyDefends ? this.game.playersWhoContributeMostKnights() : [];
+    if (this.defendersOfCatan.length === 1) {
+      return this.game.awardDefenderOfCatanCardTo(this.defendersOfCatan[0]);
+    }
   };
   BarbariansBattleOutcome.prototype.calculatePlayersWhoLoseCity = function() {
     var player, _i, _len, _ref, _results;

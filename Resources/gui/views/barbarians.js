@@ -33,7 +33,6 @@ gui.knightStrengthTable = Ti.UI.createTableView({
   style: Ti.UI.iPhone.TableViewStyle.GROUPED,
   headerView: matchupHeaderView
 });
-gui.updateKnightStrengths();
 gui.knightStrengthTable.addEventListener('click', function(event) {
   var player;
   player = game.playerByColor(event.row.playerColor);

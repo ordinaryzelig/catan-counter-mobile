@@ -21,5 +21,6 @@ for file in [
   'barbarians',
   'catanDefense',
   'barbariansBattleOutcome',
+  'defenderOfCatanCard',
 ]
   Ti.include('models/' + file + '.js')

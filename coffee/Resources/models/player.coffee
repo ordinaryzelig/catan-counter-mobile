@@ -9,6 +9,7 @@ class Player
     if @game.usesExpansion(CitiesAndKnights)
       @createKnights()
       @buildCity()
+      @defenderOfCatanCards = []
     else
       @soldiers = []
       @developmentCardVictoryPoints = []
@@ -16,9 +17,13 @@ class Player
   # ================================================
   # Victory points.
 
+  # Use #victoryPointsFor to calculate points.
+  # Construct list of components to count depending on what expansions are used.
   victoryPoints: ->
     components = ['settlements', 'cities', 'longest road']
     if @game.usesExpansion(CitiesAndKnights)
+      for component in ['defender of Catan cards']
+        components.push component
     else
       for component in ['largest army', 'development card victory points']
         components.push component
@@ -27,6 +32,7 @@ class Player
       sum = sum + @victoryPointsFor(component)
     sum
 
+  # For given component type, calculate victory points.
   victoryPointsFor: (component) ->
     switch component
       when 'settlements'                     then @settlements.inPlay().length
@@ -34,6 +40,7 @@ class Player
       when 'longest road'                    then (if @hasLongestRoad() then 2 else 0)
       when 'largest army'                    then (if @hasLargestArmy() then 2 else 0)
       when 'development card victory points' then @developmentCardVictoryPoints.length
+      when 'defender of Catan cards'         then @defenderOfCatanCards.length
       else throw("don't know how to calculate victory points for " + component)
 
   hasEnoughVictoryPointsToWin: ->

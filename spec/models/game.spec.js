@@ -94,7 +94,7 @@ describe('Game', function() {
       player1.buildKnight().activate();
       return expect(this.game.playersWhoContributeMostKnights()).toEqual([player1]);
     });
-    return describe('#playersNotImmuneWhoContributeLeastKnights', function() {
+    describe('#playersNotImmuneWhoContributeLeastKnights', function() {
       it('returns players who have at least 1 unmetropolized city and have lowest knight strength', function() {
         var player1, player2;
         expect(this.game.playersNotImmuneWhoContributeLeastKnights()).toEqual(this.game.players);
@@ -110,6 +110,9 @@ describe('Game', function() {
         player2 = this.game.players[1];
         return expect(this.game.playersNotImmuneWhoContributeLeastKnights()).toEqual([player2]);
       });
+    });
+    return it('creates defenders of Catan cards', function() {
+      return expect(this.game.defenderOfCatanCards.length).toEqual(8);
     });
   });
 });

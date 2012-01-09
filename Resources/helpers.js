@@ -141,14 +141,12 @@ createKnightRow = function(knight) {
   return row;
 };
 createBarbariansAttackTeamView = function(teamName, options) {
-  var strengthLabel, team, view;
+  var strengthLabel, view;
   view = Ti.UI.createView(options);
   view.height = 60;
   view.width = 60;
   view.backgroundImage = barbariansImagePath(teamName + '.png');
-  team = teamName === 'barbarians' ? game.barbarians : game.catanDefense;
   strengthLabel = Ti.UI.createLabel({
-    text: '' + team.strength(),
     textAlign: 'center',
     font: {
       fontSize: 50,

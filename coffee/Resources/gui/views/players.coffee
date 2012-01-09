@@ -26,6 +26,7 @@ gui.createPlayerViews = ->
     if game.usesExpansion(CitiesAndKnights)
       items = [
         @createKnightDashboardItem(player),
+        @createDefenderOfCatanCardItem(player),
       ]
       for item in items
         dashboardItems.push(item)
@@ -61,7 +62,6 @@ gui.createPlayerViews = ->
 gui.createPlayerDashboardItem = (componentType, player) ->
   dashboardItem({
     image: imagesPath(componentType + '_' + player.color + '.png'),
-    badge: player[pluralize(componentType)].inPlay().length,
     componentType: componentType
   })
 
@@ -92,15 +92,18 @@ gui.createDevelopmentCardVictoryPointDashboardItem = ->
 gui.createKnightDashboardItem = (player) ->
   dashboardItem({
     image: imagesPath('knights/' + player.color + '_1.png'),
-    badge: player.knightStrength(),
     componentType: 'knights',
   })
 
+gui.createDefenderOfCatanCardItem = (player) ->
+  dashboardItem(
+    image: imagesPath('defender_of_catan_card.png'),
+    componentType: 'defenderOfCatanCard',
+  )
+
 # =======================================
 
-gui.scrollableView = Ti.UI.createScrollableView({
-  views: gui.createPlayerViews(),
-})
+gui.scrollableView = Ti.UI.createScrollableView()
 playersWindow.add(gui.scrollableView)
 
 # Toolbar with buttons to scroll to player.
@@ -113,19 +116,14 @@ gui.createColorNavTabs = ->
       playerColor: player.color,
     })
   tabbedBarButtonData
-gui.colorNav = Ti.UI.createTabbedBar({
-  labels: gui.createColorNavTabs(),
+
+gui.colorNav = Ti.UI.createTabbedBar
   index: 0
-})
 
 # When clicked, scroll to view and change the title bar.
-gui.colorNav.addEventListener('click', (event) ->
+gui.colorNav.addEventListener 'click', (event) ->
   gui.scrollTo(event.index)
   player = game.players[event.index]
-)
-
-# Change title for first player.
-gui.changeTitle(game.players[0], playersWindow)
 
 # Center the gui.colorNav on the window's toolbar.
 playersWindow.setToolbar([gui.flexSpace, gui.colorNav, gui.flexSpace])

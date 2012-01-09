@@ -14,24 +14,31 @@ Player = (function() {
     if (this.game.usesExpansion(CitiesAndKnights)) {
       this.createKnights();
       this.buildCity();
+      this.defenderOfCatanCards = [];
     } else {
       this.soldiers = [];
       this.developmentCardVictoryPoints = [];
     }
   }
   Player.prototype.victoryPoints = function() {
-    var component, components, sum, _i, _j, _len, _len2, _ref;
+    var component, components, sum, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
     components = ['settlements', 'cities', 'longest road'];
-    if (this.game.usesExpansion(CitiesAndKnights)) {} else {
-      _ref = ['largest army', 'development card victory points'];
+    if (this.game.usesExpansion(CitiesAndKnights)) {
+      _ref = ['defender of Catan cards'];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         component = _ref[_i];
         components.push(component);
       }
+    } else {
+      _ref2 = ['largest army', 'development card victory points'];
+      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+        component = _ref2[_j];
+        components.push(component);
+      }
     }
     sum = 0;
-    for (_j = 0, _len2 = components.length; _j < _len2; _j++) {
-      component = components[_j];
+    for (_k = 0, _len3 = components.length; _k < _len3; _k++) {
+      component = components[_k];
       sum = sum + this.victoryPointsFor(component);
     }
     return sum;
@@ -58,6 +65,8 @@ Player = (function() {
         break;
       case 'development card victory points':
         return this.developmentCardVictoryPoints.length;
+      case 'defender of Catan cards':
+        return this.defenderOfCatanCards.length;
       default:
         throw "don't know how to calculate victory points for " + component;
     }

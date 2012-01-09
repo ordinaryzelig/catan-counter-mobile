@@ -21,6 +21,7 @@ Game = (function() {
       this.victoryPointsRequiredToWin = this.victoryPointsRequiredToWin + 3;
       this.createBarbarians();
       this.createCatanDefense();
+      this.createDefenderOfCatanCards();
     } else {
       this.createSoldiers();
       this.createLargestArmy();
@@ -81,6 +82,15 @@ Game = (function() {
     return this.catanDefense = new CatanDefense({
       game: this
     });
+  };
+  Game.prototype.createDefenderOfCatanCards = function() {
+    var idx, _results;
+    this.defenderOfCatanCards = [];
+    _results = [];
+    for (idx = 1; idx <= 8; idx++) {
+      _results.push(this.defenderOfCatanCards.push(new DefenderOfCatanCard()));
+    }
+    return _results;
   };
   Game.prototype.awardLargestArmyTo = function(player) {
     this.previousPlayersWithLargestArmy.push(this.largestArmy.player);
@@ -165,6 +175,15 @@ Game = (function() {
       strength = strength + player.cities.inPlay().length;
     }
     return strength;
+  };
+  Game.prototype.awardDefenderOfCatanCardTo = function(player) {
+    var card;
+    card = this.defenderOfCatanCards.pop();
+    if (card == null) {
+      return null;
+    }
+    player.defenderOfCatanCards.push(card);
+    return card;
   };
   return Game;
 })();

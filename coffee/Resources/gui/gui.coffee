@@ -28,6 +28,8 @@ gui.updateBadges = (player) ->
         item.badge = player.developmentCardVictoryPoints.length
       when 'knights'
         item.badge = player.knightStrength()
+      when 'defenderOfCatanCard'
+        item.badge = player.defenderOfCatanCards.length
 
 # Change title of players window.
 gui.changeTitle = (player) ->
@@ -151,13 +153,14 @@ gui.createKnightStrengthTableSection = ->
   section
 
 gui.createNewGame = (settings) ->
+  controller.newGame(settings)
   @gameMenuWindow.setRightNavButton(editButton)
   @playersTable.moving = false
-  controller.newGame(settings)
   @playersTable.data = [@createPlayersTableSection()]
   @setScrollableViews(@createPlayerViews())
   @setColorNavTabs(@createColorNavTabs())
   @setExpansionTabs()
+  @updateBarbariansView() if game.usesExpansion(CitiesAndKnights)
   @scrollTo(0)
 
 # Add/remove expansion tabs.

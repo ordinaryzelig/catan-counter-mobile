@@ -1,6 +1,10 @@
 There's no good way to test the GUI, so we're just going to do it manually.
 This is a list of things that should be tested.
 
+On open
+
+  show new game window without cancel button.
+
 Main navigation tabs and windows
 
   game menu/setup tab shows editable list of players with victory points and new game creation
@@ -64,6 +68,14 @@ Barbarians window
   lists players and their knight strength in descending order of knight strength
 
     tapping on player brings up player's knight modal window (see below)
+
+  barbarians attack button
+
+    when tapped, displays confirmation dialog with summary of what will happen if attack's outcome is applied
+
+      when 'OK' tapped, outcome is applied, players lose cities or earn defender of Catan card
+
+      when 'Cancel' tapped, nothing happens
 
 Gameplay
 
