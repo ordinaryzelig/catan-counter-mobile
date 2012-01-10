@@ -6,8 +6,7 @@ events.barbariansAttack = ->
   attackAlert.addEventListener 'click', (event) ->
     unless event.index == event.cancel
       outcome.apply()
-      for player in game.players
-        gui.updatePlayerVictoryPointsAndBadges(player)
+      gui.updateAllPlayersVictoryPointsAndBadges()
       gui.updateAttackStrengths()
       gui.updateBarbariansView()
   attackAlert.show()

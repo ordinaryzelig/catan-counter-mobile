@@ -100,6 +100,26 @@ gui.checkIfPlayerHasEnoughVictoryPointsToWin = function(player) {
     return basicAlert(title, message);
   }
 };
+gui.updateAllPlayersBadges = function() {
+  var player, _i, _len, _ref, _results;
+  _ref = game.players;
+  _results = [];
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    player = _ref[_i];
+    _results.push(this.updateBadges(player));
+  }
+  return _results;
+};
+gui.updateAllPlayersVictoryPointsAndBadges = function() {
+  var player, _i, _len, _ref, _results;
+  _ref = game.players;
+  _results = [];
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    player = _ref[_i];
+    _results.push(this.updatePlayerVictoryPointsAndBadges(player));
+  }
+  return _results;
+};
 gui.updatePlayerVictoryPointsAndBadges = function(player) {
   this.updateBadges(player);
   return this.updatePlayerVictoryPoints(player);
@@ -172,6 +192,7 @@ gui.createNewGame = function(settings) {
   this.playersTable.moving = false;
   this.playersTable.data = [this.createPlayersTableSection()];
   this.setScrollableViews(this.createPlayerViews());
+  this.updateAllPlayersBadges();
   this.setColorNavTabs(this.createColorNavTabs());
   this.setExpansionTabs();
   if (game.usesExpansion(CitiesAndKnights)) {

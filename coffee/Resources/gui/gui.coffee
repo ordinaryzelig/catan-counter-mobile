@@ -85,6 +85,14 @@ gui.checkIfPlayerHasEnoughVictoryPointsToWin = (player) ->
   message = 'The official rules state that a player can only win when it is his/her turn'
   basicAlert(title, message) if player.hasEnoughVictoryPointsToWin()
 
+gui.updateAllPlayersBadges = ->
+  for player in game.players
+    @updateBadges(player)
+
+gui.updateAllPlayersVictoryPointsAndBadges = ->
+  for player in game.players
+    @updatePlayerVictoryPointsAndBadges(player)
+
 gui.updatePlayerVictoryPointsAndBadges = (player) ->
   @updateBadges(player)
   @updatePlayerVictoryPoints(player)
@@ -158,6 +166,7 @@ gui.createNewGame = (settings) ->
   @playersTable.moving = false
   @playersTable.data = [@createPlayersTableSection()]
   @setScrollableViews(@createPlayerViews())
+  @updateAllPlayersBadges()
   @setColorNavTabs(@createColorNavTabs())
   @setExpansionTabs()
   @updateBarbariansView() if game.usesExpansion(CitiesAndKnights)
