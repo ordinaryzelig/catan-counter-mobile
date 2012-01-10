@@ -1,6 +1,10 @@
 # Include lib.
-for file in ['buildable', 'arrayFilters', 'underscore']
+for file in ['buildable', 'arrayFilters']
   Ti.include('lib/' + file + '.js')
+
+# Include vendor.
+for file in ['underscore']
+  Ti.include('vendor/' + file + '.js')
 
 # Include expansions.
 for file in ['citiesAndKnights']
