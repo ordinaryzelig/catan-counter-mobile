@@ -1,2 +1,7 @@
 build
 .jhw-cache
+Resources/*.js
+Resources/gui/
+Resources/lib/
+Resources/models/
+!Resources/vendor/*
