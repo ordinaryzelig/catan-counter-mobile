@@ -217,3 +217,10 @@ class Player
     metropolis.unaward() if metropolis.player?
     metropolis.player = @
     @metropolises.push metropolis
+
+  # ================================================
+  # Defender of Catan cards.
+
+  discardDefenderOfCatanCard: ->
+    defenderCard = @defenderOfCatanCards.splice(0, 1)
+    @game.defenderOfCatanCards.push defenderCard

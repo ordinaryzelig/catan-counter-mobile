@@ -4,6 +4,7 @@ files = [
   'barbariansAttackClick',
   'cityClick',
   'componentClick',
+  'defenderOfCatanCardClick',
   'developmentCardVictoryPointClick',
   'knightClick',
   'knightDesertClick',
