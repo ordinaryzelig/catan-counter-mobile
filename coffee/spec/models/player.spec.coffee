@@ -114,7 +114,7 @@ describe 'Player', ->
       @settings = new GameSettings(expansions: [CitiesAndKnights])
       @game = new Game(numPlayers: 2, settings: @settings)
       @player = @game.players[0]
-      @Player2 = @game.players[1]
+      @player2 = @game.players[1]
 
     it '#knightStrength returns sum of activated knights levels', ->
       player = @game.players[0]
@@ -172,8 +172,8 @@ describe 'Player', ->
       @player.takeMetropolis(metropolis)
       expect(metropolis.player).toEqual(@player)
 
-    it' #takeMetropolis unawards metropolis if another player has it', ->
-      metropolis = @game.metropolis[0]
+    it '#takeMetropolis unawards metropolis if another player has it', ->
+      metropolis = @game.metropolises[0]
       @player.takeMetropolis(metropolis)
       @player2.takeMetropolis(metropolis)
       expect(@player.metropolises.length).toEqual(0)

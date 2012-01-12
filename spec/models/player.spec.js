@@ -153,7 +153,8 @@ describe('Player', function() {
         numPlayers: 2,
         settings: this.settings
       });
-      return this.player = this.game.players[0];
+      this.player = this.game.players[0];
+      return this.player2 = this.game.players[1];
     });
     it('#knightStrength returns sum of activated knights levels', function() {
       var idx, player;
@@ -215,11 +216,19 @@ describe('Player', function() {
       this.player.deactivateAllKnights();
       return expect(this.player.knightStrength()).toEqual(0);
     });
-    return it('#takeMetropolis awards metropolis to player', function() {
+    it('#takeMetropolis awards metropolis to player', function() {
       var metropolis;
       metropolis = this.game.metropolises[0];
       this.player.takeMetropolis(metropolis);
       return expect(metropolis.player).toEqual(this.player);
+    });
+    return it('#takeMetropolis unawards metropolis if another player has it', function() {
+      var metropolis;
+      metropolis = this.game.metropolises[0];
+      this.player.takeMetropolis(metropolis);
+      this.player2.takeMetropolis(metropolis);
+      expect(this.player.metropolises.length).toEqual(0);
+      return expect(this.player2.metropolises.length).toEqual(1);
     });
   });
 });
