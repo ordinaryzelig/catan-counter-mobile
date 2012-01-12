@@ -20,6 +20,8 @@ gui.updateBadges = (player) ->
     switch item.componentType
       when 'settlement', 'city'
         item.badge = player[pluralize(item.componentType)].inPlay().length
+      #when 'metropolis'
+        #item.badge = player.metrpolises.length
       when 'longestRoad'
         item.badge = if player.hasLongestRoad() then 1 else 0
       when 'soldier'
@@ -30,6 +32,8 @@ gui.updateBadges = (player) ->
         item.badge = player.knightStrength()
       when 'defenderOfCatanCard'
         item.badge = player.defenderOfCatanCards.length
+      when 'metropolises'
+        item.badge = player.metropolises.length
 
 # Change title of players window.
 gui.changeTitle = (player) ->
@@ -37,6 +41,7 @@ gui.changeTitle = (player) ->
 
 gui.flexSpace = Ti.UI.createButton({systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE})
 
+# Navigate to main tab (See gui.tabs above)
 gui.navigateTo = (tab_id) ->
   @navigation.setActiveTab(tab_id)
 
@@ -180,6 +185,9 @@ gui.setExpansionTabs = ->
   else
     gui.navigation.removeTab(gui.barbariansTab) if tabExistsOnNavigation
 
+# Set instructions for what to do with knights.
+# If there are no knights, instruct to tap '+'.
+# If there are knights, instruct to tap on knight.
 gui.setKnightsTableSectionHeaderTitle = (tableSection, numKnights) ->
   if numKnights > 0
     tableSection.headerTitle = 'Tap on knight to perform actions.'

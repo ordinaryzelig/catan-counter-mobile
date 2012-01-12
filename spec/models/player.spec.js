@@ -210,10 +210,16 @@ describe('Player', function() {
       metroplizedCity.metropolis = true;
       return expect(this.player.immune()).toEqual(true);
     });
-    return it('#deactivateAllKnights deactivates all knights', function() {
+    it('#deactivateAllKnights deactivates all knights', function() {
       this.player.buildKnight().activate();
       this.player.deactivateAllKnights();
       return expect(this.player.knightStrength()).toEqual(0);
+    });
+    return it('#takeMetropolis awards metropolis to player', function() {
+      var metropolis;
+      metropolis = this.game.metropolises[0];
+      this.player.takeMetropolis(metropolis);
+      return expect(metropolis.player).toEqual(this.player);
     });
   });
 });

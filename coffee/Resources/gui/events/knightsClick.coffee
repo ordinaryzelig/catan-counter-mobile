@@ -1,4 +1,4 @@
-# This even handles the clicking of the dashboard item which displays the knights window.
+# This event handles the clicking of the dashboard item which displays the knights window.
 # Namespace knightsTable and knightsTableSection to make it available when deserting knight.
 
 events.knightsClick = (player) ->

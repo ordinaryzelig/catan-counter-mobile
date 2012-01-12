@@ -75,6 +75,9 @@ knightImagePath = (knight) ->
 barbariansImagePath = (path) ->
   imagesPath('barbarians/' + path)
 
+metropolisImagePath = (path) ->
+  imagesPath("metropolises/#{path}")
+
 # Alerts.
 
 basicAlert = (title, message) ->
@@ -146,3 +149,28 @@ createBarbariansAttackTeamView = (teamName, options) ->
   gui.attackStrengths[teamName] = strengthLabel
   view.add(strengthLabel)
   view
+
+# Create table row with metropolis button.
+createMetropolisRow = (metropolisType, player) ->
+  row = Ti.UI.createTableViewRow(
+    backgroundColor: 'transparent',
+    height: 100,
+  )
+  metropolisButton = createMetropolisButton(metropolisType, player)
+  metropolisButton.addEventListener('click', (event) ->
+    button = event.source
+    player = game.playerByColor(button.playerColor)
+    events.metropolisClick(metropolisType, player)
+  )
+  row.add(metropolisButton)
+  row
+
+# Create a label with metropolis as image.
+createMetropolisButton = (metropolisType, player) ->
+  Ti.UI.createButton(
+    backgroundImage: metropolisImagePath("metropolis_#{metropolisType}.png"),
+    playerColor: player.color,
+    metropolisType: metropolisType,
+    height: 100,
+    width: 100,
+  )

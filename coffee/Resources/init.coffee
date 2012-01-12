@@ -1,5 +1,5 @@
 # Include lib.
-for file in ['buildable', 'arrayFilters']
+for file in ['buildable', 'arrayFilters', 'arrayExtensions']
   Ti.include('lib/' + file + '.js')
 
 # Include vendor.
@@ -12,19 +12,20 @@ for file in ['citiesAndKnights']
 
 # Include models.
 for file in [
+  'barbarians',
+  'barbariansBattleOutcome',
+  'catanDefense',
   'city',
+  'defenderOfCatanCard',
+  'developmentCardVictoryPoint',
   'game',
+  'gameSettings',
+  'knight',
   'largestArmy',
   'longestRoad',
+  'metropolis',
   'player',
   'settlement',
   'soldier',
-  'developmentCardVictoryPoint',
-  'gameSettings',
-  'knight',
-  'barbarians',
-  'catanDefense',
-  'barbariansBattleOutcome',
-  'defenderOfCatanCard',
 ]
   Ti.include('models/' + file + '.js')

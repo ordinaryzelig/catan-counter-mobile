@@ -11,10 +11,14 @@ class Game
       @createBarbarians()
       @createCatanDefense()
       @createDefenderOfCatanCards()
+      @createMetropolises()
     else
       @createSoldiers()
       @createLargestArmy()
       @createDevelopmentCardVictoryPoints()
+
+  # =======================================================================
+  # Game components.
 
   createPlayers: (num) ->
     @players = []
@@ -49,6 +53,13 @@ class Game
     @defenderOfCatanCards = []
     for idx in [1..8]
       @defenderOfCatanCards.push(new DefenderOfCatanCard())
+
+  createMetropolises: ->
+    @metropolises = []
+    for type in Metropolis.types
+      @metropolises.push new Metropolis(type: type)
+
+  # =======================================================================
 
   awardLargestArmyTo: (player) ->
     @previousPlayersWithLargestArmy.push(@largestArmy.player)
@@ -111,6 +122,12 @@ class Game
     return null unless card?
     player.defenderOfCatanCards.push(card)
     card
+
+  metropolisesByType: ->
+    metropolises = {}
+    for metro in @metropolises
+      metropolises[metro.type] = metro
+    metropolises
 
 Game.COLORS = ['red', 'blue', 'orange', 'white', 'green', 'brown']
 Game.EXPANSIONS = [

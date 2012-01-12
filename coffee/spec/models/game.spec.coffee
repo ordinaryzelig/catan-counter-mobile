@@ -86,3 +86,9 @@ describe 'Game', ->
 
     it 'creates defenders of Catan cards', ->
       expect(@game.defenderOfCatanCards.length).toEqual(8)
+
+    it 'creates a metropolis for each type', ->
+      metropolises = @game.metropolises
+      expect(metropolises.length).toEqual(3)
+      types = _.map(metropolises, (metro) -> metro.type)
+      expect(types).toEqual(Metropolis.types)

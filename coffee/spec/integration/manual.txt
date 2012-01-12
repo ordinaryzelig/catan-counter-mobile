@@ -115,6 +115,28 @@ Gameplay
 
       'Cancel' button does nothing
 
+  metropolis
+
+    tapping brings up option dialog with each metropolis on buttons
+
+      title shows who owns each metropolis
+
+      tapping any metropolis brings up option dialog
+
+        tapping 'Take x_type metropolis'
+
+          if player has a city that can have a metropolis, it is awarded to player
+
+            if metropolis was stolen, player is alerted
+
+          if player does not have city that can have a metropolis, player is alerted
+
+        tapping 'Remove x_type metropolis'
+
+          removes metropolis from player if they have it
+
+          if player does not have it, player is alerted
+
   longest road
 
     tapping brings up option dialog
@@ -198,5 +220,13 @@ Gameplay
               does not add equivalent knight to player if they are not able to build knight
 
               updates both players' and game's total activated knight strengths
+
+  defender of Catan card
+
+    tapping brings up modal window
+
+      if 'Remove' tapped, defender of Catan card is removed and put back with game's deck of defender of Catan cards
+
+      if 'Cancel' tapped, modal window closes
 
   if player has enough victory points to win, alert after they get those points

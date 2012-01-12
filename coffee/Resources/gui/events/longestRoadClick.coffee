@@ -13,12 +13,11 @@ events.longestRoadClick = (player) ->
   for key, value of longestRoadEvents
     options.push value
   title = if previousPlayerWithLongestRoad? then "#{previousPlayerWithLongestRoad.color} has the longest road" else ''
-  dialog = Ti.UI.createOptionDialog({
+  dialog = Ti.UI.createOptionDialog
     options: options
-    cancel: options.indexOf(longestRoadEvents['CANCEL']),
-    destructive: 1,
-    title: title,
-  })
+    cancel: options.indexOf(longestRoadEvents['CANCEL'])
+    destructive: 1
+    title: title
 
   # Handle clicks.
   dialog.addEventListener('click', (event) ->

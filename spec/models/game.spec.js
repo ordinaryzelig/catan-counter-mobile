@@ -111,8 +111,17 @@ describe('Game', function() {
         return expect(this.game.playersNotImmuneWhoContributeLeastKnights()).toEqual([player2]);
       });
     });
-    return it('creates defenders of Catan cards', function() {
+    it('creates defenders of Catan cards', function() {
       return expect(this.game.defenderOfCatanCards.length).toEqual(8);
+    });
+    return it('creates a metropolis for each type', function() {
+      var metropolises, types;
+      metropolises = this.game.metropolises;
+      expect(metropolises.length).toEqual(3);
+      types = _.map(metropolises, function(metro) {
+        return metro.type;
+      });
+      return expect(types).toEqual(Metropolis.types);
     });
   });
 });

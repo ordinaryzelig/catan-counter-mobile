@@ -9,6 +9,8 @@ files = [
   'knightDesertClick',
   'knightsClick',
   'longestRoadClick',
+  'metropolisClick',
+  'metropolisesClick',
   'settlementClick',
   'soldierClick',
 ]

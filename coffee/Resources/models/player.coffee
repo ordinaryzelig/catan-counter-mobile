@@ -10,6 +10,7 @@ class Player
       @createKnights()
       @buildCity()
       @defenderOfCatanCards = []
+      @metropolises = []
     else
       @soldiers = []
       @developmentCardVictoryPoints = []
@@ -22,7 +23,7 @@ class Player
   victoryPoints: ->
     components = ['settlements', 'cities', 'longest road']
     if @game.usesExpansion(CitiesAndKnights)
-      for component in ['defender of Catan cards']
+      for component in ['defender of Catan cards', 'metropolises']
         components.push component
     else
       for component in ['largest army', 'development card victory points']
@@ -41,6 +42,7 @@ class Player
       when 'largest army'                    then (if @hasLargestArmy() then 2 else 0)
       when 'development card victory points' then @developmentCardVictoryPoints.length
       when 'defender of Catan cards'         then @defenderOfCatanCards.length
+      when 'metropolises'                    then @metropolises.length * 2
       else throw("don't know how to calculate victory points for " + component)
 
   hasEnoughVictoryPointsToWin: ->
@@ -205,3 +207,13 @@ class Player
   deactivateAllKnights: ->
     for knight in @knights.inPlay().active()
       knight.deactivate()
+
+  # ================================================
+  # Metropolises.
+
+  # award metropolis to player.
+  # Unaward first if necessary.
+  takeMetropolis: (metropolis) ->
+    metropolis.unaward() if metropolis.player?
+    metropolis.player = @
+    @metropolises.push metropolis

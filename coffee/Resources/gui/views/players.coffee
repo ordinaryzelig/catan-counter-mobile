@@ -17,26 +17,24 @@ gui.createPlayerViews = ->
   views = []
   for player in game.players
 
-    dashboardItems = [
-      @createSettlementDashboardItem(player),
-      @createCityDashboardItem(player),
-      @createLongestRoadDashboardItem(),
-    ]
-
-    if game.usesExpansion(CitiesAndKnights)
-      items = [
+    # Construct list of dashboard items to create depending on which expansions used.
+    dashboardItems = if game.usesExpansion(CitiesAndKnights)
+      [
+        @createSettlementDashboardItem(player),
+        @createCityDashboardItem(player),
+        @createMetropolisItem()
+        @createLongestRoadDashboardItem(),
         @createKnightDashboardItem(player),
-        @createDefenderOfCatanCardItem(player),
+        @createDefenderOfCatanCardItem(),
       ]
-      for item in items
-        dashboardItems.push(item)
     else
-      items = [
+      [
+        @createSettlementDashboardItem(player),
+        @createCityDashboardItem(player),
+        @createLongestRoadDashboardItem(),
         @createSoldierDashboardItem(),
         @createDevelopmentCardVictoryPointDashboardItem(),
       ]
-      for item in items
-        dashboardItems.push(item)
 
     # Add all dashboard items to gui so badges can be updated easily.
     gui.dashboardItems[player.color] = dashboardItems
@@ -71,6 +69,12 @@ gui.createSettlementDashboardItem = (player) ->
 gui.createCityDashboardItem = (player) ->
   @createPlayerDashboardItem('city', player)
 
+gui.createMetropolisItem = () ->
+  dashboardItem(
+    image: metropolisImagePath('metropolis.png'),
+    componentType: 'metropolises',
+  )
+
 gui.createLongestRoadDashboardItem = ->
   dashboardItem({
     image: imagesPath('longest_road.png'),
@@ -95,7 +99,7 @@ gui.createKnightDashboardItem = (player) ->
     componentType: 'knights',
   })
 
-gui.createDefenderOfCatanCardItem = (player) ->
+gui.createDefenderOfCatanCardItem = () ->
   dashboardItem(
     image: imagesPath('defender_of_catan_card.png'),
     componentType: 'defenderOfCatanCard',
