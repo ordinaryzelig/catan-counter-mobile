@@ -78,6 +78,19 @@ barbariansImagePath = (path) ->
 metropolisImagePath = (path) ->
   imagesPath("metropolises/#{path}")
 
+# Given bonus object, determine what class it is and return an image path representation.
+imagePathForBonus = (bonus) ->
+  path = 'bonuses/'
+  switch bonus.constructor
+    when Metropolis
+      imagesPath(path + "metropolis_#{bonus.type}.png")
+    when LongestRoad
+      imagesPath(path + 'longest_road.png')
+    when LargestArmy
+      imagesPath(path + 'largest_army.png')
+    when DefenderOfCatanCard
+      imagesPath(path + 'defender_of_catan_card.png')
+
 # Alerts.
 
 basicAlert = (title, message) ->

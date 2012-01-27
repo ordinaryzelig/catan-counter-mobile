@@ -224,3 +224,19 @@ class Player
   discardDefenderOfCatanCard: ->
     defenderCard = @defenderOfCatanCards.splice(0, 1)
     @game.defenderOfCatanCards.push defenderCard
+
+  # ================================================
+
+  # Array of bonus objects like lontest road or metropolises.
+  bonuses: ->
+    bonusObjects = []
+    bonusObjects.push @game.longestRoad if @hasLongestRoad()
+    if @game.usesExpansion(CitiesAndKnights)
+      for metro in @metropolises
+        bonusObjects.push metro
+      for defenderCard in @defenderOfCatanCards
+        bonusObjects.push defenderCard
+      bonusObjects
+    else
+      bonusObjects.push @game.largestArmy if @hasLargestArmy()
+    bonusObjects

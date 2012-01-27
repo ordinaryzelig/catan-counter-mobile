@@ -178,3 +178,10 @@ describe 'Player', ->
       @player2.takeMetropolis(metropolis)
       expect(@player.metropolises.length).toEqual(0)
       expect(@player2.metropolises.length).toEqual(1)
+
+    it '#bonuses returns objects of bonuses player earned', ->
+      @player.takeLongestRoad()
+      expect(@player.bonuses()).toContain(@game.longestRoad)
+      for metro in @game.metropolises
+        @player.takeMetropolis(metro)
+        expect(@player.bonuses()).toContain(metro)

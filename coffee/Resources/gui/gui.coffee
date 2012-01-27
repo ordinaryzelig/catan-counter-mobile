@@ -74,9 +74,7 @@ gui.setColorNavTabs = (tabs) ->
   @colorNav.labels = tabs
 
 gui.changePlayersMenuVictoryPoints = (player) ->
-  for row in @playersTable.data[0].rows
-    if row.playerColor == player.color
-      row.children[2].text = player.victoryPoints()
+  @playersTable.setData([@createPlayersTableSection()])
 
 # Update player's victory points in game menu.
 # If player is current player, change title bar too.
@@ -108,7 +106,7 @@ gui.updatePlayerVictoryPointsAndBadges = (player) ->
 #   player color
 #   badge
 # badgeFunction determins badge number.
-gui.createPlayersRows = (players, badgeFunction) ->
+gui.createPlayersRows = (players, badgeFunction, extraFunc = ->) ->
   rows = []
   # Row for each player.
   for player in players
@@ -137,6 +135,8 @@ gui.createPlayersRows = (players, badgeFunction) ->
       right: 5,
     })
     row.add(victoryPoints)
+    # Add more stuff to row.
+    extraFunc(player, row)
     rows.push(row)
   rows
 
@@ -146,9 +146,19 @@ gui.createPlayersTableSection = ->
     headerTitle: 'Players and scores',
     footerTitle: 'Tap Edit to remove or reorder players',
   })
-  rows = @createPlayersRows(game.players, (player) ->
+  badgeFunction = (player) ->
     player.victoryPoints()
-  )
+  bonusesFunction = (player, row) ->
+    rightMargin = 40
+    for bonus in player.bonuses()
+      label = Ti.UI.createLabel
+        backgroundImage: imagePathForBonus(bonus)
+        width: 30
+        height: 30
+        right: rightMargin
+      rightMargin += 35
+      row.add label
+  rows = @createPlayersRows(game.players, badgeFunction, bonusesFunction)
   for row in rows
     section.add(row)
   section

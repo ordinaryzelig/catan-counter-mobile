@@ -1,3 +1,6 @@
+# TODO get rid of this and move it somewhere else.
+# No more controller.
+
 game = null
 
 controller = {}

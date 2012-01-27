@@ -75,9 +75,11 @@ Barbarians window
 
       when 'OK' tapped, outcome is applied, players lose cities or earn defender of Catan card
 
+        if player is awarded defender of Catan, bonus appears in scoreboard
+
       when 'Cancel' tapped, nothing happens
 
-Gameplay
+Player window
 
   settlement
 
@@ -127,6 +129,8 @@ Gameplay
 
           if player has a city that can have a metropolis, it is awarded to player
 
+            bonus appears in scoreboard
+
             if metropolis was stolen, player is alerted
 
           if player does not have city that can have a metropolis, player is alerted
@@ -137,6 +141,8 @@ Gameplay
 
           if player does not have it, player is alerted
 
+          bonus is removed from scoreboard
+
   longest road
 
     tapping brings up option dialog
@@ -145,9 +151,13 @@ Gameplay
 
         alerts if stolen from another player
 
+        bonus appears in scoreboard
+
       'Remove longest road' button removes the longest road from player if they have it
 
         removes largest army if necessary and reassigns it if necessary
+
+        bonus is removed from scoreboard
 
         alerts if player doesn't have it
 
@@ -226,6 +236,8 @@ Gameplay
     tapping brings up modal window
 
       if 'Remove' tapped, defender of Catan card is removed and put back with game's deck of defender of Catan cards
+
+        bonus is removed from scoreboard
 
       if 'Cancel' tapped, modal window closes
 
