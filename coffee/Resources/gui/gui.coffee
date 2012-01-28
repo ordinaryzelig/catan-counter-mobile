@@ -175,7 +175,7 @@ gui.createKnightStrengthTableSection = ->
   section
 
 gui.createNewGame = (settings) ->
-  controller.newGame(settings)
+  newGame(settings)
   @gameMenuWindow.setRightNavButton(editButton)
   @playersTable.moving = false
   @playersTable.data = [@createPlayersTableSection()]

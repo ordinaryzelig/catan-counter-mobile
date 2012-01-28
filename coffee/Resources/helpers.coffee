@@ -187,3 +187,16 @@ createMetropolisButton = (metropolisType, player) ->
     height: 100,
     width: 100,
   )
+
+# This needs to be defined here so that CoffeeScript will treat it as
+# global, and newGame() will not create a local variable.
+game = null
+
+newGame = (settings = {}) ->
+  game = new Game({
+    numPlayers: Game.COLORS.length,
+    settings: settings,
+  })
+  # Assign colors.
+  for player in game.players
+    player.color = Game.COLORS[game.players.indexOf(player)]
