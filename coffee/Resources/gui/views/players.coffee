@@ -22,9 +22,9 @@ gui.createPlayerViews = ->
       [
         @createSettlementDashboardItem(player),
         @createCityDashboardItem(player),
+        @createKnightDashboardItem(player),
         @createMetropolisItem()
         @createLongestRoadDashboardItem(),
-        @createKnightDashboardItem(player),
         @createDefenderOfCatanCardItem(),
       ]
     else
