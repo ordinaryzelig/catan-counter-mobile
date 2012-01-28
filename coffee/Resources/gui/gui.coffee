@@ -112,13 +112,12 @@ gui.createPlayersRows = (players, badgeFunction, extraFunc = ->) ->
   for player in players
     row = Ti.UI.createTableViewRow({playerColor: player.color})
     # Color label image.
-    colorImage = Ti.UI.createLabel({
-      backgroundImage: 'images/square_' + player.color + '.png',
-      width: 30,
-      height: 30,
-      borderColor: 'black',
-      left: 5,
-    })
+    colorImage = Ti.UI.createLabel
+      backgroundImage: imagesPath("squares/square_#{player.color}.png")
+      width: 30
+      height: 30
+      borderColor: 'black'
+      left: 5
     row.add(colorImage)
     # Color label.
     colorLabel = Ti.UI.createLabel({

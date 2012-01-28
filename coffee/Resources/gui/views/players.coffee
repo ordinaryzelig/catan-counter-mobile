@@ -56,10 +56,10 @@ gui.createPlayerViews = ->
 # =======================================
 # Dashboard item creation.
 
-# Settlement, city, and knight dashboard items are made the same way.
+# Settlement, city dashboard items are made the same way.
 gui.createPlayerDashboardItem = (componentType, player) ->
   dashboardItem({
-    image: imagesPath(componentType + '_' + player.color + '.png'),
+    image: imagesPath("#{pluralize(componentType)}/#{componentType}_#{player.color}.png"),
     componentType: componentType
   })
 
