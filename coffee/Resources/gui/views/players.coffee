@@ -26,6 +26,7 @@ gui.createPlayerViews = ->
         @createMetropolisItem()
         @createLongestRoadDashboardItem(),
         @createDefenderOfCatanCardItem(),
+        @createMerchantItem(),
       ]
     else
       [
@@ -105,6 +106,12 @@ gui.createDefenderOfCatanCardItem = () ->
     componentType: 'defenderOfCatanCard',
   )
 
+gui.createMerchantItem = () ->
+  dashboardItem(
+    image: imagesPath('merchant.png'),
+    componentType: 'merchant',
+  )
+
 # =======================================
 
 gui.scrollableView = Ti.UI.createScrollableView()
@@ -114,7 +121,7 @@ playersWindow.add(gui.scrollableView)
 gui.createColorNavTabs = ->
   tabbedBarButtonData = []
   for player in game.players
-    imagePath = 'images/square_' + player.color + '.png'
+    imagePath = 'images/squares/square_' + player.color + '.png'
     tabbedBarButtonData.push({
       image: imagePath,
       playerColor: player.color,

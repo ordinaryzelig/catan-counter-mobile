@@ -1,5 +1,4 @@
-# This is probably the wrong way to do namespacing.
-# Plus this is pretty disorganized. There's plenty of gui code in view files.
+# This is pretty disorganized. There's plenty of gui code in view files.
 # So I guess this is a general place for functions that don't belong in their own view files.
 
 Ti.UI.setBackgroundImage(imagesPath('water.png'))
@@ -18,22 +17,22 @@ gui.attackStrengths = {}
 gui.updateBadges = (player) ->
   for item in @dashboardItems[player.color]
     switch item.componentType
-      when 'settlement', 'city'
+      when 'city', 'settlement'
         item.badge = player[pluralize(item.componentType)].inPlay().length
-      #when 'metropolis'
-        #item.badge = player.metrpolises.length
-      when 'longestRoad'
-        item.badge = if player.hasLongestRoad() then 1 else 0
-      when 'soldier'
-        item.badge = player.soldiers.length
+      when 'defenderOfCatanCard'
+        item.badge = player.defenderOfCatanCards.length
       when 'developmentCardVictoryPoint'
         item.badge = player.developmentCardVictoryPoints.length
       when 'knights'
         item.badge = player.knightStrength()
-      when 'defenderOfCatanCard'
-        item.badge = player.defenderOfCatanCards.length
+      when 'longestRoad'
+        item.badge = if player.hasLongestRoad() then 1 else 0
+      when 'merchant'
+        item.badge = if player.hasMerchant() then 1 else 0
       when 'metropolises'
         item.badge = player.metropolises.length
+      when 'soldier'
+        item.badge = player.soldiers.length
 
 # Change title of players window.
 gui.changeTitle = (player) ->

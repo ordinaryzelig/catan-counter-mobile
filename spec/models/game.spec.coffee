@@ -92,3 +92,6 @@ describe 'Game', ->
       expect(metropolises.length).toEqual(3)
       types = _.map(metropolises, (metro) -> metro.type)
       expect(types).toEqual(Metropolis.types)
+
+    it 'creates merchant', ->
+      expect(@game.merchant).toBeDefined()

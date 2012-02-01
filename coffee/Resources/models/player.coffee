@@ -23,7 +23,7 @@ class Player
   victoryPoints: ->
     components = ['settlements', 'cities', 'longest road']
     if @game.usesExpansion(CitiesAndKnights)
-      for component in ['defender of Catan cards', 'metropolises']
+      for component in ['defender of Catan cards', 'metropolises', 'merchant']
         components.push component
     else
       for component in ['largest army', 'development card victory points']
@@ -36,13 +36,14 @@ class Player
   # For given component type, calculate victory points.
   victoryPointsFor: (component) ->
     switch component
-      when 'settlements'                     then @settlements.inPlay().length
       when 'cities'                          then @cities.inPlay().length * 2
-      when 'longest road'                    then (if @hasLongestRoad() then 2 else 0)
-      when 'largest army'                    then (if @hasLargestArmy() then 2 else 0)
-      when 'development card victory points' then @developmentCardVictoryPoints.length
       when 'defender of Catan cards'         then @defenderOfCatanCards.length
+      when 'development card victory points' then @developmentCardVictoryPoints.length
+      when 'largest army'                    then (if @hasLargestArmy() then 2 else 0)
+      when 'longest road'                    then (if @hasLongestRoad() then 2 else 0)
+      when 'merchant'                        then (if @hasMerchant() then 1 else 0)
       when 'metropolises'                    then @metropolises.length * 2
+      when 'settlements'                     then @settlements.inPlay().length
       else throw("don't know how to calculate victory points for " + component)
 
   hasEnoughVictoryPointsToWin: ->
@@ -226,6 +227,16 @@ class Player
     @game.defenderOfCatanCards.push defenderCard
 
   # ================================================
+  # Merchant.
+
+  # award merchant to player.
+  takeMerchant: ->
+    @game.merchant.player = @
+
+  hasMerchant: ->
+    @game.merchant.player == @
+
+  # ================================================
 
   # Array of bonus objects like lontest road or metropolises.
   bonuses: ->
@@ -236,6 +247,7 @@ class Player
         bonusObjects.push metro
       for defenderCard in @defenderOfCatanCards
         bonusObjects.push defenderCard
+      bonusObjects.push @game.merchant if @hasMerchant()
       bonusObjects
     else
       bonusObjects.push @game.largestArmy if @hasLargestArmy()

@@ -185,3 +185,8 @@ describe 'Player', ->
       for metro in @game.metropolises
         @player.takeMetropolis(metro)
         expect(@player.bonuses()).toContain(metro)
+
+    it '#takeMerchant awards merchant to player', ->
+      merchant = @game.merchant
+      @player.takeMerchant()
+      expect(merchant.player).toEqual(@player)

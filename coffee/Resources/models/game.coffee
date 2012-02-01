@@ -12,6 +12,7 @@ class Game
       @createCatanDefense()
       @createDefenderOfCatanCards()
       @createMetropolises()
+      @createMerchant()
     else
       @createSoldiers()
       @createLargestArmy()
@@ -58,6 +59,9 @@ class Game
     @metropolises = []
     for type in Metropolis.types
       @metropolises.push new Metropolis(type: type)
+
+  createMerchant: ->
+    @merchant = new Merchant(game: @)
 
   # =======================================================================
 

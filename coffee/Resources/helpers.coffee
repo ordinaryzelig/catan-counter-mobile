@@ -82,14 +82,16 @@ metropolisImagePath = (path) ->
 imagePathForBonus = (bonus) ->
   path = 'bonuses/'
   switch bonus.constructor
-    when Metropolis
-      imagesPath(path + "metropolis_#{bonus.type}.png")
-    when LongestRoad
-      imagesPath(path + 'longest_road.png')
-    when LargestArmy
-      imagesPath(path + 'largest_army.png')
     when DefenderOfCatanCard
       imagesPath(path + 'defender_of_catan_card.png')
+    when LargestArmy
+      imagesPath(path + 'largest_army.png')
+    when LongestRoad
+      imagesPath(path + 'longest_road.png')
+    when Merchant
+      imagesPath(path + 'merchant.png')
+    when Metropolis
+      imagesPath(path + "metropolis_#{bonus.type}.png")
 
 # Alerts.
 

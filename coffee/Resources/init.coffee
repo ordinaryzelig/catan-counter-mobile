@@ -1,3 +1,6 @@
+# Include files necessary for model side.
+# I.e. anything required to run jasmine.
+
 # Include lib.
 for file in ['buildable', 'arrayFilters', 'arrayExtensions']
   Ti.include('lib/' + file + '.js')
@@ -23,6 +26,7 @@ for file in [
   'knight',
   'largestArmy',
   'longestRoad',
+  'merchant',
   'metropolis',
   'player',
   'settlement',
